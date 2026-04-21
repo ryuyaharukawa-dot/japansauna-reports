@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>サウナ付きホテル・旅館 リアルタイム空室・価格モニタリング設計レポート — JapanSauna</title>
+  <style>
+    body {
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      color: #1a1a1a; background: #fff; line-height: 1.7; margin: 0;
+    }
+    html { font-size: 15px; }
+    #sticky-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid #ccc;
+      padding: 12px 20px;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    #sticky-nav .nav-label {
+      font-size: 0.72rem; font-weight: 700; color: #777;
+      letter-spacing: 0.05em; margin-right: 4px; white-space: nowrap;
+    }
+    .pill {
+      display: inline-block; padding: 5px 16px;
+      font-size: 0.78rem; font-weight: 600; color: #555;
+      text-decoration: none; border: 1px solid #ccc;
+      border-radius: 999px; transition: all 0.2s ease; white-space: nowrap;
+    }
+    .pill:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    #main { max-width: 920px; margin: 0 auto; padding: 40px 48px 80px; }
+    .report-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 20px; margin-bottom: 32px; }
+    .report-header h1 { font-size: 1.6rem; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+    .report-header .subtitle { font-size: 0.9rem; color: #555; margin-bottom: 16px; }
+    .report-header .summary-box { background: #f7f7f7; border: 1px solid #ddd; padding: 16px 20px; margin-top: 16px; }
+    .report-header .summary-box h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; }
+    .report-header .summary-box ul { padding-left: 20px; font-size: 0.82rem; }
+    .report-header .summary-box li { margin-bottom: 4px; }
+    h2.section-title {
+      font-size: 1.2rem; font-weight: 700;
+      border-bottom: 1px solid #999; padding-bottom: 6px;
+      margin-top: 48px; margin-bottom: 20px;
+    }
+    h3.subsection-title {
+      font-size: 1.0rem; font-weight: 700;
+      margin-top: 32px; margin-bottom: 12px;
+      padding-left: 10px; border-left: 3px solid #555;
+    }
+    h4 { font-size: 0.9rem; font-weight: 700; margin-top: 20px; margin-bottom: 8px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 0.82rem; }
+    table th, table td { border: 1px solid #bbb; padding: 7px 10px; text-align: left; vertical-align: top; }
+    table th { background: #f0f0f0; font-weight: 700; white-space: nowrap; }
+    table td { background: #fff; }
+    table tr:nth-child(even) td { background: #fafafa; }
+    p { margin-bottom: 10px; font-size: 0.88rem; }
+    ul, ol { margin-bottom: 10px; padding-left: 22px; font-size: 0.88rem; }
+    ul li, ol li { margin-bottom: 3px; }
+    .highlight-box { background: #f7f7f7; border: 1px solid #ddd; padding: 14px 18px; margin: 12px 0 20px; font-size: 0.85rem; }
+    .note-box { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #78350f; }
+    .info-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #1e3a5f; }
+    .confirm-box { background: #f0fdf4; border-left: 4px solid #22c55e; padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #14532d; }
+    .badge { display: inline-block; padding: 2px 10px; font-size: 0.72rem; font-weight: 700; border-radius: 999px; letter-spacing: 0.03em; }
+    .badge-ok { background: #d4edda; color: #155724; }
+    .badge-warn { background: #fff3cd; color: #856404; }
+    .badge-info { background: #d1ecf1; color: #0c5460; }
+    .badge-pending { background: #e2e3e5; color: #383d41; }
+    .badge-ng { background: #f8d7da; color: #721c24; }
+    .flow { display: flex; align-items: center; gap: 0; margin: 20px 0; flex-wrap: wrap; }
+    .flow-step { background: #f0f0f0; border: 1px solid #ccc; padding: 10px 18px; font-size: 0.82rem; font-weight: 600; text-align: center; min-width: 110px; }
+    .flow-step.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .flow-step.done { background: #d4edda; color: #155724; border-color: #155724; }
+    .flow-arrow { font-size: 1.2rem; color: #999; padding: 0 4px; }
+    pre {
+      background: #f4f4f4; border: 1px solid #ddd;
+      padding: 14px 18px; font-size: 0.78rem; line-height: 1.6;
+      overflow-x: auto; margin: 12px 0 20px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    }
+    code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.82rem; background: #f0f0f0; padding: 1px 5px; border-radius: 3px; }
+    .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0 24px; }
+    .metric-card { border: 1px solid #ddd; padding: 16px; text-align: center; }
+    .metric-card .num { font-size: 1.8rem; font-weight: 700; line-height: 1.2; }
+    .metric-card .label { font-size: 0.75rem; color: #555; margin-top: 4px; }
+    .metric-card .sub { font-size: 0.72rem; color: #999; margin-top: 2px; }
+    .report-footer { border-top: 1px solid #999; margin-top: 48px; padding-top: 16px; font-size: 0.78rem; color: #777; }
+    @media (max-width: 640px) {
+      #main { padding: 24px 20px 60px; }
+      .report-header h1 { font-size: 1.3rem; }
+      h2.section-title { font-size: 1.05rem; }
+      table { font-size: 0.78rem; }
+      table th, table td { padding: 5px 7px; }
+      #sticky-nav { padding: 10px 12px; gap: 6px; }
+      .pill { padding: 4px 12px; font-size: 0.72rem; }
+      .metric-grid { grid-template-columns: 1fr 1fr; }
+      .flow { flex-direction: column; align-items: flex-start; }
+    }
+    @media print {
+      #sticky-nav { display: none; }
+      #main { padding: 0; max-width: 100%; }
+      body { font-size: 10pt; }
+      h2.section-title { page-break-after: avoid; }
+      table { page-break-inside: avoid; }
+      table th { background: #f0f0f0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="sticky-nav">
+  <span class="nav-label">SECTIONS</span>
+  <a class="pill" href="#overview">概要</a>
+  <a class="pill" href="#design">収集設計</a>
+  <a class="pill" href="#targets">対象施設</a>
+  <a class="pill" href="#method">分析手法</a>
+  <a class="pill" href="#output">アウトプット例</a>
+  <a class="pill" href="#roadmap">ロードマップ</a>
+  <a class="pill" href="#limits">限界・注意</a>
+</nav>
+
+<div id="main">
+
+  <header class="report-header">
+    <h1>サウナ付きホテル・旅館<br>リアルタイム空室・価格モニタリング 設計レポート</h1>
+    <div class="subtitle">間接データによる稼働率・需要推定の実現可能性と実装方針</div>
+    <div class="summary-box">
+      <h3>サマリー</h3>
+      <ul>
+        <li><strong>目的:</strong> OTAの公開データ（空室状況・宿泊価格）を継続収集し、サウナ有無による稼働率・需要の差を間接的に比較する</li>
+        <li><strong>手法:</strong> 楽天トラベルAPI（公式）＋ じゃらん・一休のスクレイピング（ToS要確認）</li>
+        <li><strong>取得できる指標:</strong> 空室充足率（満室日数÷調査日数）、価格推移、直前割引率</li>
+        <li><strong>取得できない指標:</strong> 実際の稼働率（ホテルPMS内データのため非公開）</li>
+        <li><strong>必要工数（概算）:</strong> 初期構築3〜5日、自動収集後はメンテナンスのみ</li>
+        <li><strong>作成日:</strong> 2026年4月21日</li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- SECTION 1 -->
+  <h2 class="section-title" id="overview">1. なぜ間接推定か — データ構造の整理</h2>
+
+  <p>ホテル・旅館の実際の稼働率は <strong>ホテルのPMS（プロパティ管理システム）</strong> 内にある情報であり、外部から直接取得する手段はない。OTAが持つのは「在庫の空き状況」のみで、予約済み客室数はOTAも保持していない。</p>
+
+  <table>
+    <thead>
+      <tr><th>データ種別</th><th>外部取得</th><th>精度</th><th>用途</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>空室あり／なし</td>
+        <td><span class="badge badge-ok">取得可能</span></td>
+        <td>高（リアルタイム）</td>
+        <td>満室日数カウント → 需要の高さを推定</td>
+      </tr>
+      <tr>
+        <td>宿泊単価（表示価格）</td>
+        <td><span class="badge badge-ok">取得可能</span></td>
+        <td>高（リアルタイム）</td>
+        <td>価格推移・直前割引率の比較</td>
+      </tr>
+      <tr>
+        <td>残り○室表示</td>
+        <td><span class="badge badge-warn">条件付き</span></td>
+        <td>中（表示される場合のみ）</td>
+        <td>切迫度の推定</td>
+      </tr>
+      <tr>
+        <td>レビュー数・評点</td>
+        <td><span class="badge badge-ok">取得可能</span></td>
+        <td>中（累積値）</td>
+        <td>人気度・露出量の代理指標</td>
+      </tr>
+      <tr>
+        <td><strong>実際の稼働率</strong></td>
+        <td><span class="badge badge-ng">取得不可</span></td>
+        <td>—</td>
+        <td>STR（有料）またはホテル直接提供のみ</td>
+      </tr>
+      <tr>
+        <td>予約済み客室数</td>
+        <td><span class="badge badge-ng">取得不可</span></td>
+        <td>—</td>
+        <td>PMS内データのため非公開</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <strong>間接推定の考え方：</strong>「チェックイン7日前に空室なし＝高需要」「直前でも空室あり＝低需要」という相関を利用する。これを継続的に収集・集計することで、サウナ有無による需要差の傾向が見えてくる。
+  </div>
+
+  <!-- SECTION 2 -->
+  <h2 class="section-title" id="design">2. データ収集設計</h2>
+
+  <h3 class="subsection-title">収集ソースと方法</h3>
+
+  <table>
+    <thead>
+      <tr><th>サービス</th><th>方法</th><th>制約</th><th>優先度</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>楽天トラベルAPI</strong></td>
+        <td>公式API（無料・要アプリID申請）</td>
+        <td>1秒1リクエスト制限。空室検索・料金取得可</td>
+        <td><span class="badge badge-ok">最優先</span></td>
+      </tr>
+      <tr>
+        <td><strong>じゃらん（リクルート）</strong></td>
+        <td>じゃらんnet API（無料・要申請）</td>
+        <td>空室検索・施設詳細取得可</td>
+        <td><span class="badge badge-ok">優先</span></td>
+      </tr>
+      <tr>
+        <td><strong>一休.com</strong></td>
+        <td>スクレイピング（ToS要確認）</td>
+        <td>高級施設に強い。Bot検知あり。ゆるやかなクロールが必要</td>
+        <td><span class="badge badge-warn">要確認</span></td>
+      </tr>
+      <tr>
+        <td><strong>Booking.com</strong></td>
+        <td>Affiliate API（要申請）またはスクレイピング</td>
+        <td>インバウンド需要の参照に有用</td>
+        <td><span class="badge badge-info">補助</span></td>
+      </tr>
+      <tr>
+        <td><strong>TripAdvisor</strong></td>
+        <td>Content API（無料枠あり）</td>
+        <td>レビュー数・評点取得に特化</td>
+        <td><span class="badge badge-info">補助</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">収集スケジュール設計</h3>
+
+  <p>「チェックイン日までの残り日数」ごとに空室状況を記録することで、需要の時系列変化を捉える。</p>
+
+  <table>
+    <thead>
+      <tr><th>収集タイミング</th><th>チェックイン日との関係</th><th>取得する値</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>毎朝 8:00</td>
+        <td>当日 / 3日前 / 7日前 / 14日前 / 30日前</td>
+        <td>空室あり・なし、最安値、残り室数（表示時）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box">
+    <strong>例：</strong> 2026年5月3日（土）のデータを収集する場合<br>
+    → 4月3日・4月19日・4月26日・4月30日・5月2日・5月3日の計6回記録<br>
+    → 「30日前から埋まり始めた施設」vs「前日でも空きがある施設」の比較が可能
+  </div>
+
+  <h3 class="subsection-title">収集データの構造（イメージ）</h3>
+
+  <pre>
+{
+  "hotel_id": "rakuten_12345",
+  "hotel_name": "森のスパリゾート 北海道ホテル",
+  "has_sauna": true,
+  "sauna_type": ["room", "public_bath"],
+  "checkin_date": "2026-05-03",
+  "days_before": 7,
+  "collected_at": "2026-04-26T08:00:00+09:00",
+  "available": false,
+  "min_price": null,
+  "remaining_rooms": null,
+  "source": "rakuten_api"
+}
+  </pre>
+
+  <!-- SECTION 3 -->
+  <h2 class="section-title" id="targets">3. 対象施設リスト設計</h2>
+
+  <h3 class="subsection-title">施設の選定方針</h3>
+
+  <p>「サウナあり」vs「サウナなし」を比較するため、<strong>同エリア・同価格帯・同施設タイプ</strong>でペアを組む。</p>
+
+  <table>
+    <thead>
+      <tr><th>エリア</th><th>施設タイプ</th><th>サウナあり（例）</th><th>サウナなし対照群（例）</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>北海道（帯広）</td>
+        <td>リゾートホテル</td>
+        <td>北海道ホテル</td>
+        <td>同エリア同価格帯の旅館</td>
+      </tr>
+      <tr>
+        <td>関東（熱海）</td>
+        <td>旅館</td>
+        <td>ゆとりろ熱海 / ニューとみよし</td>
+        <td>同エリア同価格帯の旅館</td>
+      </tr>
+      <tr>
+        <td>近畿（京都）</td>
+        <td>シティホテル</td>
+        <td>サウナ付き施設</td>
+        <td>同エリア同価格帯の旅館</td>
+      </tr>
+      <tr>
+        <td>九州（別府・由布院）</td>
+        <td>旅館</td>
+        <td>サウナ付き施設</td>
+        <td>同エリア同価格帯の旅館</td>
+      </tr>
+      <tr>
+        <td>全国</td>
+        <td>ビジネスホテル</td>
+        <td>ドーミーイン各店</td>
+        <td>東横イン・アパホテル等</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <strong>サウナ判定の方法：</strong> 楽天トラベルAPIの施設情報・設備フラグ、または施設名・説明文のキーワード（「サウナ」「ととのい」「水風呂」「ロウリュ」）で自動分類する。初期は手動で確認リストを作成するのが確実。
+  </div>
+
+  <!-- SECTION 4 -->
+  <h2 class="section-title" id="method">4. 分析手法</h2>
+
+  <h3 class="subsection-title">① 空室充足率（満室推定）</h3>
+
+  <p>収集した空室データから、各施設の「満室率」を算出する。</p>
+
+  <div class="highlight-box">
+    <strong>計算式：</strong><br>
+    空室充足率 ＝ 空室なし（満室）の日数 ÷ 調査対象期間の総日数 × 100<br><br>
+    例：4月〜6月（90日間）で68日が「空室なし」→ 空室充足率 75.6%<br>
+    ※実際の稼働率ではなく「OTAで満室になっていた日の割合」
+  </div>
+
+  <h3 class="subsection-title">② 価格プレミアム分析</h3>
+
+  <p>同エリア・同タイプの施設間で価格を比較し、サウナ付き施設がどれだけ高い料金を維持できているかを測る。</p>
+
+  <table>
+    <thead>
+      <tr><th>指標</th><th>計算方法</th><th>意味</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>平均最安値（ADR代理）</td>
+        <td>各施設の週次平均最安値</td>
+        <td>施設の価格帯の把握</td>
+      </tr>
+      <tr>
+        <td>価格プレミアム率</td>
+        <td>（サウナあり平均価格 − サウナなし平均価格）÷ サウナなし平均価格</td>
+        <td>サウナによる単価上乗せ幅</td>
+      </tr>
+      <tr>
+        <td>直前割引率</td>
+        <td>（30日前価格 − 前日価格）÷ 30日前価格</td>
+        <td>大きいほど埋まっていない（値下げが必要）</td>
+      </tr>
+      <tr>
+        <td>早期割引率</td>
+        <td>（通常価格 − 早期予約価格）÷ 通常価格</td>
+        <td>需要が強いほど早割が少ない</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">③ 需要ヒートマップ（週・季節別）</h3>
+
+  <p>曜日・月別・シーズン別に空室充足率を集計し、サウナ有無による需要パターンの違いを可視化する。</p>
+
+  <pre>
+         月   火   水   木   金   土   日
+サウナあり  62%  58%  61%  65%  89%  97%  91%
+サウナなし  45%  41%  43%  48%  72%  85%  79%
+差分       +17  +17  +18  +17  +17  +12  +12
+  </pre>
+
+  <!-- SECTION 5 -->
+  <h2 class="section-title" id="output">5. 期待されるアウトプット例</h2>
+
+  <h3 class="subsection-title">月次比較レポート（イメージ）</h3>
+
+  <div class="highlight-box">
+    <h4 style="margin-top:0;">2026年5月 熱海エリア 旅館比較（サウナ有無別）</h4>
+    <table>
+      <thead>
+        <tr><th>施設</th><th>サウナ</th><th>空室充足率</th><th>週末充足率</th><th>平均最安値</th><th>直前割引率</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ゆとりろ熱海（客室サウナ）</td>
+          <td><span class="badge badge-ok">客室＋大浴場</span></td>
+          <td><strong>82%</strong></td>
+          <td><strong>97%</strong></td>
+          <td>¥28,400</td>
+          <td>3%</td>
+        </tr>
+        <tr>
+          <td>熱海A旅館（比較対照）</td>
+          <td><span class="badge badge-ng">なし</span></td>
+          <td>51%</td>
+          <td>78%</td>
+          <td>¥22,100</td>
+          <td>18%</td>
+        </tr>
+        <tr>
+          <td>熱海B旅館（比較対照）</td>
+          <td><span class="badge badge-warn">大浴場のみ</span></td>
+          <td>64%</td>
+          <td>88%</td>
+          <td>¥24,800</td>
+          <td>11%</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem;color:#999;margin-bottom:0;">※上記はアウトプットイメージ。実データ収集後に更新予定。</p>
+  </div>
+
+  <h3 class="subsection-title">営業資料への活用イメージ</h3>
+
+  <ul>
+    <li>「同エリアのサウナ付き施設は空室充足率が平均○pt高い」→ 稼働率改善の間接証拠として提示</li>
+    <li>「直前割引率が低い＝需要が強い＝値下げしなくても埋まる」→ 収益率改善の訴求</li>
+    <li>「週末の充足率差が特に顕著」→ 週末・繁忙期への集中効果として説明</li>
+    <li>「価格プレミアム率＋○%」→ 単価アップの根拠に</li>
+  </ul>
+
+  <!-- SECTION 6 -->
+  <h2 class="section-title" id="roadmap">6. 実装ロードマップ</h2>
+
+  <div class="flow">
+    <div class="flow-step">Step 1<br><small>施設リスト作成</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Step 2<br><small>API申請・設定</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Step 3<br><small>収集スクリプト</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Step 4<br><small>スプレッドシート蓄積</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step active">Step 5<br><small>月次レポート化</small></div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Step</th><th>内容</th><th>工数目安</th><th>担当</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Step 1</strong></td>
+        <td>対象施設リストの作成（サウナあり施設30〜50件＋対照群30〜50件）。楽天トラベルIDを紐付け</td>
+        <td>0.5日</td>
+        <td>Hal確認 + Kiuas</td>
+      </tr>
+      <tr>
+        <td><strong>Step 2</strong></td>
+        <td>楽天デベロッパーズにアプリID申請（即日〜翌日）。じゃらんAPIも申請</td>
+        <td>1〜2時間</td>
+        <td>Hal</td>
+      </tr>
+      <tr>
+        <td><strong>Step 3</strong></td>
+        <td>Pythonスクリプト作成（API呼び出し・データ整形・スプレッドシート書き込み）。GitHub Actionsで毎朝8時自動実行</td>
+        <td>1〜2日</td>
+        <td>Kiuas（engineering）</td>
+      </tr>
+      <tr>
+        <td><strong>Step 4</strong></td>
+        <td>Googleスプレッドシートにデータ蓄積。施設ID・日付・空室状況・価格を行として追記</td>
+        <td>Step3に含む</td>
+        <td>Kiuas</td>
+      </tr>
+      <tr>
+        <td><strong>Step 5</strong></td>
+        <td>月次でスプレッドシートの集計レポート自動生成 → このHTMLレポートに反映</td>
+        <td>0.5日/月</td>
+        <td>Kiuas</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="confirm-box">
+    <strong>まず始めるなら：</strong> Step 1（施設リスト作成）と Step 2（楽天API申請）を先行させるだけでよい。Step 3以降はHalの判断後に進める。申請URL → <a href="https://webservice.rakuten.co.jp/" target="_blank">webservice.rakuten.co.jp</a>
+  </div>
+
+  <!-- SECTION 7 -->
+  <h2 class="section-title" id="limits">7. 限界・注意点</h2>
+
+  <div class="note-box">
+    <strong>⚠️ 「空室充足率」は「稼働率」ではない：</strong> OTAに在庫を出していない室数、直販（自社サイト・電話）で埋まった分は反映されない。実際の稼働率より低く出る傾向がある。営業資料での使用時は「OTA上の需要指標」として説明すること。
+  </div>
+
+  <ul>
+    <li><strong>じゃらん・一休のスクレイピングはToS確認が必要：</strong> 利用規約で自動収集を禁じている場合、公式APIに切り替えるか対象から外す判断が必要</li>
+    <li><strong>サウナ判定の精度：</strong> OTAの設備フラグは施設側の入力次第で漏れがある。初期は手動確認が必要</li>
+    <li><strong>施設数が少ないと統計的信頼性が低い：</strong> 最低でもエリアあたりサウナあり10件・なし10件は欲しい</li>
+    <li><strong>外部要因の影響：</strong> イベント・連休・天候・インバウンド需要変動を除外した純粋な比較は難しい</li>
+    <li><strong>データ蓄積に時間がかかる：</strong> 有意な傾向を掴むには最低1〜3ヶ月の継続収集が必要</li>
+  </ul>
+
+  <footer class="report-footer">
+    research — サウナ付きホテル・旅館 リアルタイムモニタリング設計 — Generated 2026-04-21 — JapanSauna / Kiuas
+  </footer>
+
+</div>
+</body>
+</html>
