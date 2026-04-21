@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SANU × JapanSauna サウナ設備運用改善 提案書</title>
+  <title>SANU × JapanSauna 共創提案書</title>
   <style>
     body {
       font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
@@ -42,9 +42,7 @@
       background: #f7f7f7; border: 1px solid #ddd; padding: 16px 20px; margin-top: 16px;
     }
     .report-header .summary-box h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; }
-    .report-header .summary-box ul, .report-header .summary-box ol {
-      padding-left: 20px; font-size: 0.82rem;
-    }
+    .report-header .summary-box ul { padding-left: 20px; font-size: 0.82rem; }
     .report-header .summary-box li { margin-bottom: 4px; }
     h2.section-title {
       font-size: 1.2rem; font-weight: 700;
@@ -103,6 +101,19 @@
     .flow-step.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
     .flow-step.done { background: #d4edda; color: #155724; border-color: #155724; }
     .flow-arrow { font-size: 1.2rem; color: #999; padding: 0 4px; }
+    .role-split {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0 24px;
+    }
+    .role-card {
+      border: 1px solid #ddd; padding: 16px 18px;
+    }
+    .role-card .role-title {
+      font-size: 0.78rem; font-weight: 700; color: #777;
+      letter-spacing: 0.05em; margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .role-card ul { padding-left: 18px; font-size: 0.82rem; margin: 0; }
+    .role-card li { margin-bottom: 5px; }
     .report-footer {
       border-top: 1px solid #999; margin-top: 48px; padding-top: 16px;
       font-size: 0.78rem; color: #777;
@@ -115,6 +126,7 @@
       table th, table td { padding: 5px 7px; }
       #sticky-nav { padding: 10px 12px; gap: 6px; }
       .pill { padding: 4px 12px; font-size: 0.72rem; }
+      .role-split { grid-template-columns: 1fr; }
     }
     @media print {
       #sticky-nav { display: none; }
@@ -128,10 +140,7 @@
       .highlight-box, .note-box, .info-box, .confirm-box {
         -webkit-print-color-adjust: exact; print-color-adjust: exact;
       }
-      table th {
-        background: #f0f0f0 !important;
-        -webkit-print-color-adjust: exact; print-color-adjust: exact;
-      }
+      table th { background: #f0f0f0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     }
   </style>
 </head>
@@ -141,9 +150,9 @@
   <span class="nav-label">SECTIONS</span>
   <a class="pill" href="#overview">概要</a>
   <a class="pill" href="#issues">現状課題</a>
-  <a class="pill" href="#solutions">提案内容</a>
-  <a class="pill" href="#strengths">JapanSaunaの強み</a>
-  <a class="pill" href="#steps">導入ステップ</a>
+  <a class="pill" href="#concept">共創の提案</a>
+  <a class="pill" href="#scope">スコープ</a>
+  <a class="pill" href="#roles">役割分担</a>
   <a class="pill" href="#next">Next</a>
 </nav>
 
@@ -151,272 +160,227 @@
 
   <!-- ===== HEADER ===== -->
   <header class="report-header">
-    <h1>サウナ設備の運用課題を、まるごと解決する</h1>
-    <div class="subtitle">SANU 様向け 設備改善提案書 — JapanSauna</div>
+    <h1>「SANU仕様のサウナ」を、一緒につくりませんか。</h1>
+    <div class="subtitle">SANU × JapanSauna 共創プロジェクト提案書 — 2026年4月</div>
     <div class="summary-box">
       <h3>サマリー</h3>
       <ul>
-        <li><strong>提案先:</strong> SANU 2nd Home Co-Owners（全国35拠点・231室）</li>
-        <li><strong>提案日:</strong> 2026年4月21日</li>
-        <li><strong>課題の核心:</strong> 機種混在 × 復旧難易度の高さ → 体験品質のブレ・運用負荷の増大</li>
-        <li><strong>提案の柱:</strong> ① 設備リプレース ② IoT遠隔監視 ③ 年間保守契約</li>
-        <li><strong>目指す状態:</strong> サウナ起因のトラブル対応をJapanSauna1社に集約し、SANUは体験価値提供に専念できる体制</li>
+        <li><strong>提案の核心:</strong> 1施設をパイロットに、サウナストーブ開発と管理システム構築を共同で進める</li>
+        <li><strong>なぜ共創か:</strong> 既製品では課題は解決しない。SANUの現場知見 × JapanSaunaの開発・調達力で「SANU仕様」を作る</li>
+        <li><strong>対象フェーズ:</strong> Phase 1 — 1施設でのパイロット開発・検証</li>
+        <li><strong>2つのアウトプット:</strong> ① サウナストーブ（OEM開発） ② 遠隔管理システム</li>
+        <li><strong>成功した場合:</strong> 全35拠点への展開 + 新規拠点の標準仕様として採用</li>
         <li><strong>担当:</strong> JapanSauna｜Hal / ryuya.harukawa@sevenrich.jp</li>
       </ul>
     </div>
   </header>
 
-  <!-- ===== SECTION 1: 提案概要 ===== -->
-  <h2 class="section-title" id="overview">1. 提案概要</h2>
+  <!-- ===== SECTION 1: 概要 ===== -->
+  <h2 class="section-title" id="overview">1. この提案の背景</h2>
 
-  <h3 class="subsection-title">SANUについての認識</h3>
+  <h3 class="subsection-title">「既製品を入れ替える」では、根本は解決しない</h3>
   <p>
-    SANUは「自然がもうひとつの家になる」をコンセプトに、全国35拠点・231室のコオーナーシップ別荘サービスを展開しています。
-    各ユニットに専用サウナを標準装備するなど、上質な自然体験の提供にコミットしている点は、JapanSaunaの事業哲学と深く共鳴します。
+    SANUが抱えるサウナ設備の課題——ヒーターの不安定な動作、機種混在による運用複雑化、インフラ停止時の復旧難易度——は、
+    既製品をひとつの別の既製品に置き換えるだけでは解消しません。
   </p>
   <p>
-    一方で、拠点拡大に伴い<strong>サウナ設備の維持・管理が事業上の課題</strong>として顕在化していることも把握しています。
-    本提案では、その課題をJapanSaunaとの協業によって解決する具体策をご提示します。
+    問題の本質は、<strong>「SANUの運営モデルに最適化された設備が存在しない」</strong>ことにあります。
+    35拠点に分散した無人（またはセルフ）運営、非専門スタッフによる復旧対応、ゲストによる多様な使われ方——こうした条件に応えられる製品は、現時点では市場にありません。
   </p>
-
-  <div class="info-box">
-    <strong>提案の前提認識：</strong>サウナ体験の品質安定は、SANU様の顧客満足・継続率・口コミ拡大に直結するコアテーマです。設備トラブルは「機器の問題」ではなく「ブランド体験の問題」として捉えています。
-  </div>
-
-  <!-- ===== SECTION 2: 現状課題の整理 ===== -->
-  <h2 class="section-title" id="issues">2. 現状課題の整理</h2>
-
-  <h3 class="subsection-title">課題の全体像</h3>
-  <p>設備面における課題は、以下の1点に集約されます。</p>
 
   <div class="highlight-box">
-    <strong>「機種や拠点ごとに機器の挙動が異なる中で、不具合（特に温度不良や稼働停止）の発生と復旧難易度の高さが、顧客体験の低下および運用負荷の増大を招いていること」</strong>
+    <strong>だからこそ、「作る」という選択肢があります。</strong><br>
+    JapanSaunaはサウナキャビン・ストーブの開発・調達・輸入のネットワークを持っています。SANUは現場課題と運営データを持っています。
+    両社が持ち寄れば、SANUの運営に本当に合ったサウナをゼロから設計できます。
   </div>
 
-  <h3 class="subsection-title">4つの課題詳細</h3>
+  <!-- ===== SECTION 2: 現状課題 ===== -->
+  <h2 class="section-title" id="issues">2. 現状課題の整理</h2>
+
+  <h3 class="subsection-title">設備面における4つの課題</h3>
 
   <table>
     <thead>
       <tr>
         <th>#</th>
         <th>課題</th>
-        <th>具体的な事象</th>
-        <th>主な影響</th>
-        <th>深刻度</th>
+        <th>現在の影響</th>
+        <th>共創で解決できるか</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><strong>①</strong></td>
         <td>ヒーターの不具合・性能低下による体験品質のブレ</td>
-        <td>「温まりにくい」「安全装置のリセット頻発」「65度までしか上がらない」「ヒーター線の焦げ付き」「電源が入らない」（Harvia製品等）</td>
-        <td>体験品質のブレ → 顧客満足の低下</td>
-        <td><span class="badge badge-ng">高</span></td>
+        <td>「温まらない」「安全装置リセット頻発」→ 顧客満足の低下</td>
+        <td><span class="badge badge-ok">開発仕様で対応</span></td>
       </tr>
       <tr>
         <td><strong>②</strong></td>
-        <td>機器構成の多様化に伴う点検・復旧手順の複雑化</td>
-        <td>ONE SAUNA・Harvia・TYLOが混在。機種ごとに操作盤・ブレーカー・リセット手順が異なる</td>
-        <td>マニュアル化困難 → 一次切り分けに時間・工数</td>
-        <td><span class="badge badge-warn">中〜高</span></td>
+        <td>機種混在による点検・復旧手順の複雑化</td>
+        <td>マニュアル化困難 → スタッフ・ゲスト負担</td>
+        <td><span class="badge badge-ok">全拠点統一仕様で解消</span></td>
       </tr>
       <tr>
         <td><strong>③</strong></td>
         <td>インフラ起因の停止と現地復旧のハードル</td>
-        <td>ブレーカー遮断・ガスメーター安全装置作動など。復旧にゲスト・現地パートナーの対応が必要</td>
-        <td>対応コスト・クレーム発生リスク</td>
-        <td><span class="badge badge-ng">高</span></td>
+        <td>ゲスト・現地パートナーへの対応依頼が発生</td>
+        <td><span class="badge badge-ok">管理システムで対応</span></td>
       </tr>
       <tr>
         <td><strong>④</strong></td>
-        <td>安全設備（非常停止・異常通知）の実装基準のばらつき</td>
-        <td>新設施設は「室内緊急停止機能」「遠隔異常通知」を必須化。既存施設への標準化が途上</td>
-        <td>ブランドリスク・安全管理の不統一</td>
-        <td><span class="badge badge-warn">中〜高</span></td>
+        <td>安全設備の実装基準のばらつき</td>
+        <td>既存施設への標準化が途上 → ブランドリスク</td>
+        <td><span class="badge badge-ok">新仕様で標準化</span></td>
       </tr>
     </tbody>
   </table>
 
-  <!-- ===== SECTION 3: 提案内容 ===== -->
-  <h2 class="section-title" id="solutions">3. 提案内容：3つのソリューション</h2>
+  <!-- ===== SECTION 3: 共創の提案 ===== -->
+  <h2 class="section-title" id="concept">3. 共創プロジェクトの提案</h2>
 
-  <h3 class="subsection-title">ソリューション A｜設備リプレース：信頼性の高いヒーターへの機種統一</h3>
-  <p><span class="badge badge-ng">課題① ②に対応</span></p>
-
+  <h3 class="subsection-title">まず1施設で、一緒につくる</h3>
   <p>
-    Harvia・TYLO・ONE SAUNAなど混在している既存機器を、<strong>保守対応・部品供給・サポート窓口をJapanSaunaが一元管理できる機種に統一</strong>します。
+    いきなり全35拠点に展開するのではなく、<strong>まず1施設をパイロットとして選定し、サウナストーブと管理システムを共同で開発・検証</strong>します。
+    現場で動いてはじめてわかることを拾いながら、両社のリスクを最小化した形で進めます。
   </p>
+
+  <div class="info-box">
+    <strong>共創である理由：</strong>JapanSaunaはサウナストーブの自社製品をこれから開発する段階にあります。SANUの現場環境と課題データを開発に組み込むことで、実運用に耐える製品を最短で作れます。SANUにとっても「自社仕様の設備」が生まれるメリットがあります。
+  </div>
+
+  <h3 class="subsection-title">2つのアウトプット</h3>
+
+  <h4>① サウナストーブ（OEM共同開発）</h4>
+  <p>SANUの運営条件に特化した仕様でストーブを開発します。</p>
 
   <table>
     <thead>
-      <tr><th>選定観点</th><th>方向性</th></tr>
+      <tr><th>設計要件（仮）</th><th>背景となる課題</th></tr>
     </thead>
     <tbody>
-      <tr><td>信頼性</td><td>安全装置の誤作動が少なく、温度安定性の高いモデル</td></tr>
-      <tr><td>保守性</td><td>部品・消耗品を国内在庫で常時確保できるモデル</td></tr>
-      <tr><td>操作統一</td><td>全拠点でリセット手順・点検項目を標準化できるモデル</td></tr>
+      <tr><td>安全装置の誤作動が少ない温度制御設計</td><td>課題①：リセット頻発・65度問題</td></tr>
+      <tr><td>ゲストが操作できるシンプルなUI</td><td>課題②：機種ごとの操作差異</td></tr>
+      <tr><td>遠隔制御・電源管理への対応端子</td><td>課題③：インフラ停止時の復旧</td></tr>
+      <tr><td>室内緊急停止・異常通知の標準内蔵</td><td>課題④：安全設備の統一</td></tr>
     </tbody>
   </table>
 
   <div class="note-box">
-    具体的な機種は現地ヒアリング後に確定します。JapanSaunaが取り扱うメーカー群から最適品番をご提示します。
+    具体的なスペックはヒアリングを経て確定します。上記はあくまで現状課題から導いた設計要件の仮置きです。
   </div>
 
-  <h4>導入によって実現すること</h4>
-  <ul>
-    <li>不具合対応先が「JapanSauna 1社」に集約 → 問い合わせ先の混乱解消</li>
-    <li>マニュアル・チェックシートを全拠点統一 → スタッフ教育コスト削減</li>
-    <li>故障パターンの蓄積による予防保全の実現</li>
-  </ul>
-
-  <h3 class="subsection-title">ソリューション B｜IoT遠隔監視：リアルタイム異常検知パッケージ</h3>
-  <p><span class="badge badge-ng">課題③ ④に対応</span></p>
-
-  <p>
-    各ユニットのサウナヒーターに<strong>温度センサー＋通電監視デバイスを設置</strong>し、停止インシデントへの即時対応と安全設備の標準化を実現します。
-  </p>
+  <h4>② 遠隔管理システム</h4>
+  <p>ストーブと連動して、運営の手間とリスクを下げるシステムを構築します。</p>
 
   <table>
     <thead>
       <tr><th>機能</th><th>内容</th></tr>
     </thead>
     <tbody>
-      <tr><td>異常通知</td><td>温度異常・電源断・安全装置作動を検知し、運営担当者にリアルタイムでアラート送信</td></tr>
-      <tr><td>遠隔ログ確認</td><td>稼働状況・温度推移をダッシュボードで可視化。問題の事前察知が可能</td></tr>
-      <tr><td>現地復旧サポート</td><td>アラート発生時にJapanSaunaが復旧手順をリモート案内（必要に応じて訪問対応）</td></tr>
+      <tr><td>リアルタイム温度・稼働監視</td><td>全拠点のサウナ状態をダッシュボードで確認</td></tr>
+      <tr><td>異常アラート通知</td><td>温度異常・電源断を検知し運営担当者へ即時通知</td></tr>
+      <tr><td>遠隔電源制御</td><td>スマートフォンからON/OFF・スケジュール設定</td></tr>
+      <tr><td>稼働ログ蓄積</td><td>トラブル原因の特定・予防保全への活用</td></tr>
     </tbody>
   </table>
 
-  <div class="confirm-box">
-    <strong>安全設備の標準化（課題④への直接対応）</strong><br>
-    新設拠点：室内ヒーター緊急停止スイッチ＋遠隔異常通知を標準装備。<br>
-    既存拠点：後付けキットで順次対応。改修ロードマップをJapanSaunaと共同策定します。
-  </div>
+  <!-- ===== SECTION 4: スコープ ===== -->
+  <h2 class="section-title" id="scope">4. パイロットのスコープ</h2>
 
-  <h4>導入によって実現すること</h4>
-  <ul>
-    <li>ゲスト・現地パートナーへの対応依頼が不要になる</li>
-    <li>停止インシデントの発生→検知→復旧までのリードタイムを大幅短縮</li>
-    <li>安全要件の全拠点統一によるブランドリスクの低減</li>
-  </ul>
-
-  <h3 class="subsection-title">ソリューション C｜年間保守契約：予防保全＋駆けつけ対応の定額化</h3>
-  <p><span class="badge badge-info">課題① ② ③ ④すべてに対応</span></p>
-
-  <p>
-    設備リプレース・IoT導入と組み合わせた<strong>年間保守契約</strong>により、突発的なトラブル対応コストを平準化し、予測可能な運用体制を構築します。
-  </p>
-
-  <table>
-    <thead>
-      <tr><th>内容</th><th>詳細</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>定期点検</td><td>年1〜2回の現地点検（消耗品交換・動作確認）</td></tr>
-      <tr><td>優先駆けつけ</td><td>不具合発生時、通常より優先的に現地対応</td></tr>
-      <tr><td>部品保証</td><td>主要消耗品（ヒーター線等）の在庫確保・優先供給</td></tr>
-      <tr><td>窓口一元化</td><td>全拠点のサウナ設備に関する問い合わせ先をJapanSauna 1社に集約</td></tr>
-    </tbody>
-  </table>
-
-  <div class="highlight-box">
-    <strong>コスト構造の変化イメージ：</strong><br>
-    現状：突発修理・出張費 × 年間複数回 × 複数拠点 ＝ 管理コスト・機会損失が予測困難<br>
-    保守契約後：定額月額 × 12ヶ月 ＝ コスト予測可能 / 優先対応・予防保全付き<br>
-    <small>※正式な金額は拠点数・機器台数のヒアリング後にご提示します。</small>
-  </div>
-
-  <!-- ===== SECTION 4: JapanSaunaの強み ===== -->
-  <h2 class="section-title" id="strengths">4. なぜ JapanSauna か</h2>
-
-  <h3 class="subsection-title">他社との差別化ポイント</h3>
-
-  <table>
-    <thead>
-      <tr><th>強み</th><th>内容</th><th>SANU様への意味</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>施設運営の現場知見</strong></td>
-        <td>自社施設「The・のサウナ」を運営</td>
-        <td>「直す」だけでなく「使う側」の視点で課題を理解している</td>
-      </tr>
-      <tr>
-        <td><strong>製品供給力</strong></td>
-        <td>サウナキャビン・ヒーターの仕入れ・輸入網を保有</td>
-        <td>リプレース機種の安定調達・コスト最適化が可能</td>
-      </tr>
-      <tr>
-        <td><strong>BtoB実績</strong></td>
-        <td>ホテル・ヴィラへの導入支援の経験</td>
-        <td>施設運営特有の要件（非常時対応・スタッフ教育）に精通</td>
-      </tr>
-      <tr>
-        <td><strong>一気通貫対応</strong></td>
-        <td>設計・調達・施工・保守まで一社完結</td>
-        <td>複数業者との調整コストがゼロになる</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- ===== SECTION 5: 導入ステップ ===== -->
-  <h2 class="section-title" id="steps">5. 導入ステップ</h2>
-
-  <h3 class="subsection-title">パイロット導入からの段階展開</h3>
+  <h3 class="subsection-title">Phase 1：1施設での開発・検証</h3>
 
   <div class="flow">
-    <div class="flow-step active">Step 1<br><small>ヒアリング</small></div>
+    <div class="flow-step active">キックオフ<br><small>課題・要件定義</small></div>
     <div class="flow-arrow">→</div>
-    <div class="flow-step">Step 2<br><small>現地視察</small></div>
+    <div class="flow-step">仕様策定<br><small>ストーブ・システム</small></div>
     <div class="flow-arrow">→</div>
-    <div class="flow-step">Step 3<br><small>見積もり提示</small></div>
+    <div class="flow-step">試作・開発<br><small>OEMサンプル</small></div>
     <div class="flow-arrow">→</div>
-    <div class="flow-step">Step 4<br><small>パイロット導入</small></div>
+    <div class="flow-step">1施設導入<br><small>実地検証</small></div>
     <div class="flow-arrow">→</div>
-    <div class="flow-step">Step 5<br><small>全拠点展開</small></div>
+    <div class="flow-step">評価・改善<br><small>仕様確定</small></div>
   </div>
 
   <table>
     <thead>
-      <tr><th>ステップ</th><th>内容</th><th>目安期間</th></tr>
+      <tr><th>フェーズ</th><th>内容</th><th>目安期間</th></tr>
     </thead>
     <tbody>
       <tr>
-        <td><strong>Step 1</strong><br>ヒアリング（1h）</td>
-        <td>現在の設備台数・機種・拠点別トラブル頻度の確認。保守契約の希望条件のすり合わせ</td>
-        <td>〜2週間以内</td>
+        <td><strong>キックオフ</strong></td>
+        <td>現状設備・トラブル事例の共有。パイロット拠点の選定。開発要件の合意</td>
+        <td>〜1ヶ月</td>
       </tr>
       <tr>
-        <td><strong>Step 2</strong><br>現地視察</td>
-        <td>希望拠点1〜2箇所の設備状態確認。改修難易度・IoT設置可否の把握</td>
-        <td>ヒアリング後1〜2週間</td>
+        <td><strong>仕様策定</strong></td>
+        <td>ストーブスペック・システム設計の確定。OEMメーカーへの発注仕様書作成</td>
+        <td>1〜2ヶ月</td>
       </tr>
       <tr>
-        <td><strong>Step 3</strong><br>見積もり提示</td>
-        <td>リプレース費用・IoT導入費用・保守契約額を拠点数・台数ベースで提示</td>
-        <td>視察後1週間</td>
+        <td><strong>試作・開発</strong></td>
+        <td>サンプル製造。管理システムの開発・テスト</td>
+        <td>2〜4ヶ月</td>
       </tr>
       <tr>
-        <td><strong>Step 4</strong><br>パイロット導入</td>
-        <td>まず1〜3拠点で試験導入。効果・オペレーション適合性を確認</td>
-        <td>契約後1〜2ヶ月</td>
+        <td><strong>1施設導入</strong></td>
+        <td>パイロット拠点への設置。実際のゲスト利用環境での稼働確認</td>
+        <td>1ヶ月</td>
       </tr>
       <tr>
-        <td><strong>Step 5</strong><br>全拠点展開</td>
-        <td>パイロット結果をもとに優先順位を設定し、順次全拠点へ展開</td>
-        <td>〜12ヶ月（拠点数に応じて調整）</td>
+        <td><strong>評価・改善</strong></td>
+        <td>稼働データ・運営フィードバックをもとに仕様を最終化。全拠点展開の判断</td>
+        <td>1〜2ヶ月</td>
       </tr>
     </tbody>
   </table>
 
-  <div class="info-box">
-    <strong>新規拠点への展開について：</strong>SANUが今後も拠点拡大を続ける前提で、新規拠点のサウナ設備一式をJapanSaunaが標準パッケージとして供給するスキームも別途ご提案可能です。設計段階からの介入により、安全設備・IoTを最初から組み込み、長期的な保守コストを最小化します。
+  <h3 class="subsection-title">Phase 2以降：全拠点展開</h3>
+  <p>
+    パイロットで仕様が確定した後、優先度の高い拠点から順次展開します。
+    新規拠点については、設計段階から本仕様を標準採用することで導入コストを最小化します。
+  </p>
+
+  <!-- ===== SECTION 5: 役割分担 ===== -->
+  <h2 class="section-title" id="roles">5. 役割分担と持ち寄るもの</h2>
+
+  <h3 class="subsection-title">両社が持ち寄るもの</h3>
+
+  <div class="role-split">
+    <div class="role-card">
+      <div class="role-title">SANU が持ち寄るもの</div>
+      <ul>
+        <li>現場の課題・トラブルデータ</li>
+        <li>ゲストの使われ方・行動パターン</li>
+        <li>パイロット施設の提供</li>
+        <li>運営視点からの仕様フィードバック</li>
+        <li>全拠点展開時の導入コミット</li>
+      </ul>
+    </div>
+    <div class="role-card">
+      <div class="role-title">JapanSauna が持ち寄るもの</div>
+      <ul>
+        <li>OEMメーカーネットワーク（開発・調達）</li>
+        <li>サウナ施設運営の現場知見</li>
+        <li>ストーブ仕様策定・設計のリード</li>
+        <li>管理システムの開発・実装</li>
+        <li>導入後の保守・サポート</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="confirm-box">
+    <strong>費用負担・権利関係については別途協議：</strong>開発費の分担、完成品の所有権・知的財産権、展開時の優先価格条件などは、キックオフ前に合意文書として整理します。
   </div>
 
   <!-- ===== SECTION 6: Next Actions ===== -->
   <h2 class="section-title" id="next">6. Next Actions</h2>
 
-  <h3 class="subsection-title">まず確認させてください</h3>
+  <h3 class="subsection-title">まず話しましょう</h3>
+  <p>
+    この提案はまだ仮説の段階です。SANUの現場実態をお聞きしてはじめて、具体的な開発要件と進め方が決まります。
+    まずは60〜90分のキックオフミーティングからはじめさせてください。
+  </p>
 
   <table>
     <thead>
@@ -425,40 +389,39 @@
     <tbody>
       <tr>
         <td>1</td>
-        <td>ヒアリング日程の調整（60分 / オンライン可）</td>
-        <td>SANU様 / JapanSauna</td>
+        <td>キックオフミーティングの日程調整（60〜90分）</td>
+        <td>両社</td>
         <td><span class="badge badge-pending">調整中</span></td>
       </tr>
       <tr>
         <td>2</td>
-        <td>現在の設備台数・機種リストの共有（概数でも可）</td>
+        <td>パイロット候補拠点の選定（トラブル頻度・アクセス性を考慮）</td>
         <td>SANU様</td>
-        <td><span class="badge badge-pending">依頼予定</span></td>
+        <td><span class="badge badge-pending">ミーティング内で</span></td>
       </tr>
       <tr>
         <td>3</td>
-        <td>視察希望拠点のご指定（トラブル頻度が高い拠点推奨）</td>
+        <td>現状設備リスト・トラブル事例の共有</td>
         <td>SANU様</td>
-        <td><span class="badge badge-pending">依頼予定</span></td>
+        <td><span class="badge badge-pending">ミーティング内で</span></td>
       </tr>
       <tr>
         <td>4</td>
-        <td>見積もり作成・提示</td>
+        <td>OEMメーカーへの初期打診・開発スケジュール試算</td>
         <td>JapanSauna</td>
-        <td><span class="badge badge-pending">ヒアリング後</span></td>
+        <td><span class="badge badge-pending">ミーティング後</span></td>
       </tr>
     </tbody>
   </table>
 
   <div class="confirm-box">
-    <strong>まずはご相談からでも大歓迎です。</strong><br>
-    「うちの拠点だとどうなる？」「費用感だけ先に知りたい」など、お気軽にご連絡ください。<br>
+    <strong>まずはカジュアルなご相談からでも大歓迎です。</strong><br>
+    「こんな課題もある」「この仕様は難しいのでは」など、ざっくばらんにお聞かせください。<br>
     JapanSauna｜担当: Hal — ryuya.harukawa@sevenrich.jp
   </div>
 
-  <!-- ===== FOOTER ===== -->
   <div class="report-footer">
-    SANU × JapanSauna 設備改善提案書 — 作成: 2026-04-21 — JapanSauna（セブンリッチグループ）
+    SANU × JapanSauna 共創プロジェクト提案書 — 作成: 2026-04-21 — JapanSauna（セブンリッチグループ）
   </div>
 
 </div>
