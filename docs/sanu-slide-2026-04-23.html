@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SANU × JapanSauna 共創提案</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      background: #0f0f0f;
+      color: #1a1a1a;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ===== SLIDE CONTAINER ===== */
+    #deck {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 80px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      background: #fff;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .slide.dark {
+      background: #1a1a1a;
+      color: #fff;
+    }
+    .slide.accent {
+      background: #f7f7f7;
+    }
+
+    /* ===== LAYOUT HELPERS ===== */
+    .slide-inner {
+      width: 100%;
+      max-width: 960px;
+    }
+    .slide-inner.left { align-items: flex-start; }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 16px;
+    }
+    .dark .eyebrow { color: #666; }
+
+    h1.title {
+      font-size: 2.6rem;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+    h2.title {
+      font-size: 2.0rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    h3.title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .dark h1.title, .dark h2.title, .dark h3.title { color: #fff; }
+
+    .lead {
+      font-size: 1.05rem;
+      color: #555;
+      line-height: 1.75;
+      margin-top: 20px;
+      max-width: 680px;
+    }
+    .dark .lead { color: #aaa; }
+
+    .subtitle-line {
+      font-size: 0.88rem;
+      color: #888;
+      margin-top: 12px;
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      width: 48px;
+      height: 3px;
+      background: #1a1a1a;
+      margin: 20px 0;
+    }
+    .dark .divider { background: #fff; }
+
+    /* ===== HIGHLIGHT BOX ===== */
+    .callout {
+      background: #f7f7f7;
+      border-left: 4px solid #1a1a1a;
+      padding: 18px 24px;
+      margin-top: 28px;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      max-width: 720px;
+    }
+    .callout.blue {
+      background: #eff6ff;
+      border-color: #3b82f6;
+      color: #1e3a5f;
+    }
+    .callout.green {
+      background: #f0fdf4;
+      border-color: #22c55e;
+      color: #14532d;
+    }
+
+    /* ===== BADGE ===== */
+    .badge {
+      display: inline-block;
+      padding: 3px 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      border-radius: 999px;
+    }
+    .badge-ok { background: #d4edda; color: #155724; }
+    .badge-warn { background: #fff3cd; color: #856404; }
+    .badge-ng { background: #f8d7da; color: #721c24; }
+    .badge-pending { background: #e2e3e5; color: #383d41; }
+
+    /* ===== TABLE ===== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      margin-top: 20px;
+    }
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 9px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    table th {
+      background: #f0f0f0;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    table tr:nth-child(even) td { background: #fafafa; }
+
+    /* ===== TWO COL ===== */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 28px;
+      width: 100%;
+      max-width: 960px;
+    }
+    .col-card {
+      border: 1px solid #ddd;
+      padding: 20px 22px;
+    }
+    .col-card .col-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 12px;
+    }
+    .col-card ul {
+      padding-left: 18px;
+      font-size: 0.88rem;
+      line-height: 1.8;
+    }
+    .col-card.dark-card {
+      background: #1a1a1a;
+      border-color: #1a1a1a;
+      color: #fff;
+    }
+    .col-card.dark-card .col-label { color: #888; }
+
+    /* ===== FLOW ===== */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-top: 28px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+    }
+    .flow-step {
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      padding: 12px 20px;
+      font-size: 0.80rem;
+      font-weight: 600;
+      text-align: center;
+      min-width: 110px;
+      line-height: 1.4;
+    }
+    .flow-step.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .flow-arrow { font-size: 1.2rem; color: #aaa; padding: 0 6px; }
+
+    /* ===== LIST ===== */
+    .point-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 24px;
+      max-width: 720px;
+    }
+    .point-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+    .point-list li:last-child { border-bottom: none; }
+    .point-list .num {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #888;
+      min-width: 24px;
+      padding-top: 2px;
+    }
+
+    /* ===== BIG NUMBER ===== */
+    .big-nums {
+      display: flex;
+      gap: 48px;
+      margin-top: 32px;
+    }
+    .big-num-item .num {
+      font-size: 3.2rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .big-num-item .label {
+      font-size: 0.82rem;
+      color: #777;
+      margin-top: 6px;
+    }
+    .dark .big-num-item .label { color: #888; }
+
+    /* ===== PROGRESS BAR ===== */
+    #progress {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: #1a1a1a;
+      transition: width 0.35s ease;
+      z-index: 100;
+    }
+
+    /* ===== NAV ===== */
+    #nav {
+      position: fixed;
+      bottom: 24px;
+      right: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 100;
+    }
+    #slide-counter {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #aaa;
+      letter-spacing: 0.05em;
+    }
+    .nav-btn {
+      width: 36px;
+      height: 36px;
+      border: 1px solid #ccc;
+      background: #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      color: #555;
+    }
+    .nav-btn:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+
+    /* hint */
+    #hint {
+      position: fixed;
+      bottom: 24px;
+      left: 32px;
+      font-size: 0.68rem;
+      color: #bbb;
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+
+<div id="deck">
+
+  <!-- ===== SLIDE 01: TITLE ===== -->
+  <section class="slide dark active" id="s1">
+    <div class="slide-inner">
+      <div class="eyebrow">SANU × JapanSauna — 2026.04</div>
+      <h1 class="title">「SANU仕様のサウナ」を、<br>一緒につくりませんか。</h1>
+      <div class="divider"></div>
+      <p class="lead">既製品の置き換えではなく、共同開発という選択。<br>1施設のパイロットからはじめる、新しいサウナ体験の設計。</p>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 02: SANU理解 ===== -->
+  <section class="slide" id="s2">
+    <div class="slide-inner">
+      <div class="eyebrow">About SANU</div>
+      <h2 class="title">SANUが届けているもの</h2>
+      <div class="divider"></div>
+      <div class="big-nums">
+        <div class="big-num-item">
+          <div class="num">35</div>
+          <div class="label">全国拠点数</div>
+        </div>
+        <div class="big-num-item">
+          <div class="num">231</div>
+          <div class="label">室数</div>
+        </div>
+        <div class="big-num-item">
+          <div class="num">全室</div>
+          <div class="label">専用サウナ標準装備</div>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:32px;">
+        「自然がもうひとつの家になる」——SANUにとってサウナは単なる設備ではなく、<strong>ブランド体験の核心</strong>です。
+        サウナの品質安定は、顧客満足・継続率・口コミに直結します。
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 03: 課題の核心 ===== -->
+  <section class="slide accent" id="s3">
+    <div class="slide-inner">
+      <div class="eyebrow">Core Problem</div>
+      <h2 class="title">課題の核心</h2>
+      <div class="divider"></div>
+      <div class="callout" style="font-size:1.05rem; border-left-width:5px; max-width:100%;">
+        <strong>「機種や拠点ごとに機器の挙動が異なる中で、<br>不具合の発生と復旧難易度の高さが、<br>顧客体験の低下および運用負荷の増大を招いている」</strong>
+      </div>
+      <ul class="point-list" style="margin-top:24px;">
+        <li><span class="num">①</span>ヒーターの不具合・性能低下による体験品質のブレ</li>
+        <li><span class="num">②</span>機種混在（ONE SAUNA・Harvia・TYLO）による点検・復旧手順の複雑化</li>
+        <li><span class="num">③</span>インフラ起因の停止と現地復旧のハードル</li>
+        <li><span class="num">④</span>安全設備の実装基準のばらつき</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 04: 既製品では解決しない ===== -->
+  <section class="slide" id="s4">
+    <div class="slide-inner">
+      <div class="eyebrow">Why Not Off-the-Shelf</div>
+      <h2 class="title">既製品を入れ替えるだけでは、<br>根本は解決しない。</h2>
+      <div class="divider"></div>
+      <p class="lead">問題の本質は「SANUの運営モデルに最適化された設備が存在しない」ことにあります。</p>
+      <ul class="point-list" style="margin-top:24px;">
+        <li><span class="num">—</span>35拠点に分散した無人・セルフ運営</li>
+        <li><span class="num">—</span>非専門スタッフによる復旧対応</li>
+        <li><span class="num">—</span>ゲストによる多様な使われ方</li>
+      </ul>
+      <div class="callout blue" style="margin-top:24px;">
+        これらの条件を満たす既製品は、現時点では市場に存在しません。
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 05: 提案 ===== -->
+  <section class="slide dark" id="s5">
+    <div class="slide-inner">
+      <div class="eyebrow">Our Proposal</div>
+      <h1 class="title">だから、一緒につくる。</h1>
+      <div class="divider"></div>
+      <p class="lead">JapanSaunaはサウナキャビン・ストーブの開発・調達・輸入ネットワークを持っています。<br>SANUは現場課題と運営データを持っています。<br><br>両社が持ち寄れば、SANUの運営に本当に合ったサウナをゼロから設計できます。</p>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 06: 2つのアウトプット ===== -->
+  <section class="slide" id="s6">
+    <div class="slide-inner">
+      <div class="eyebrow">Deliverables</div>
+      <h2 class="title">2つのアウトプット</h2>
+      <div class="divider"></div>
+      <div class="two-col">
+        <div class="col-card dark-card">
+          <div class="col-label">Output 01</div>
+          <h3 style="font-size:1.1rem; margin-bottom:12px;">サウナストーブ<br>（OEM共同開発）</h3>
+          <ul>
+            <li>安全装置の誤作動が少ない温度制御</li>
+            <li>ゲストが操作できるシンプルなUI</li>
+            <li>遠隔制御・電源管理への対応</li>
+            <li>緊急停止・異常通知を標準内蔵</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <div class="col-label">Output 02</div>
+          <h3 style="font-size:1.1rem; margin-bottom:12px;">遠隔管理システム</h3>
+          <ul>
+            <li>リアルタイム温度・稼働監視</li>
+            <li>異常アラートを担当者へ即時通知</li>
+            <li>スマホから遠隔電源制御</li>
+            <li>稼働ログの蓄積・予防保全</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 07: 進め方 ===== -->
+  <section class="slide accent" id="s7">
+    <div class="slide-inner">
+      <div class="eyebrow">Roadmap</div>
+      <h2 class="title">まず1施設で、検証する。</h2>
+      <div class="divider"></div>
+      <div class="flow">
+        <div class="flow-step active">キックオフ<br><small>要件定義</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">仕様策定<br><small>ストーブ・システム</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">試作・開発<br><small>OEMサンプル</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">1施設導入<br><small>実地検証</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">評価・改善<br><small>仕様確定</small></div>
+      </div>
+      <div class="callout" style="margin-top:28px;">
+        パイロット検証を経て、全35拠点への展開と新規拠点の標準仕様採用を目指します。
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 08: 役割分担 ===== -->
+  <section class="slide" id="s8">
+    <div class="slide-inner">
+      <div class="eyebrow">Roles</div>
+      <h2 class="title">両社が持ち寄るもの</h2>
+      <div class="divider"></div>
+      <div class="two-col">
+        <div class="col-card">
+          <div class="col-label">SANU が持ち寄るもの</div>
+          <ul>
+            <li>現場の課題・トラブルデータ</li>
+            <li>ゲストの使われ方・行動パターン</li>
+            <li>パイロット施設の提供</li>
+            <li>運営視点からの仕様フィードバック</li>
+            <li>全拠点展開時の導入コミット</li>
+          </ul>
+        </div>
+        <div class="col-card dark-card">
+          <div class="col-label">JapanSauna が持ち寄るもの</div>
+          <ul>
+            <li>OEMメーカーネットワーク</li>
+            <li>サウナ施設運営の現場知見</li>
+            <li>ストーブ仕様策定・設計のリード</li>
+            <li>管理システムの開発・実装</li>
+            <li>導入後の保守・サポート</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 09: Next Actions ===== -->
+  <section class="slide accent" id="s9">
+    <div class="slide-inner">
+      <div class="eyebrow">Next Actions</div>
+      <h2 class="title">まず、話しましょう。</h2>
+      <div class="divider"></div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>アクション</th>
+            <th>担当</th>
+            <th>タイミング</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>キックオフミーティング（60〜90分）</td>
+            <td>両社</td>
+            <td><span class="badge badge-pending">日程調整</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>パイロット候補拠点の選定</td>
+            <td>SANU様</td>
+            <td><span class="badge badge-pending">MTG内で</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>現状設備リスト・トラブル事例の共有</td>
+            <td>SANU様</td>
+            <td><span class="badge badge-pending">MTG内で</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>OEMメーカーへの初期打診・スケジュール試算</td>
+            <td>JapanSauna</td>
+            <td><span class="badge badge-pending">MTG後</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 10: CLOSING ===== -->
+  <section class="slide dark" id="s10">
+    <div class="slide-inner">
+      <div class="eyebrow">JapanSauna</div>
+      <h1 class="title">「SANU仕様のサウナ」で、<br>体験品質の標準を変える。</h1>
+      <div class="divider"></div>
+      <p class="lead">この提案はまだ仮説の段階です。SANUの現場実態をお聞きしてはじめて、具体的な要件と進め方が決まります。</p>
+      <div class="callout green" style="margin-top:32px;">
+        <strong>まずはカジュアルなご相談からでも大歓迎です。</strong><br>
+        JapanSauna｜Hal — ryuya.harukawa@sevenrich.jp
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ===== CONTROLS ===== -->
+<div id="progress"></div>
+<div id="nav">
+  <span id="slide-counter">1 / 10</span>
+  <button class="nav-btn" id="btn-prev">←</button>
+  <button class="nav-btn" id="btn-next">→</button>
+</div>
+<div id="hint">← → Space で操作</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    current = Math.max(0, Math.min(n, total - 1));
+    slides[current].classList.add('active');
+    document.getElementById('slide-counter').textContent = `${current + 1} / ${total}`;
+    document.getElementById('progress').style.width = `${((current + 1) / total) * 100}%`;
+  }
+
+  document.getElementById('btn-next').addEventListener('click', () => goTo(current + 1));
+  document.getElementById('btn-prev').addEventListener('click', () => goTo(current - 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+  });
+
+  goTo(0);
+</script>
+</body>
+</html>
