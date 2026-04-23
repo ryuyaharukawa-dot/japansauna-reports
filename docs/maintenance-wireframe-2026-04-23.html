@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>サウナの修理・メンテナンス | JapanSauna</title>
+  <style>
+    body {
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      color: #1a1a1a; background: #fff; line-height: 1.7; margin: 0;
+    }
+    html { font-size: 15px; }
+    #sticky-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.97); border-bottom: 1px solid #ccc;
+      padding: 12px 20px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    #sticky-nav .nav-label { font-size: 0.72rem; font-weight: 700; color: #777; letter-spacing: 0.05em; margin-right: 4px; white-space: nowrap; }
+    .pill { display: inline-block; padding: 5px 16px; font-size: 0.78rem; font-weight: 600; color: #555; text-decoration: none; border: 1px solid #ccc; border-radius: 999px; transition: all 0.2s ease; white-space: nowrap; }
+    .pill:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .pill.cta-pill { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    #main { max-width: 920px; margin: 0 auto; padding: 40px 48px 80px; }
+    .hero { border-bottom: 2px solid #1a1a1a; padding-bottom: 40px; margin-bottom: 48px; }
+    .hero .tag { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; color: #777; border: 1px solid #bbb; padding: 3px 12px; border-radius: 999px; margin-bottom: 16px; }
+    .hero h1 { font-size: 2.0rem; font-weight: 700; line-height: 1.35; margin-bottom: 16px; }
+    .hero .lead { font-size: 0.95rem; color: #444; margin-bottom: 12px; line-height: 1.9; }
+    .hero .badge { display: inline-block; background: #1a1a1a; color: #fff; font-size: 0.78rem; font-weight: 700; padding: 6px 16px; margin-bottom: 24px; letter-spacing: 0.05em; }
+    .hero .cta-wrap { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .btn-primary { display: inline-block; background: #1a1a1a; color: #fff; padding: 14px 36px; font-size: 0.92rem; font-weight: 700; text-decoration: none; border: none; cursor: pointer; letter-spacing: 0.03em; transition: background 0.2s; }
+    .btn-primary:hover { background: #333; }
+    .hero .cta-note { font-size: 0.78rem; color: #777; }
+    h2.section-title { font-size: 1.2rem; font-weight: 700; border-bottom: 1px solid #999; padding-bottom: 6px; margin-top: 56px; margin-bottom: 24px; }
+    h3.subsection-title { font-size: 1.0rem; font-weight: 700; margin-top: 32px; margin-bottom: 12px; padding-left: 10px; border-left: 3px solid #555; }
+    p { margin-bottom: 10px; font-size: 0.88rem; }
+    ul, ol { margin-bottom: 10px; padding-left: 22px; font-size: 0.88rem; }
+    ul li, ol li { margin-bottom: 3px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 0.82rem; }
+    table th, table td { border: 1px solid #bbb; padding: 7px 10px; text-align: left; vertical-align: top; }
+    table th { background: #f0f0f0; font-weight: 700; white-space: nowrap; }
+    table td { background: #fff; }
+    table tr:nth-child(even) td { background: #fafafa; }
+    .highlight-box { background: #f7f7f7; border: 1px solid #ddd; padding: 14px 18px; margin: 12px 0 20px; font-size: 0.85rem; }
+    .note-box { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #78350f; }
+    .info-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #1e3a5f; }
+    .confirm-box { background: #f0fdf4; border-left: 4px solid #22c55e; padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #14532d; }
+    .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 16px 0 24px; }
+    .card { border: 1px solid #ddd; padding: 20px 18px; }
+    .card .card-num { font-size: 0.68rem; font-weight: 700; color: #777; letter-spacing: 0.1em; margin-bottom: 10px; }
+    .card .card-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; }
+    .card .card-body { font-size: 0.82rem; color: #444; line-height: 1.7; }
+    .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 16px 0 24px; }
+    .case-card { border: 1px solid #ddd; }
+    .case-card .case-img { background: #f0f0f0; height: 180px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #999; border-bottom: 1px solid #ddd; }
+    .case-card .case-body { padding: 16px 18px; }
+    .case-card .case-tag { font-size: 0.72rem; font-weight: 700; color: #777; letter-spacing: 0.08em; margin-bottom: 8px; }
+    .case-card .case-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .case-card .case-desc { font-size: 0.82rem; color: #444; line-height: 1.7; }
+    .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 16px 0 24px; }
+    .price-card { border: 1px solid #ddd; padding: 20px 18px; }
+    .price-card .price-label { font-size: 0.72rem; font-weight: 700; color: #777; letter-spacing: 0.08em; margin-bottom: 8px; }
+    .price-card .price-name { font-size: 1.0rem; font-weight: 700; margin-bottom: 12px; }
+    .price-card .price-amount { font-size: 1.4rem; font-weight: 700; margin-bottom: 4px; }
+    .price-card .price-amount span { font-size: 0.78rem; font-weight: 400; color: #777; }
+    .price-card .price-note { font-size: 0.76rem; color: #555; margin-top: 12px; line-height: 1.6; border-top: 1px solid #eee; padding-top: 10px; }
+    .flow { display: flex; align-items: stretch; gap: 0; margin: 20px 0; flex-wrap: wrap; }
+    .flow-step { flex: 1; min-width: 120px; background: #f0f0f0; border: 1px solid #ccc; padding: 16px 14px; font-size: 0.82rem; text-align: center; }
+    .flow-step.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .flow-step .step-num { font-size: 0.68rem; font-weight: 700; color: #777; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .flow-step.active .step-num { color: #aaa; }
+    .flow-step .step-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 6px; }
+    .flow-step .step-desc { font-size: 0.76rem; color: #555; line-height: 1.5; }
+    .flow-step.active .step-desc { color: #ccc; }
+    .flow-arrow { display: flex; align-items: center; font-size: 1.2rem; color: #999; padding: 0 4px; }
+    .faq-item { border-bottom: 1px solid #eee; padding: 16px 0; }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q { font-size: 0.88rem; font-weight: 700; margin-bottom: 6px; display: flex; gap: 10px; }
+    .faq-q::before { content: "Q."; color: #777; flex-shrink: 0; }
+    .faq-a { font-size: 0.85rem; color: #444; padding-left: 28px; line-height: 1.7; }
+    .cta-section { background: #f7f7f7; border: 1px solid #ddd; padding: 40px; text-align: center; margin-top: 56px; }
+    .cta-section h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+    .cta-section p { font-size: 0.88rem; color: #555; margin-bottom: 24px; }
+    .cta-section .cta-sub { margin-top: 16px; font-size: 0.78rem; color: #777; }
+    .form-wrap { margin-top: 32px; }
+    .form-row { margin-bottom: 16px; }
+    .form-row label { display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 4px; color: #333; }
+    .form-row .required { font-size: 0.68rem; color: #e53e3e; margin-left: 4px; }
+    .form-row input[type="text"], .form-row input[type="email"], .form-row input[type="tel"], .form-row select, .form-row textarea { width: 100%; box-sizing: border-box; border: 1px solid #ccc; padding: 8px 12px; font-size: 0.85rem; font-family: inherit; background: #fff; color: #1a1a1a; border-radius: 0; }
+    .form-row textarea { min-height: 100px; resize: vertical; }
+    .form-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .report-footer { border-top: 1px solid #999; margin-top: 48px; padding-top: 16px; font-size: 0.78rem; color: #777; }
+    @media (max-width: 640px) {
+      #main { padding: 24px 20px 60px; }
+      .hero h1 { font-size: 1.5rem; }
+      h2.section-title { font-size: 1.05rem; }
+      .card-grid, .price-grid { grid-template-columns: 1fr; }
+      .case-grid { grid-template-columns: 1fr; }
+      .flow { flex-direction: column; }
+      .flow-arrow { display: none; }
+      .form-2col { grid-template-columns: 1fr; }
+      #sticky-nav { padding: 10px 12px; gap: 6px; }
+      .pill { padding: 4px 12px; font-size: 0.72rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="sticky-nav">
+  <span class="nav-label">MENU</span>
+  <a class="pill" href="#reason">選ばれる理由</a>
+  <a class="pill" href="#cases">対応事例</a>
+  <a class="pill" href="#price">料金</a>
+  <a class="pill" href="#flow">ご依頼の流れ</a>
+  <a class="pill" href="#faq">FAQ</a>
+  <a class="pill cta-pill" href="#form">修理・メンテを相談する</a>
+</nav>
+
+<div id="main">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="tag">修理・メンテナンスサービス</div>
+    <h1>サウナの不調、<br>プロに任せてください。</h1>
+    <p class="lead">
+      ヒーターが動かない、温度が上がらない、異音がする——<br>
+      症状を伝えるだけで診断します。全国対応。
+    </p>
+    <div class="badge">症状相談・見積もり無料</div>
+    <div class="cta-wrap">
+      <a href="#form" class="btn-primary">修理・メンテナンスを相談する</a>
+      <span class="cta-note">まずは症状をお聞かせください。</span>
+    </div>
+  </header>
+
+  <!-- 選ばれる理由 -->
+  <h2 class="section-title" id="reason">JapanSaunaのメンテナンスが選ばれる理由</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-num">REASON 01</div>
+      <div class="card-title">サウナ専門だから<br>症状を正確に診断</div>
+      <div class="card-body">家電修理業者では対応が難しいサウナ特有のトラブルも、専門知識で的確に診断・対応します。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">REASON 02</div>
+      <div class="card-title">メーカー問わず<br>対応</div>
+      <div class="card-body">HARVIA・HELO・KIPO・THEHOUSEなど主要メーカーに幅広く対応。購入先に関わらず相談できます。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">REASON 03</div>
+      <div class="card-title">定期メンテで<br>故障を未然に防ぐ</div>
+      <div class="card-body">年1回の定期点検プランあり。消耗品交換・清掃・動作確認をまとめて対応します。</div>
+    </div>
+  </div>
+
+  <!-- 対応事例 -->
+  <h2 class="section-title" id="cases">対応事例</h2>
+
+  <div class="case-grid">
+    <div class="case-card">
+      <div class="case-img">📷 写真（準備中）</div>
+      <div class="case-body">
+        <div class="case-tag">個人宅 / 神奈川県</div>
+        <div class="case-title">ヒーターの温度が上がらない</div>
+        <div class="case-desc">ストーン詰まりによる温度低下。サウナストーンの交換・清掃で完全復旧。症状相談から2日で対応完了。</div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-img">📷 写真（準備中）</div>
+      <div class="case-body">
+        <div class="case-tag">一棟貸しヴィラ / 長野県</div>
+        <div class="case-title">電源が入らなくなった</div>
+        <div class="case-desc">温度センサーの故障による安全装置作動が原因。部品交換で修理完了。施設の休業日に合わせて対応。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 料金 -->
+  <h2 class="section-title" id="price">料金の目安</h2>
+
+  <div class="price-grid">
+    <div class="price-card">
+      <div class="price-label">スポット修理</div>
+      <div class="price-name">故障・不具合の修理</div>
+      <div class="price-amount">¥15,000〜<span></span></div>
+      <div class="price-note">
+        ・症状診断・見積もり無料<br>
+        ・部品交換費用は別途<br>
+        ・修理完了後のテスト動作確認込み
+      </div>
+    </div>
+    <div class="price-card">
+      <div class="price-label">定期メンテナンス</div>
+      <div class="price-name">年1回の点検プラン</div>
+      <div class="price-amount">¥20,000〜<span></span></div>
+      <div class="price-note">
+        ・動作確認・清掃・消耗品チェック<br>
+        ・サウナストーン交換（費用別途）<br>
+        ・次回点検リマインド付き
+      </div>
+    </div>
+    <div class="price-card">
+      <div class="price-label">出張診断</div>
+      <div class="price-name">現地での詳細診断</div>
+      <div class="price-amount">¥10,000〜<span></span></div>
+      <div class="price-note">
+        ・遠隔診断で解決しない場合<br>
+        ・出張費込み（遠方は別途）<br>
+        ・その場で修理対応も可
+      </div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    診断・見積もりは無料です。作業内容確定後に正式見積もりをご提示します。
+  </div>
+
+  <!-- 流れ -->
+  <h2 class="section-title" id="flow">ご依頼の流れ</h2>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="step-num">STEP 1</div>
+      <div class="step-title">症状を相談</div>
+      <div class="step-desc">フォームまたは電話で症状をお伝えください</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step active">
+      <div class="step-num">STEP 2</div>
+      <div class="step-title">遠隔診断・<br>見積もり</div>
+      <div class="step-desc">写真・動画をもとに原因を診断。無料で見積もりをご提示</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="step-num">STEP 3</div>
+      <div class="step-title">修理・<br>メンテナンス</div>
+      <div class="step-desc">郵送または出張で対応。日程はご都合に合わせます</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="step-num">STEP 4</div>
+      <div class="step-title">動作確認・<br>完了</div>
+      <div class="step-desc">修理後の動作確認までJapanSaunaが対応</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>STEP 2（遠隔診断）はほとんどの場合、写真・動画だけで原因を特定できます。</strong>現地対応が必要な場合のみ出張費が発生します。
+  </div>
+
+  <!-- FAQ -->
+  <h2 class="section-title" id="faq">よくある質問</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">購入先がJapanSaunaでなくても対応できますか？</div>
+    <div class="faq-a">はい、対応可能です。他社・海外メーカー製品も受け付けています。まずは症状をご相談ください。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">遠方でも対応できますか？</div>
+    <div class="faq-a">全国対応しています。まず遠隔診断を行い、現地対応が必要な場合は出張費をご案内します。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">修理費用はいくらかかりますか？</div>
+    <div class="faq-a">症状・部品によって異なります。診断・見積もりは無料ですので、まずはご相談ください。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">定期メンテナンスの頻度はどのくらいが適切ですか？</div>
+    <div class="faq-a">年1回を推奨しています。使用頻度が高い施設は半年ごとの点検をお勧めします。</div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>まずは症状をお聞かせください。</h2>
+    <p>診断・見積もりは無料です。<br>どんな症状でもお気軽にご相談ください。</p>
+    <a href="#form" class="btn-primary">修理・メンテナンスを相談する</a>
+    <div class="cta-sub">お電話でのご相談も受け付けています。</div>
+  </div>
+
+  <!-- FORM -->
+  <h2 class="section-title" id="form">修理・メンテナンスの相談フォーム</h2>
+
+  <div class="form-wrap">
+    <div class="form-2col">
+      <div class="form-row">
+        <label>お名前<span class="required">必須</span></label>
+        <input type="text" placeholder="例：山田 太郎">
+      </div>
+      <div class="form-row">
+        <label>メールアドレス<span class="required">必須</span></label>
+        <input type="email" placeholder="例：example@email.com">
+      </div>
+    </div>
+    <div class="form-2col">
+      <div class="form-row">
+        <label>電話番号</label>
+        <input type="tel" placeholder="例：090-0000-0000">
+      </div>
+      <div class="form-row">
+        <label>ご相談の種類<span class="required">必須</span></label>
+        <select>
+          <option value="">選択してください</option>
+          <option>修理（故障・不具合）</option>
+          <option>定期メンテナンス</option>
+          <option>出張診断</option>
+          <option>その他・まず相談したい</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>サウナのメーカー・型番（わかる範囲で）</label>
+      <input type="text" placeholder="例：HARVIA KIP6">
+    </div>
+    <div class="form-row">
+      <label>症状・気になること</label>
+      <textarea placeholder="温度が上がらない、電源が入らない、異音がするなど、症状をできるだけ詳しくご記入ください。"></textarea>
+    </div>
+    <div class="form-row" style="text-align:center; margin-top:24px;">
+      <button class="btn-primary" style="padding: 16px 60px;">相談する</button>
+    </div>
+  </div>
+
+  <footer class="report-footer">
+    <p>JapanSauna — 修理・メンテナンスサービス | japansauna.jp/maintenance/ | 作成: 2026-04-23（テンプレートテスト）</p>
+  </footer>
+
+</div>
+</body>
+</html>
