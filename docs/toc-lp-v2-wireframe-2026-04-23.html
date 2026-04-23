@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>家を建てるなら、サウナも一緒に。| JapanSauna</title>
+  <style>
+    body {
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      color: #1a1a1a;
+      background: #fff;
+      line-height: 1.7;
+      margin: 0;
+    }
+    html { font-size: 15px; }
+
+    #sticky-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid #ccc;
+      padding: 12px 20px;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    #sticky-nav .nav-label {
+      font-size: 0.72rem; font-weight: 700; color: #777;
+      letter-spacing: 0.05em; margin-right: 4px; white-space: nowrap;
+    }
+    .pill {
+      display: inline-block; padding: 5px 16px;
+      font-size: 0.78rem; font-weight: 600; color: #555;
+      text-decoration: none; border: 1px solid #ccc;
+      border-radius: 999px; transition: all 0.2s ease; white-space: nowrap;
+    }
+    .pill:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .pill.cta-pill { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+
+    #main { max-width: 920px; margin: 0 auto; padding: 40px 48px 80px; }
+
+    /* HERO */
+    .hero {
+      border-bottom: 2px solid #1a1a1a;
+      padding-bottom: 40px;
+      margin-bottom: 48px;
+    }
+    .hero .tag {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      color: #777; border: 1px solid #bbb; padding: 3px 12px;
+      border-radius: 999px; margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: 2.1rem; font-weight: 700; line-height: 1.35;
+      margin-bottom: 16px;
+    }
+    .hero .lead {
+      font-size: 0.95rem; color: #444; margin-bottom: 12px; line-height: 1.9;
+    }
+    .hero .loan-badge {
+      display: inline-block;
+      background: #1a1a1a; color: #fff;
+      font-size: 0.78rem; font-weight: 700;
+      padding: 6px 16px; margin-bottom: 24px;
+      letter-spacing: 0.05em;
+    }
+    .hero .cta-wrap {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: #1a1a1a; color: #fff;
+      padding: 14px 36px; font-size: 0.92rem; font-weight: 700;
+      text-decoration: none; border: none; cursor: pointer;
+      letter-spacing: 0.03em; transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #333; }
+    .hero .cta-note { font-size: 0.78rem; color: #777; }
+
+    /* Section titles */
+    h2.section-title {
+      font-size: 1.2rem; font-weight: 700;
+      border-bottom: 1px solid #999; padding-bottom: 6px;
+      margin-top: 56px; margin-bottom: 24px;
+    }
+    h3.subsection-title {
+      font-size: 1.0rem; font-weight: 700;
+      margin-top: 32px; margin-bottom: 12px;
+      padding-left: 10px; border-left: 3px solid #555;
+    }
+
+    p { margin-bottom: 10px; font-size: 0.88rem; }
+    ul, ol { margin-bottom: 10px; padding-left: 22px; font-size: 0.88rem; }
+    ul li, ol li { margin-bottom: 3px; }
+
+    /* Table */
+    table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 0.82rem; }
+    table th, table td { border: 1px solid #bbb; padding: 7px 10px; text-align: left; vertical-align: top; }
+    table th { background: #f0f0f0; font-weight: 700; white-space: nowrap; }
+    table td { background: #fff; }
+    table tr:nth-child(even) td { background: #fafafa; }
+
+    /* Boxes */
+    .highlight-box {
+      background: #f7f7f7; border: 1px solid #ddd;
+      padding: 14px 18px; margin: 12px 0 20px; font-size: 0.85rem;
+    }
+    .note-box {
+      background: #fffbeb; border-left: 4px solid #f59e0b;
+      padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #78350f;
+    }
+    .info-box {
+      background: #eff6ff; border-left: 4px solid #3b82f6;
+      padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #1e3a5f;
+    }
+    .confirm-box {
+      background: #f0fdf4; border-left: 4px solid #22c55e;
+      padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #14532d;
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-block; padding: 2px 10px;
+      font-size: 0.72rem; font-weight: 700;
+      border-radius: 999px; letter-spacing: 0.03em;
+    }
+    .badge-ok   { background: #d4edda; color: #155724; }
+    .badge-info { background: #d1ecf1; color: #0c5460; }
+    .badge-warn { background: #fff3cd; color: #856404; }
+
+    /* Merit cards（新築時導入メリット） */
+    .merit-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      margin: 16px 0 24px;
+    }
+    .merit-card { border: 1px solid #ddd; padding: 20px 18px; }
+    .merit-card .merit-num {
+      font-size: 0.68rem; font-weight: 700; color: #777;
+      letter-spacing: 0.1em; margin-bottom: 10px;
+    }
+    .merit-card .merit-title {
+      font-size: 0.95rem; font-weight: 700; margin-bottom: 10px;
+    }
+    .merit-card .merit-body {
+      font-size: 0.82rem; color: #444; line-height: 1.7;
+    }
+
+    /* Reason cards */
+    .reason-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      margin: 16px 0 24px;
+    }
+    .reason-card { border: 1px solid #ddd; padding: 20px 18px; }
+    .reason-card .reason-num {
+      font-size: 0.68rem; font-weight: 700; color: #777;
+      letter-spacing: 0.1em; margin-bottom: 10px;
+    }
+    .reason-card .reason-title {
+      font-size: 0.95rem; font-weight: 700; margin-bottom: 10px;
+    }
+    .reason-card .reason-body {
+      font-size: 0.82rem; color: #444; line-height: 1.7;
+    }
+
+    /* Case cards */
+    .case-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+      margin: 16px 0 24px;
+    }
+    .case-card { border: 1px solid #ddd; }
+    .case-card .case-img {
+      background: #f0f0f0; height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; color: #999; border-bottom: 1px solid #ddd;
+    }
+    .case-card .case-body { padding: 16px 18px; }
+    .case-card .case-tag {
+      font-size: 0.72rem; font-weight: 700; color: #777;
+      letter-spacing: 0.08em; margin-bottom: 8px;
+    }
+    .case-card .case-title {
+      font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;
+    }
+    .case-card .case-desc {
+      font-size: 0.82rem; color: #444; line-height: 1.7;
+    }
+
+    /* Price */
+    .price-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      margin: 16px 0 24px;
+    }
+    .price-card { border: 1px solid #ddd; padding: 20px 18px; }
+    .price-card .price-label {
+      font-size: 0.72rem; font-weight: 700; color: #777;
+      letter-spacing: 0.08em; margin-bottom: 8px;
+    }
+    .price-card .price-name {
+      font-size: 1.0rem; font-weight: 700; margin-bottom: 12px;
+    }
+    .price-card .price-amount {
+      font-size: 1.4rem; font-weight: 700; margin-bottom: 4px;
+    }
+    .price-card .price-amount span {
+      font-size: 0.78rem; font-weight: 400; color: #777;
+    }
+    .price-card .price-monthly {
+      font-size: 0.82rem; color: #555; margin-bottom: 12px;
+    }
+    .price-card .price-note {
+      font-size: 0.76rem; color: #555; margin-top: 12px; line-height: 1.6;
+      border-top: 1px solid #eee; padding-top: 10px;
+    }
+
+    /* Flow */
+    .flow {
+      display: flex; align-items: stretch; gap: 0;
+      margin: 20px 0; flex-wrap: wrap;
+    }
+    .flow-step {
+      flex: 1; min-width: 120px;
+      background: #f0f0f0; border: 1px solid #ccc;
+      padding: 16px 14px; font-size: 0.82rem; text-align: center;
+    }
+    .flow-step.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .flow-step .step-num {
+      font-size: 0.68rem; font-weight: 700; color: #777;
+      letter-spacing: 0.08em; margin-bottom: 6px;
+    }
+    .flow-step.active .step-num { color: #aaa; }
+    .flow-step .step-title {
+      font-weight: 700; font-size: 0.88rem; margin-bottom: 6px;
+    }
+    .flow-step .step-desc {
+      font-size: 0.76rem; color: #555; line-height: 1.5;
+    }
+    .flow-step.active .step-desc { color: #ccc; }
+    .flow-arrow {
+      display: flex; align-items: center;
+      font-size: 1.2rem; color: #999; padding: 0 4px;
+    }
+
+    /* Comparison table */
+    .compare-wrap { overflow-x: auto; margin: 12px 0 20px; }
+    .compare-wrap table th:first-child { min-width: 140px; }
+    .compare-wrap table td:not(:first-child),
+    .compare-wrap table th:not(:first-child) { text-align: center; }
+    .compare-wrap .col-us { background: #f0fdf4 !important; }
+    .compare-wrap th.col-us { background: #d4edda !important; }
+
+    /* FAQ */
+    .faq-item { border-bottom: 1px solid #eee; padding: 16px 0; }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      font-size: 0.88rem; font-weight: 700; margin-bottom: 6px;
+      display: flex; gap: 10px;
+    }
+    .faq-q::before { content: "Q."; color: #777; flex-shrink: 0; }
+    .faq-a { font-size: 0.85rem; color: #444; padding-left: 28px; line-height: 1.7; }
+
+    /* CTA section */
+    .cta-section {
+      background: #f7f7f7; border: 1px solid #ddd;
+      padding: 40px; text-align: center; margin-top: 56px;
+    }
+    .cta-section h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+    .cta-section p { font-size: 0.88rem; color: #555; margin-bottom: 24px; }
+    .cta-section .cta-sub { margin-top: 16px; font-size: 0.78rem; color: #777; }
+
+    /* Form */
+    .form-wrap { margin-top: 32px; }
+    .form-row { margin-bottom: 16px; }
+    .form-row label {
+      display: block; font-size: 0.82rem; font-weight: 700;
+      margin-bottom: 4px; color: #333;
+    }
+    .form-row .required { font-size: 0.68rem; color: #e53e3e; margin-left: 4px; }
+    .form-row input[type="text"],
+    .form-row input[type="email"],
+    .form-row input[type="tel"],
+    .form-row select,
+    .form-row textarea {
+      width: 100%; box-sizing: border-box;
+      border: 1px solid #ccc; padding: 8px 12px;
+      font-size: 0.85rem; font-family: inherit;
+      background: #fff; color: #1a1a1a; border-radius: 0;
+    }
+    .form-row textarea { min-height: 100px; resize: vertical; }
+    .form-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Footer */
+    .report-footer {
+      border-top: 1px solid #999; margin-top: 48px; padding-top: 16px;
+      font-size: 0.78rem; color: #777;
+    }
+
+    @media (max-width: 640px) {
+      #main { padding: 24px 20px 60px; }
+      .hero h1 { font-size: 1.5rem; }
+      h2.section-title { font-size: 1.05rem; }
+      .merit-grid, .reason-grid, .price-grid { grid-template-columns: 1fr; }
+      .case-grid { grid-template-columns: 1fr; }
+      .flow { flex-direction: column; }
+      .flow-arrow { display: none; }
+      .form-2col { grid-template-columns: 1fr; }
+      #sticky-nav { padding: 10px 12px; gap: 6px; }
+      .pill { padding: 4px 12px; font-size: 0.72rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="sticky-nav">
+  <span class="nav-label">MENU</span>
+  <a class="pill" href="#merit">新築時のメリット</a>
+  <a class="pill" href="#reason">選ばれる理由</a>
+  <a class="pill" href="#cases">導入事例</a>
+  <a class="pill" href="#price">価格・ラインナップ</a>
+  <a class="pill" href="#flow">導入の流れ</a>
+  <a class="pill" href="#faq">FAQ</a>
+  <a class="pill cta-pill" href="#form">資料請求する</a>
+</nav>
+
+<div id="main">
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="tag">新築戸建 サウナ導入</div>
+    <h1>家を建てるなら、<br>サウナも一緒に。</h1>
+    <p class="lead">
+      新築のタイミングが、最もスムーズにサウナを導入できる機会です。<br>
+      後付けより工事費が抑えられ、住宅ローンにも組み込めます。
+    </p>
+    <div class="loan-badge">住宅ローンに組み込めます</div>
+    <div class="cta-wrap">
+      <a href="#form" class="btn-primary">無料資料を請求する</a>
+      <span class="cta-note">価格・施工事例・仕様書を一冊にまとめた資料をお送りします。</span>
+    </div>
+  </header>
+
+  <!-- ===== 新築時導入メリット ===== -->
+  <h2 class="section-title" id="merit">新築のタイミングに導入する3つのメリット</h2>
+
+  <div class="merit-grid">
+    <div class="merit-card">
+      <div class="merit-num">MERIT 01</div>
+      <div class="merit-title">住宅ローンに<br>組み込める</div>
+      <div class="merit-body">
+        新築時であれば、サウナの費用を住宅ローンに含めることができます。
+        月々の支払いに組み込めるため、まとまった初期費用が不要です。
+      </div>
+    </div>
+    <div class="merit-card">
+      <div class="merit-num">MERIT 02</div>
+      <div class="merit-title">後付けより<br>工事費が安い</div>
+      <div class="merit-body">
+        新築工事と同時に進めることで、電気・配管工事を効率よく行えます。
+        完成後に後付けするより、工事費を大幅に抑えることができます。
+      </div>
+    </div>
+    <div class="merit-card">
+      <div class="merit-num">MERIT 03</div>
+      <div class="merit-title">間取りから<br>設計できる</div>
+      <div class="merit-body">
+        建築段階からサウナスペースを確保することで、理想のレイアウトを実現。
+        動線・換気・電気容量まで最初から最適な設計が可能です。
+      </div>
+    </div>
+  </div>
+
+  <div class="confirm-box">
+    <strong>工務店・ハウスメーカーとの連携も対応しています。</strong>
+    担当工務店へのご説明・仕様書の提供も行っていますので、建築側との調整はJapanSaunaにお任せください。
+  </div>
+
+  <!-- ===== 比較 ===== -->
+  <h2 class="section-title" id="compare">新築時 vs 後付け、何が違う？</h2>
+
+  <div class="compare-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th class="col-us">新築時に導入</th>
+          <th>完成後に後付け</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>住宅ローン</td>
+          <td class="col-us"><span class="badge badge-ok">組み込める</span></td>
+          <td><span class="badge badge-warn">原則対象外</span></td>
+        </tr>
+        <tr>
+          <td>工事費</td>
+          <td class="col-us"><span class="badge badge-ok">同時施工で安い</span></td>
+          <td><span class="badge badge-warn">別途工事で割高</span></td>
+        </tr>
+        <tr>
+          <td>間取り・設計</td>
+          <td class="col-us"><span class="badge badge-ok">最初から設計可</span></td>
+          <td><span class="badge badge-warn">既存に合わせる制約あり</span></td>
+        </tr>
+        <tr>
+          <td>電気・換気工事</td>
+          <td class="col-us"><span class="badge badge-ok">建築工事と一括</span></td>
+          <td><span class="badge badge-warn">壁・床の開口が必要なことも</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== 選ばれる理由 ===== -->
+  <h2 class="section-title" id="reason">JapanSaunaが選ばれる理由</h2>
+
+  <div class="reason-grid">
+    <div class="reason-card">
+      <div class="reason-num">REASON 01</div>
+      <div class="reason-title">工務店との<br>連携実績あり</div>
+      <div class="reason-body">
+        仕様書・施工図面の提供から工務店への説明まで対応。
+        建築側とスムーズに連携し、施主の負担を減らします。
+      </div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">REASON 02</div>
+      <div class="reason-title">国内メーカー品で<br>品質・安全性が高い</div>
+      <div class="reason-body">
+        PSE認証取得済みの安全な製品のみを取り扱い。
+        国産ヒノキ材を使ったキャビンは耐久性・香りともに国内トップクラスです。
+      </div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">REASON 03</div>
+      <div class="reason-title">導入後の<br>メンテナンスも安心</div>
+      <div class="reason-body">
+        設置後のメンテナンス・消耗品交換・故障時の相談まで対応。
+        「買ったら終わり」ではなく、長く使い続けられるサポート体制です。
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 導入事例 ===== -->
+  <h2 class="section-title" id="cases">導入事例</h2>
+
+  <div class="case-grid">
+    <div class="case-card">
+      <div class="case-img">📷 施工写真（準備中）</div>
+      <div class="case-body">
+        <div class="case-tag">新築戸建 / 神奈川県 / 30代男性</div>
+        <div class="case-title">LDKに隣接した<br>室内サウナ2人用</div>
+        <div class="case-desc">
+          新築設計段階からサウナ室を確保。
+          住宅ローンに組み込み、月々の負担を抑えて導入。
+          「毎日のルーティンになった」とご満足いただいています。
+        </div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-img">📷 施工写真（準備中）</div>
+      <div class="case-body">
+        <div class="case-tag">新築戸建 / 埼玉県 / 30代男性</div>
+        <div class="case-title">庭に設置した<br>バレルサウナ4人用</div>
+        <div class="case-desc">
+          外構工事と同時にバレルサウナを設置。
+          家族で使える4人用を選び、週末の自宅時間が大幅に充実。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 価格・ラインナップ ===== -->
+  <h2 class="section-title" id="price">価格・ラインナップ</h2>
+
+  <div class="price-grid">
+    <div class="price-card">
+      <div class="price-label">BASIC</div>
+      <div class="price-name">室内サウナ<br>1〜2人用</div>
+      <div class="price-amount">¥86万〜<span>（設置工事込み）</span></div>
+      <div class="price-monthly">住宅ローン組込時：月々 約2,400円〜</div>
+      <div class="price-note">
+        ・最小1畳から設置可能<br>
+        ・国産ヒノキ材使用<br>
+        ・電気ストーブ標準装備
+      </div>
+    </div>
+    <div class="price-card">
+      <div class="price-label">STANDARD</div>
+      <div class="price-name">室内サウナ<br>2〜4人用</div>
+      <div class="price-amount">¥120万〜<span>（設置工事込み）</span></div>
+      <div class="price-monthly">住宅ローン組込時：月々 約3,300円〜</div>
+      <div class="price-note">
+        ・家族でも使える広さ<br>
+        ・ロウリュ対応ストーブ選択可<br>
+        ・テレビ・照明カスタマイズ可
+      </div>
+    </div>
+    <div class="price-card">
+      <div class="price-label">OUTDOOR</div>
+      <div class="price-name">屋外バレルサウナ<br>2〜6人用</div>
+      <div class="price-amount">¥100万〜<span>（設置工事込み）</span></div>
+      <div class="price-monthly">住宅ローン組込時：月々 約2,800円〜</div>
+      <div class="price-note">
+        ・庭・テラスへの設置<br>
+        ・薪・電気どちらも選択可<br>
+        ・外構工事と同時施工で割安
+      </div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    月額の目安は35年ローン・金利1%で試算。実際の月額は金利・借入額・期間により異なります。詳細はお気軽にご相談ください。
+  </div>
+
+  <!-- ===== 導入の流れ ===== -->
+  <h2 class="section-title" id="flow">導入の流れ</h2>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="step-num">STEP 1</div>
+      <div class="step-title">資料請求</div>
+      <div class="step-desc">価格・仕様・事例を確認</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="step-num">STEP 2</div>
+      <div class="step-title">ご相談・<br>機種選定</div>
+      <div class="step-desc">間取り・予算に合わせた機種をご提案</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step active">
+      <div class="step-num">STEP 3</div>
+      <div class="step-title">工務店と<br>仕様確認</div>
+      <div class="step-desc">仕様書・施工図を工務店に提供。連携をサポート</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="step-num">STEP 4</div>
+      <div class="step-title">設置・<br>引き渡し</div>
+      <div class="step-desc">新築工事と同時に設置。動作確認・使い方説明まで対応</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="step-num">STEP 5</div>
+      <div class="step-title">導入後<br>サポート</div>
+      <div class="step-desc">メンテナンス・消耗品交換など継続対応</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    STEP 3（工務店との仕様確認）はJapanSaunaがサポートします。施主様が工務店に個別で調整する必要はありません。
+  </div>
+
+  <!-- ===== FAQ ===== -->
+  <h2 class="section-title" id="faq">よくある質問</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">本当に住宅ローンに組み込めますか？</div>
+    <div class="faq-a">はい。新築工事の一部として設備費用に含める形であれば、住宅ローンの対象となるケースがほとんどです。担当の工務店・金融機関にご確認ください。JapanSaunaから必要な書類をご提供することも可能です。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">どのタイミングで相談すればいいですか？</div>
+    <div class="faq-a">間取りの検討段階が理想です。設計が確定する前にご相談いただくと、サウナスペースを最初から確保できます。上棟後でもご相談はお受けしています。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">工務店に伝えると嫌がられませんか？</div>
+    <div class="faq-a">多くの工務店はサウナ設備の取り扱いに慣れています。JapanSaunaから仕様書・施工図・設置要件を工務店にご提供するので、施主様が個別に調整していただく必要はありません。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">維持費はどのくらいかかりますか？</div>
+    <div class="faq-a">電気代は1回（90分使用）あたり約50〜100円が目安です。月20回使用しても1,000〜2,000円程度。消耗品はサウナストーンの定期交換（数年に1回）が主な費用です。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">狭い家でも設置できますか？</div>
+    <div class="faq-a">最小1畳（約1.6㎡）から設置できるモデルがあります。脱衣スペースと合わせて2畳程度確保できれば、実用的なサウナ環境を作ることができます。</div>
+  </div>
+
+  <!-- ===== CTA ===== -->
+  <div class="cta-section">
+    <h2>まずは資料をご覧ください。</h2>
+    <p>価格・施工事例・仕様書・ローン試算表を一冊にまとめた資料を無料でお送りします。<br>検討段階でも、間取りが決まっていなくてもOKです。</p>
+    <a href="#form" class="btn-primary">無料資料を請求する</a>
+    <div class="cta-sub">お電話・メールでのご相談も受け付けています。</div>
+  </div>
+
+  <!-- ===== FORM ===== -->
+  <h2 class="section-title" id="form">資料請求フォーム</h2>
+
+  <div class="form-wrap">
+    <div class="form-2col">
+      <div class="form-row">
+        <label>お名前<span class="required">必須</span></label>
+        <input type="text" placeholder="例：山田 太郎">
+      </div>
+      <div class="form-row">
+        <label>メールアドレス<span class="required">必須</span></label>
+        <input type="email" placeholder="例：example@email.com">
+      </div>
+    </div>
+    <div class="form-2col">
+      <div class="form-row">
+        <label>電話番号</label>
+        <input type="tel" placeholder="例：090-0000-0000">
+      </div>
+      <div class="form-row">
+        <label>新築の進捗状況<span class="required">必須</span></label>
+        <select>
+          <option value="">選択してください</option>
+          <option>土地を探している段階</option>
+          <option>工務店・HMを検討中</option>
+          <option>間取りを検討中</option>
+          <option>設計確定・着工前</option>
+          <option>建築中</option>
+          <option>その他（後付け含む）</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-2col">
+      <div class="form-row">
+        <label>気になるサウナの設置場所</label>
+        <select>
+          <option value="">選択してください</option>
+          <option>室内（脱衣室・洗面隣接）</option>
+          <option>室内（独立した部屋）</option>
+          <option>屋外（庭・テラス）</option>
+          <option>まだ決まっていない</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>ご予算の目安</label>
+        <select>
+          <option value="">選択してください</option>
+          <option>〜100万円</option>
+          <option>100〜150万円</option>
+          <option>150万円以上</option>
+          <option>未定・まず資料を見たい</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>ご質問・気になること</label>
+      <textarea placeholder="間取りの状況、気になる機種、ローンについてなど、何でもご記入ください。"></textarea>
+    </div>
+    <div class="form-row" style="text-align:center; margin-top:24px;">
+      <button class="btn-primary" style="padding: 16px 60px;">資料を請求する</button>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="report-footer">
+    <p>JapanSauna — 新築戸建サウナ導入サービス | japansauna.jp/lp/ | 作成: 2026-04-23（改善案 v2）</p>
+  </footer>
+
+</div>
+</body>
+</html>
