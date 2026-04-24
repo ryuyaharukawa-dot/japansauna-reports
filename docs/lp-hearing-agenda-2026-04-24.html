@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LPヒアリング アジェンダ | 2026-04-24</title>
+  <style>
+    body {
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      color: #1a1a1a;
+      background: #fff;
+      line-height: 1.7;
+      margin: 0;
+    }
+    html { font-size: 15px; }
+
+    #sticky-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid #ccc;
+      padding: 12px 20px;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    #sticky-nav .nav-label {
+      font-size: 0.72rem; font-weight: 700; color: #777;
+      letter-spacing: 0.05em; margin-right: 4px; white-space: nowrap;
+    }
+    .pill {
+      display: inline-block; padding: 5px 16px;
+      font-size: 0.78rem; font-weight: 600; color: #555;
+      text-decoration: none; border: 1px solid #ccc;
+      border-radius: 999px; transition: all 0.2s ease; white-space: nowrap;
+    }
+    .pill:hover, .pill.active {
+      background: #1a1a1a; color: #fff; border-color: #1a1a1a;
+    }
+
+    #main { max-width: 920px; margin: 0 auto; padding: 40px 48px 80px; }
+
+    /* HERO */
+    .hero {
+      border-bottom: 2px solid #1a1a1a;
+      padding-bottom: 32px;
+      margin-bottom: 40px;
+    }
+    .hero .tag {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      color: #777; border: 1px solid #bbb; padding: 3px 12px;
+      border-radius: 999px; margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: 2rem; font-weight: 700; line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .hero .lead {
+      font-size: 0.95rem; color: #444; margin-bottom: 24px; line-height: 1.9;
+    }
+    .meta-row {
+      display: flex; gap: 24px; flex-wrap: wrap; font-size: 0.85rem; color: #555;
+    }
+    .meta-row span { display: flex; align-items: center; gap: 6px; }
+
+    /* Section titles */
+    h2.section-title {
+      font-size: 1.2rem; font-weight: 700;
+      border-bottom: 1px solid #999; padding-bottom: 6px;
+      margin-top: 56px; margin-bottom: 24px;
+    }
+    h3.subsection-title {
+      font-size: 1.0rem; font-weight: 700;
+      margin-top: 32px; margin-bottom: 12px;
+      padding-left: 10px; border-left: 3px solid #555;
+    }
+
+    p { margin-bottom: 10px; font-size: 0.88rem; }
+    ul, ol { margin-bottom: 10px; padding-left: 22px; font-size: 0.88rem; }
+    ul li, ol li { margin-bottom: 3px; }
+
+    /* Table */
+    table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 0.82rem; }
+    table th, table td { border: 1px solid #bbb; padding: 7px 10px; text-align: left; vertical-align: top; }
+    table th { background: #f0f0f0; font-weight: 700; white-space: nowrap; }
+    table td { background: #fff; }
+    table tr:nth-child(even) td { background: #fafafa; }
+
+    /* Boxes */
+    .highlight-box {
+      background: #f7f7f7; border: 1px solid #ddd;
+      padding: 14px 18px; margin: 12px 0 20px; font-size: 0.85rem;
+    }
+    .note-box {
+      background: #fffbeb; border-left: 4px solid #f59e0b;
+      padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #78350f;
+    }
+    .info-box {
+      background: #eff6ff; border-left: 4px solid #3b82f6;
+      padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #1e3a5f;
+    }
+    .confirm-box {
+      background: #f0fdf4; border-left: 4px solid #22c55e;
+      padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #14532d;
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-block; padding: 2px 10px;
+      font-size: 0.72rem; font-weight: 700;
+      border-radius: 999px; letter-spacing: 0.03em;
+    }
+    .badge-ok  { background: #d4edda; color: #155724; }
+    .badge-ng  { background: #f8d7da; color: #721c24; }
+    .badge-info { background: #d1ecf1; color: #0c5460; }
+    .badge-warn { background: #fff3cd; color: #856404; }
+
+    /* Flow（タイムライン） */
+    .agenda-flow { margin: 20px 0; }
+    .agenda-item {
+      display: flex; gap: 20px; padding: 20px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .agenda-item:last-child { border-bottom: none; }
+    .agenda-time {
+      flex-shrink: 0; width: 90px;
+      font-size: 0.82rem; font-weight: 700; color: #777;
+      padding-top: 2px;
+    }
+    .agenda-duration {
+      flex-shrink: 0; width: 36px;
+      font-size: 0.72rem; color: #aaa; padding-top: 4px;
+      text-align: right;
+    }
+    .agenda-body { flex: 1; }
+    .agenda-title {
+      font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;
+    }
+    .agenda-detail {
+      font-size: 0.82rem; color: #444; line-height: 1.7;
+    }
+    .agenda-detail ul { margin: 6px 0; }
+
+    /* WF Links */
+    .wf-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+      margin: 12px 0 20px;
+    }
+    .wf-card {
+      border: 1px solid #ddd; padding: 16px;
+    }
+    .wf-card .wf-label {
+      font-size: 0.72rem; font-weight: 700; color: #777;
+      letter-spacing: 0.08em; margin-bottom: 6px;
+    }
+    .wf-card .wf-title {
+      font-size: 0.88rem; font-weight: 700; margin-bottom: 6px;
+    }
+    .wf-card .wf-points {
+      font-size: 0.78rem; color: #555; line-height: 1.6;
+    }
+    .wf-card a {
+      display: inline-block; margin-top: 10px;
+      font-size: 0.75rem; color: #3b82f6; text-decoration: underline;
+    }
+
+    /* Action table */
+    .action-table { margin: 16px 0; }
+
+    /* Footer */
+    .report-footer {
+      border-top: 1px solid #999; margin-top: 48px; padding-top: 16px;
+      font-size: 0.78rem; color: #777;
+    }
+
+    @media (max-width: 640px) {
+      #main { padding: 24px 20px 60px; }
+      .hero h1 { font-size: 1.4rem; }
+      h2.section-title { font-size: 1.05rem; }
+      .wf-grid { grid-template-columns: 1fr; }
+      .agenda-item { flex-wrap: wrap; gap: 8px; }
+      .agenda-time { width: auto; }
+      #sticky-nav { padding: 10px 12px; gap: 6px; }
+      .pill { padding: 4px 12px; font-size: 0.72rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="sticky-nav">
+  <span class="nav-label">AGENDA</span>
+  <a class="pill" href="#goal">ゴール</a>
+  <a class="pill" href="#schedule">タイムライン</a>
+  <a class="pill" href="#wireframes">WF一覧</a>
+  <a class="pill" href="#scope">スコープ確認</a>
+  <a class="pill" href="#action">次のアクション</a>
+</nav>
+
+<div id="main">
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="tag">MTG AGENDA</div>
+    <h1>LPヒアリング</h1>
+    <p class="lead">
+      toB・toC LP制作、および中古買取・修理メンテナンスページの追加。<br>
+      ワイヤーフレームをもとに、制作要件と進め方を合意する。
+    </p>
+    <div class="meta-row">
+      <span>📅 2026-04-24（金）12:00〜13:00</span>
+      <span>👤 Hal / 木村あゆみ / 板本将宗</span>
+      <span>🔗 Google Meet</span>
+    </div>
+  </header>
+
+  <!-- ===== ゴール ===== -->
+  <h2 class="section-title" id="goal">本日のゴール</h2>
+
+  <div class="confirm-box">
+    <strong>このMTGで合意したいこと：</strong>
+    ワイヤーフレームの方向性OK → 制作スコープ・優先順位・スケジュールを決める
+  </div>
+
+  <ul>
+    <li>各ページのワイヤーフレームをレビューし、方向性に合意する</li>
+    <li>制作範囲（デザイン / コーディング / コピー）を明確にする</li>
+    <li>ページごとの優先順位と着手順を決める</li>
+    <li>素材・写真の用意は誰がいつまでにやるかを決める</li>
+    <li>次のアクション・担当・期限を決めて終わる</li>
+  </ul>
+
+  <!-- ===== タイムライン ===== -->
+  <h2 class="section-title" id="schedule">タイムライン</h2>
+
+  <div class="agenda-flow">
+
+    <div class="agenda-item">
+      <div class="agenda-time">12:00</div>
+      <div class="agenda-duration">5分</div>
+      <div class="agenda-body">
+        <div class="agenda-title">① オープニング・ゴール確認</div>
+        <div class="agenda-detail">
+          <ul>
+            <li>本日のゴールと進め方を共有</li>
+            <li>参加者の役割確認（制作担当範囲など）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-time">12:05</div>
+      <div class="agenda-duration">20分</div>
+      <div class="agenda-body">
+        <div class="agenda-title">② ワイヤーフレーム ウォークスルー</div>
+        <div class="agenda-detail">
+          4ページを順番にHalが説明。意図・ポイントを共有しながらフィードバックをもらう。
+          <ul>
+            <li>toB LP（ホテル・ヴィラ向け）</li>
+            <li>toC LP（新築戸建て向け）</li>
+            <li>中古サウナ買取・販売ページ</li>
+            <li>修理メンテナンスページ</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-time">12:25</div>
+      <div class="agenda-duration">20分</div>
+      <div class="agenda-body">
+        <div class="agenda-title">③ 制作スコープ・スケジュール確認</div>
+        <div class="agenda-detail">
+          <ul>
+            <li>制作する範囲の合意（デザイン / コーディング / コピーライティング）</li>
+            <li>ページごとの優先順位と着手順</li>
+            <li>納期・マイルストーンの設定</li>
+            <li>写真・素材の用意：誰がいつまでに</li>
+            <li>費用感・工数感の確認</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-time">12:45</div>
+      <div class="agenda-duration">10分</div>
+      <div class="agenda-body">
+        <div class="agenda-title">④ 次のアクション整理</div>
+        <div class="agenda-detail">
+          決まった宿題・担当・期限を全員で確認して終わる。
+        </div>
+      </div>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-time">12:55</div>
+      <div class="agenda-duration">5分</div>
+      <div class="agenda-body">
+        <div class="agenda-title">⑤ バッファ・Q&A</div>
+        <div class="agenda-detail">
+          積み残しの確認・次回MTGの要否
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== ワイヤーフレーム一覧 ===== -->
+  <h2 class="section-title" id="wireframes">ワイヤーフレーム一覧</h2>
+
+  <p>事前に目を通しておいてください。</p>
+
+  <div class="wf-grid">
+    <div class="wf-card">
+      <div class="wf-label">PAGE 01 — BtoB</div>
+      <div class="wf-title">toB LP（ホテル・一棟貸しヴィラ向け）</div>
+      <div class="wf-points">
+        確認ポイント：ターゲット訴求・事例・CTAの方向性
+      </div>
+      <a href="https://ryuyaharukawa-dot.github.io/japansauna-reports/hotel-lp-wireframe-2026-04-23.html" target="_blank">ワイヤーフレームを開く →</a>
+    </div>
+    <div class="wf-card">
+      <div class="wf-label">PAGE 02 — BtoC</div>
+      <div class="wf-title">toC LP（新築戸建て・30代男性向け）</div>
+      <div class="wf-points">
+        確認ポイント：ストーリー構成・ファーストビュー・差別化訴求
+      </div>
+      <a href="https://ryuyaharukawa-dot.github.io/japansauna-reports/toc-lp-v2-wireframe-2026-04-23.html" target="_blank">ワイヤーフレームを開く →</a>
+    </div>
+    <div class="wf-card">
+      <div class="wf-label">PAGE 03 — NEW</div>
+      <div class="wf-title">中古サウナ買取・販売ページ</div>
+      <div class="wf-points">
+        確認ポイント：サービス設計・フロー・CTAの整合性
+      </div>
+      <a href="https://ryuyaharukawa-dot.github.io/japansauna-reports/reuse-wireframe-2026-04-23.html" target="_blank">ワイヤーフレームを開く →</a>
+    </div>
+    <div class="wf-card">
+      <div class="wf-label">PAGE 04 — NEW</div>
+      <div class="wf-title">修理・メンテナンスページ</div>
+      <div class="wf-points">
+        確認ポイント：対応範囲・スコープ・優先度
+      </div>
+      <a href="https://ryuyaharukawa-dot.github.io/japansauna-reports/maintenance-wireframe-2026-04-23.html" target="_blank">ワイヤーフレームを開く →</a>
+    </div>
+  </div>
+
+  <!-- ===== スコープ確認 ===== -->
+  <h2 class="section-title" id="scope">確認したいこと</h2>
+
+  <h3 class="subsection-title">制作スコープ</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ページ</th>
+        <th>優先度</th>
+        <th>デザイン</th>
+        <th>コーディング</th>
+        <th>コピー</th>
+        <th>備考</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>toC LP</td>
+        <td><span class="badge badge-ng">最優先</span></td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>既存LPのリニューアル</td>
+      </tr>
+      <tr>
+        <td>toB LP</td>
+        <td><span class="badge badge-warn">高</span></td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>新規作成</td>
+      </tr>
+      <tr>
+        <td>中古買取・販売</td>
+        <td><span class="badge badge-info">通常</span></td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>HP内新規ページ</td>
+      </tr>
+      <tr>
+        <td>修理メンテナンス</td>
+        <td><span class="badge badge-info">通常</span></td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>HP内新規ページ</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note-box">
+    <strong>優先度・スコープはMTG内で更新します。</strong>上記は現時点の仮設定です。
+  </div>
+
+  <h3 class="subsection-title">確認事項リスト</h3>
+
+  <ul>
+    <li>デザイン制作の担当は誰か（社内 / 外注 / AIDesigner）</li>
+    <li>コーディングはWordPressに直接実装か、別途LP環境か</li>
+    <li>コピーライティングはHalが書くか、制作側で入れるか</li>
+    <li>写真・素材の準備：Halが用意する範囲と期限</li>
+    <li>公開に必要なWP REST APIアプリケーションパスワード発行（未対応）</li>
+  </ul>
+
+  <!-- ===== 次のアクション ===== -->
+  <h2 class="section-title" id="action">次のアクション（MTG後に記入）</h2>
+
+  <table class="action-table">
+    <thead>
+      <tr>
+        <th>アクション</th>
+        <th>担当</th>
+        <th>期限</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="confirm-box">
+    <strong>次回MTG：</strong>要否・日時をMTG内で確認する
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="report-footer">
+    <p>JapanSauna — LPヒアリング アジェンダ | 2026-04-24 | 作成: Kiuas</p>
+  </footer>
+
+</div>
+</body>
+</html>
