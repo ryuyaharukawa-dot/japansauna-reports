@@ -324,81 +324,119 @@
   </div>
 
   <h3>図2. サウナ室レイアウト（W1,800 × D1,700）</h3>
-  <p style="font-size:10pt;color:#444;margin:4px 0 8px;">ロウリュ排水口の位置・ストーブ背面タイル範囲・ベンチ配置・ドア開口位置の確認用。詳細寸法は現地協議で確定。</p>
+  <p style="font-size:10pt;color:#444;margin:4px 0 8px;">奥壁側にベンチ2段、手前壁の左コーナーにストーブ、右側に外開きの耐熱強化ガラスドアを配置。ストーブ背面（左壁・奥壁の一部）に耐熱タイル。詳細寸法は現地協議で確定。</p>
   <div class="svg-wrap" style="margin:8px 0 18px;text-align:center;">
-    <svg viewBox="0 0 560 480" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;border:1px solid #ccc;background:#fafafa;">
-      <!-- 室外 -->
-      <text x="280" y="20" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#666">サウナ室（外寸 W1,800 × D1,700mm）</text>
+    <svg viewBox="0 0 580 520" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;border:1px solid #ccc;background:#fafafa;">
+      <!-- タイトル -->
+      <text x="290" y="20" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#666">サウナ室 平面（外寸 W1,800 × D1,700mm）</text>
 
       <!-- 室の外壁（外寸枠） -->
       <rect x="80" y="40" width="400" height="378" fill="#fff" stroke="#1a1a1a" stroke-width="2"/>
 
-      <!-- 内壁 = ヒノキ羽目板の範囲 -->
+      <!-- 内壁 = ヒノキ羽目板の範囲（内寸 約W1600×D1500） -->
       <rect x="100" y="60" width="360" height="338" fill="#fdf6e6" stroke="#a0763a" stroke-width="1" stroke-dasharray="4,3"/>
 
-      <!-- 寸法線 上 -->
+      <!-- 寸法線 上（W1800） -->
       <line x1="80" y1="32" x2="480" y2="32" stroke="#666" stroke-width="0.6"/>
       <line x1="80" y1="28" x2="80" y2="36" stroke="#666" stroke-width="0.6"/>
       <line x1="480" y1="28" x2="480" y2="36" stroke="#666" stroke-width="0.6"/>
       <text x="280" y="28" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#666">W 1,800mm</text>
 
-      <!-- 寸法線 右 -->
+      <!-- 寸法線 右（D1700） -->
       <line x1="490" y1="40" x2="490" y2="418" stroke="#666" stroke-width="0.6"/>
       <line x1="486" y1="40" x2="494" y2="40" stroke="#666" stroke-width="0.6"/>
       <line x1="486" y1="418" x2="494" y2="418" stroke="#666" stroke-width="0.6"/>
-      <text x="500" y="232" font-family="sans-serif" font-size="10" fill="#666" transform="rotate(90,500,232)" text-anchor="middle">D 1,700mm</text>
+      <text x="510" y="232" font-family="sans-serif" font-size="10" fill="#666" transform="rotate(90,510,232)" text-anchor="middle">D 1,700mm</text>
 
-      <!-- ストーブ背面タイル領域（背面壁） -->
-      <rect x="180" y="60" width="200" height="20" fill="#e7d9b4" stroke="#a08a4a" stroke-width="1"/>
-      <text x="280" y="74" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#5b3a1a" font-weight="bold">耐熱タイル（ストーブ背面）</text>
+      <!-- 方位ガイド -->
+      <text x="280" y="54" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#999">▲ 奥壁</text>
+      <text x="280" y="412" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#999">▼ 手前壁（出入口側）</text>
 
-      <!-- ストーブ -->
-      <rect x="220" y="90" width="120" height="80" fill="#5a5a5a" stroke="#1a1a1a" stroke-width="1.5"/>
-      <text x="280" y="125" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#fff" font-weight="bold">HARVIA KIP6</text>
-      <text x="280" y="142" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#fff">ストーブ</text>
-      <text x="280" y="158" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#ddd">200V単相</text>
+      <!-- ストーブ背面の耐熱タイル領域（左壁の下半分＋奥壁の左端） -->
+      <!-- 左壁側 -->
+      <rect x="100" y="240" width="22" height="158" fill="#e7d9b4" stroke="#a08a4a" stroke-width="1"/>
+      <!-- 奥壁左端側はストーブ位置が手前壁なので無し。コーナー設置のため左壁＋手前壁左端のタイル -->
+      <!-- 手前壁左端側 -->
+      <rect x="100" y="376" width="120" height="22" fill="#e7d9b4" stroke="#a08a4a" stroke-width="1"/>
 
-      <!-- ベンチ上段 -->
-      <rect x="320" y="200" width="140" height="50" fill="#e8c98a" stroke="#a0763a" stroke-width="1.2"/>
-      <text x="390" y="230" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5b3a1a" font-weight="bold">ベンチ上段</text>
+      <!-- ベンチ上段（奥壁側 上段） -->
+      <rect x="100" y="60" width="360" height="60" fill="#e8c98a" stroke="#a0763a" stroke-width="1.2"/>
+      <line x1="100" y1="60" x2="460" y2="60" stroke="#a0763a" stroke-width="0.4"/>
+      <!-- ベンチ板の縦目地（縦張り） -->
+      <g stroke="#b0884a" stroke-width="0.5">
+        <line x1="130" y1="60" x2="130" y2="120"/>
+        <line x1="160" y1="60" x2="160" y2="120"/>
+        <line x1="190" y1="60" x2="190" y2="120"/>
+        <line x1="220" y1="60" x2="220" y2="120"/>
+        <line x1="250" y1="60" x2="250" y2="120"/>
+        <line x1="280" y1="60" x2="280" y2="120"/>
+        <line x1="310" y1="60" x2="310" y2="120"/>
+        <line x1="340" y1="60" x2="340" y2="120"/>
+        <line x1="370" y1="60" x2="370" y2="120"/>
+        <line x1="400" y1="60" x2="400" y2="120"/>
+        <line x1="430" y1="60" x2="430" y2="120"/>
+      </g>
+      <text x="280" y="96" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#5b3a1a" font-weight="bold">ベンチ 上段</text>
 
-      <!-- ベンチ下段 -->
-      <rect x="320" y="260" width="140" height="50" fill="#f0d9a8" stroke="#a0763a" stroke-width="1.2"/>
-      <text x="390" y="290" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5b3a1a" font-weight="bold">ベンチ下段</text>
+      <!-- ベンチ下段（奥壁側 下段） -->
+      <rect x="100" y="120" width="360" height="60" fill="#f0d9a8" stroke="#a0763a" stroke-width="1.2"/>
+      <g stroke="#b0884a" stroke-width="0.5">
+        <line x1="130" y1="120" x2="130" y2="180"/>
+        <line x1="160" y1="120" x2="160" y2="180"/>
+        <line x1="190" y1="120" x2="190" y2="180"/>
+        <line x1="220" y1="120" x2="220" y2="180"/>
+        <line x1="250" y1="120" x2="250" y2="180"/>
+        <line x1="280" y1="120" x2="280" y2="180"/>
+        <line x1="310" y1="120" x2="310" y2="180"/>
+        <line x1="340" y1="120" x2="340" y2="180"/>
+        <line x1="370" y1="120" x2="370" y2="180"/>
+        <line x1="400" y1="120" x2="400" y2="180"/>
+        <line x1="430" y1="120" x2="430" y2="180"/>
+      </g>
+      <text x="280" y="156" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#5b3a1a" font-weight="bold">ベンチ 下段</text>
 
-      <!-- 床排水口 -->
-      <circle cx="180" cy="280" r="14" fill="#9aa9c7" stroke="#1a1a1a" stroke-width="1.5"/>
-      <line x1="170" y1="270" x2="190" y2="290" stroke="#1a1a1a" stroke-width="0.8"/>
-      <line x1="190" y1="270" x2="170" y2="290" stroke="#1a1a1a" stroke-width="0.8"/>
-      <text x="180" y="312" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="bold">床排水口</text>
-      <text x="180" y="325" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#444">(ロウリュ排水)</text>
+      <!-- ストーブ（手前左コーナー） -->
+      <rect x="122" y="290" width="100" height="108" fill="#5a5a5a" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="172" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#fff" font-weight="bold">HARVIA</text>
+      <text x="172" y="350" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#fff" font-weight="bold">KIP6</text>
+      <text x="172" y="370" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#ddd">200V単相</text>
 
-      <!-- ドア -->
-      <rect x="160" y="395" width="100" height="6" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
-      <path d="M 160 401 Q 160 350 210 350" fill="none" stroke="#1a1a1a" stroke-width="0.8" stroke-dasharray="3,2"/>
-      <rect x="160" y="395" width="100" height="6" fill="#aac5e7" stroke="#1a1a1a" stroke-width="1.2"/>
-      <text x="210" y="415" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="bold">耐熱強化ガラスドア</text>
+      <!-- 床排水口（ストーブ近傍） -->
+      <circle cx="270" cy="340" r="13" fill="#9aa9c7" stroke="#1a1a1a" stroke-width="1.5"/>
+      <line x1="261" y1="331" x2="279" y2="349" stroke="#1a1a1a" stroke-width="0.8"/>
+      <line x1="279" y1="331" x2="261" y2="349" stroke="#1a1a1a" stroke-width="0.8"/>
+      <text x="270" y="370" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="bold">床排水口</text>
+      <text x="270" y="383" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#444">(ロウリュ用)</text>
 
-      <!-- LED照明 -->
-      <line x1="100" y1="180" x2="180" y2="180" stroke="#e0b400" stroke-width="3"/>
-      <text x="105" y="195" font-family="sans-serif" font-size="9" fill="#a07c00">LED 1,500mm (100V)</text>
+      <!-- ドア（手前壁・右開き 外開き） -->
+      <!-- ドア本体（壁の開口部に板） -->
+      <rect x="290" y="395" width="160" height="6" fill="#aac5e7" stroke="#1a1a1a" stroke-width="1.2"/>
+      <!-- 外開きスイング軌跡（左ヒンジ・右に開く） -->
+      <path d="M 290 401 A 160 160 0 0 1 450 461" fill="none" stroke="#1a1a1a" stroke-width="0.6" stroke-dasharray="3,2"/>
+      <!-- ドア開放時の位置（点線） -->
+      <line x1="290" y1="401" x2="290" y2="461" stroke="#aac5e7" stroke-width="3" stroke-dasharray="4,3" opacity="0.5"/>
+      <text x="370" y="480" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="bold">耐熱強化ガラスドア（外開き）</text>
 
-      <!-- 換気給気 -->
-      <rect x="100" y="100" width="14" height="14" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
-      <text x="118" y="111" font-family="sans-serif" font-size="9" fill="#1a1a1a">給気</text>
+      <!-- LED照明（壁付け・天井下） -->
+      <line x1="330" y1="200" x2="430" y2="200" stroke="#e0b400" stroke-width="3"/>
+      <text x="380" y="218" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#a07c00">LED 1,500mm (100V)</text>
 
-      <!-- 換気排気 -->
-      <rect x="446" y="100" width="14" height="14" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
-      <text x="440" y="111" text-anchor="end" font-family="sans-serif" font-size="9" fill="#1a1a1a">排気</text>
+      <!-- 換気給気（ストーブ近くの低位置） -->
+      <rect x="100" y="220" width="14" height="14" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+      <text x="118" y="231" font-family="sans-serif" font-size="9" fill="#1a1a1a">給気（低位）</text>
+
+      <!-- 換気排気（対角の高位置） -->
+      <rect x="446" y="220" width="14" height="14" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+      <text x="440" y="231" text-anchor="end" font-family="sans-serif" font-size="9" fill="#1a1a1a">排気（高位）</text>
 
       <!-- 凡例 -->
-      <g transform="translate(80,440)">
+      <g transform="translate(80,490)">
         <rect x="0" y="0" width="14" height="14" fill="#e7d9b4" stroke="#a08a4a" stroke-width="0.8"/>
-        <text x="20" y="11" font-family="sans-serif" font-size="9" fill="#1a1a1a">耐熱タイル</text>
-        <rect x="100" y="0" width="14" height="14" fill="#fdf6e6" stroke="#a0763a" stroke-width="0.8" stroke-dasharray="3,2"/>
-        <text x="120" y="11" font-family="sans-serif" font-size="9" fill="#1a1a1a">ヒノキ羽目板（その他全面）</text>
-        <rect x="290" y="0" width="14" height="14" fill="#aac5e7" stroke="#1a1a1a" stroke-width="0.8"/>
-        <text x="310" y="11" font-family="sans-serif" font-size="9" fill="#1a1a1a">サウナドア（耐熱強化ガラス）</text>
+        <text x="20" y="11" font-family="sans-serif" font-size="9" fill="#1a1a1a">耐熱タイル（ストーブ背面）</text>
+        <rect x="170" y="0" width="14" height="14" fill="#fdf6e6" stroke="#a0763a" stroke-width="0.8" stroke-dasharray="3,2"/>
+        <text x="190" y="11" font-family="sans-serif" font-size="9" fill="#1a1a1a">ヒノキ羽目板（その他全面）</text>
+        <rect x="350" y="0" width="14" height="14" fill="#aac5e7" stroke="#1a1a1a" stroke-width="0.8"/>
+        <text x="370" y="11" font-family="sans-serif" font-size="9" fill="#1a1a1a">耐熱強化ガラスドア</text>
       </g>
     </svg>
   </div>
