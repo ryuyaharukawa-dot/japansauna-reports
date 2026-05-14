@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JapanSauna CRM 利用マニュアル</title>
+  <style>
+    body {
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      color: #1a1a1a;
+      background: #fff;
+      line-height: 1.7;
+      margin: 0;
+    }
+    html { font-size: 15px; }
+    #sticky-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid #ccc;
+      padding: 12px 20px;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    #sticky-nav .nav-label {
+      font-size: 0.72rem; font-weight: 700; color: #777;
+      letter-spacing: 0.05em; margin-right: 4px; white-space: nowrap;
+    }
+    .pill {
+      display: inline-block; padding: 5px 16px;
+      font-size: 0.78rem; font-weight: 600; color: #555;
+      text-decoration: none; border: 1px solid #ccc;
+      border-radius: 999px; transition: all 0.2s ease; white-space: nowrap;
+    }
+    .pill:hover, .pill.active {
+      background: #1a1a1a; color: #fff; border-color: #1a1a1a;
+    }
+    #main { max-width: 920px; margin: 0 auto; padding: 40px 48px 80px; }
+    .report-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 20px; margin-bottom: 32px; }
+    .report-header h1 { font-size: 1.6rem; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+    .report-header .subtitle { font-size: 0.9rem; color: #555; margin-bottom: 16px; }
+    .report-header .meta-row {
+      display: flex; gap: 24px; font-size: 0.8rem; color: #555; flex-wrap: wrap;
+    }
+    h2.section-title {
+      font-size: 1.2rem; font-weight: 700;
+      border-bottom: 1px solid #999; padding-bottom: 6px;
+      margin-top: 44px; margin-bottom: 20px;
+    }
+    h3.subsection-title {
+      font-size: 1.0rem; font-weight: 700;
+      margin-top: 28px; margin-bottom: 12px;
+      padding-left: 10px; border-left: 3px solid #555;
+    }
+    p { margin-bottom: 10px; font-size: 0.88rem; }
+    ul, ol { margin-bottom: 10px; padding-left: 22px; font-size: 0.88rem; }
+    ul li, ol li { margin-bottom: 5px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 0.82rem; }
+    table th, table td { border: 1px solid #bbb; padding: 8px 10px; text-align: left; vertical-align: top; }
+    table th { background: #f0f0f0; font-weight: 700; white-space: nowrap; }
+    table td { background: #fff; }
+    table tr:nth-child(even) td { background: #fafafa; }
+    .highlight-box {
+      background: #f7f7f7; border: 1px solid #ddd;
+      padding: 14px 18px; margin: 12px 0 20px; font-size: 0.85rem;
+    }
+    .note-box {
+      background: #fffbeb; border-left: 4px solid #f59e0b;
+      padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #78350f;
+    }
+    .info-box {
+      background: #eff6ff; border-left: 4px solid #3b82f6;
+      padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #1e3a5f;
+    }
+    .tip-box {
+      background: #f0fdf4; border-left: 4px solid #22c55e;
+      padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #14532d;
+    }
+    .danger-box {
+      background: #fef2f2; border-left: 4px solid #ef4444;
+      padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #7f1d1d;
+    }
+    .badge {
+      display: inline-block; padding: 2px 8px;
+      font-size: 0.7rem; font-weight: 700;
+      border-radius: 999px; letter-spacing: 0.03em;
+    }
+    .badge-ok { background: #d4edda; color: #155724; }
+    .badge-warn { background: #fff3cd; color: #856404; }
+    .badge-info { background: #d1ecf1; color: #0c5460; }
+    .badge-ng { background: #f8d7da; color: #721c24; }
+    .step {
+      display: flex; gap: 16px; margin-bottom: 18px;
+      padding: 14px 16px; border: 1px solid #ddd; border-radius: 6px;
+    }
+    .step-num {
+      flex-shrink: 0; width: 36px; height: 36px;
+      background: #1a1a1a; color: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.95rem;
+    }
+    .step-body { flex: 1; }
+    .step-body .step-title {
+      font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;
+    }
+    .step-body p { font-size: 0.85rem; margin-bottom: 6px; }
+    .step-body p:last-child { margin-bottom: 0; }
+    .key-row {
+      display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0 20px;
+    }
+    .key-card {
+      flex: 1; min-width: 180px;
+      padding: 12px 16px; border: 1px solid #ddd; border-radius: 6px;
+      font-size: 0.85rem;
+    }
+    .key-card .label {
+      font-size: 0.7rem; font-weight: 700; color: #777; letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .key-card .value { font-size: 0.9rem; font-weight: 600; }
+    code {
+      font-family: "SF Mono", "Menlo", Consolas, monospace;
+      background: #f0f0f0; padding: 1px 6px; border-radius: 3px;
+      font-size: 0.85em;
+    }
+    .stage-row {
+      display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0 12px;
+    }
+    .stage-pill {
+      display: inline-block; padding: 4px 10px;
+      font-size: 0.75rem; font-weight: 600;
+      border-radius: 4px;
+    }
+    .stage-inquiry { background: #f1f5f9; color: #475569; }
+    .stage-followup { background: #ede9fe; color: #6d28d9; }
+    .stage-contacted { background: #dbeafe; color: #1e40af; }
+    .stage-meeting { background: #e0e7ff; color: #4338ca; }
+    .stage-quoted { background: #fef3c7; color: #92400e; }
+    .stage-won { background: #d1fae5; color: #065f46; }
+    .stage-lost { background: #fee2e2; color: #991b1b; }
+    .prob-row {
+      display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0;
+    }
+    .prob-pill {
+      display: inline-block; padding: 3px 9px;
+      font-size: 0.72rem; font-weight: 700;
+      border-radius: 4px;
+    }
+    .prob-A { background: #f43f5e; color: #fff; }
+    .prob-B { background: #f59e0b; color: #fff; }
+    .prob-C { background: #fde047; color: #713f12; }
+    .prob-D { background: #cbd5e1; color: #475569; }
+    .prob-E { background: #e2e8f0; color: #64748b; }
+    .report-footer {
+      border-top: 1px solid #999; margin-top: 48px; padding-top: 16px;
+      font-size: 0.78rem; color: #777;
+    }
+    @media (max-width: 640px) {
+      #main { padding: 24px 20px 60px; }
+      .report-header h1 { font-size: 1.3rem; }
+      h2.section-title { font-size: 1.05rem; }
+      table { font-size: 0.78rem; }
+      .step { flex-direction: column; }
+      .step-num { width: 32px; height: 32px; font-size: 0.85rem; }
+    }
+    @media print {
+      #sticky-nav { display: none; }
+      body { background: #fff; }
+      #main { padding: 0; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="sticky-nav">
+  <span class="nav-label">CONTENTS</span>
+  <a class="pill" href="#welcome">はじめに</a>
+  <a class="pill" href="#login">ログイン</a>
+  <a class="pill" href="#daily">朝のルーティン</a>
+  <a class="pill" href="#flow">案件対応フロー</a>
+  <a class="pill" href="#screens">画面ガイド</a>
+  <a class="pill" href="#probability">確度の判定</a>
+  <a class="pill" href="#rules">運用ルール</a>
+  <a class="pill" href="#faq">FAQ</a>
+</nav>
+
+<div id="main">
+
+  <header class="report-header">
+    <h1>JapanSauna CRM 利用マニュアル</h1>
+    <div class="subtitle">案件管理から朝のフォローアップ、活動記録まで、日々の業務で使う操作ガイド</div>
+    <div class="meta-row">
+      <span>📅 v1.0 / 2026-05-14</span>
+      <span>👤 対象：JapanSauna 営業メンバー</span>
+      <span>🔧 編集：春川 隆也 (Hal)</span>
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <section id="welcome">
+    <h2 class="section-title">📌 はじめに</h2>
+    <p>JapanSauna CRMは、これまでGoogleスプレッドシートで管理していた案件情報を一元化し、フォローアップ漏れを防ぎ、ダッシュボードで業務全体を見える化するためのシステムです。</p>
+
+    <div class="key-row">
+      <div class="key-card">
+        <div class="label">本番URL</div>
+        <div class="value">japansauna-crm.vercel.app</div>
+      </div>
+      <div class="key-card">
+        <div class="label">ログイン方法</div>
+        <div class="value">Googleアカウント1クリック</div>
+      </div>
+      <div class="key-card">
+        <div class="label">対応デバイス</div>
+        <div class="value">PC・スマホ（ブラウザ）</div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>💡 このマニュアルの読み方</strong>：A4 2-3枚相当。最初に「朝のルーティン」と「案件対応フロー」だけ読めば日々の業務はスタートできます。残りは必要なときに参照してください。
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <section id="login">
+    <h2 class="section-title">🔐 ログイン</h2>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">CRM URLにアクセス</div>
+        <p>ブラウザで <code>japansauna-crm.vercel.app</code> を開く。Halからの招待URLをブックマークしておくと便利。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">「Googleでログイン」をクリック</div>
+        <p>会社で使っているGoogleアカウント（@japansauna.jp 等）を選択。パスワード入力は不要。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">初回のみ：アクセス許可の同意</div>
+        <p>「JapanSauna CRMがGoogleアカウントへのアクセスを許可」画面で「許可」をクリック。次回以降は自動でログイン。</p>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <strong>⚠️ アクセスできない場合</strong>：許可リストに登録されていないGoogleアカウントは入れません。Halに連絡してください。
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <section id="daily">
+    <h2 class="section-title">🌅 朝のルーティン（5分）</h2>
+    <p>毎朝、CRMを開いて以下の順に確認するだけで、その日にやるべき営業活動が分かります。</p>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">ヘッダーの「🔔 フォローアップ」をクリック</div>
+        <p>担当者カードから<strong>自分の名前</strong>をクリック → 自分のフォローアップだけが表示されます。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">🔴 期限切れ から対応開始</div>
+        <p>期日を越えてしまったフォローアップ。最優先で対応。電話 or メール、何でもいいので<strong>連絡を取って活動履歴に記録</strong>する。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">🟡 今日 を順番に対応</div>
+        <p>今日の予定アクション。期日が確定しているので、午前・午後で時間を配分して対応。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">対応後は「活動を追加」で記録</div>
+        <p>架電・メール・商談のたびに、案件詳細から「活動を追加」。<strong>次のアクション期日も忘れず設定</strong>することで、明日以降のフォローアップに自動的に並ぶ。</p>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 Slack通知</strong>：毎朝9時に営業チャンネルへ「期限切れ・今日のフォローアップ一覧」が自動投稿されます。Slackで確認してから動くのもOK。
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <section id="flow">
+    <h2 class="section-title">🔄 新規問合せ→成約までの流れ</h2>
+
+    <div class="stage-row">
+      <span class="stage-pill stage-inquiry">問合せ</span>
+      <span>→</span>
+      <span class="stage-pill stage-followup">未通電フォロー中</span>
+      <span>→</span>
+      <span class="stage-pill stage-contacted">通電済</span>
+      <span>→</span>
+      <span class="stage-pill stage-meeting">商談・現調</span>
+      <span>→</span>
+      <span class="stage-pill stage-quoted">見積提出</span>
+      <span>→</span>
+      <span class="stage-pill stage-won">成約</span>
+      <span>or</span>
+      <span class="stage-pill stage-lost">失注</span>
+    </div>
+
+    <h3 class="subsection-title">①「新規問合せ」が来た時</h3>
+    <ol>
+      <li>ヘッダー右上の <code>+ 新規案件</code> をクリック</li>
+      <li>顧客名（必須）、電話、メール、地域、商材、確度（最初は <strong>E</strong>）を入力</li>
+      <li>「登録」 → 自動で案件IDが発番（例: <code>JS-2026-05-061</code>）</li>
+    </ol>
+
+    <h3 class="subsection-title">② 架電したけど繋がらなかった時</h3>
+    <ol>
+      <li>案件詳細を開く</li>
+      <li>「活動を追加」 → 種類: <strong>📞 架電（不在/折返し）</strong></li>
+      <li>結果に「不在・留守電」、内容に詳細</li>
+      <li><strong>次のアクション: 「2日後に再架電」、期日: 2日後の日付</strong>を設定</li>
+      <li>→ 自動的にステージが「未通電フォロー中」に変更</li>
+    </ol>
+
+    <h3 class="subsection-title">③ 通電・商談に進んだ時</h3>
+    <ol>
+      <li>活動を追加 → 種類: <strong>☎️ 架電（通電）</strong> や <strong>💻 オンライン商談</strong> や <strong>🏠 現地調査・対面商談</strong></li>
+      <li>会話内容や顧客の要望を <strong>「内容」</strong>に詳しく記録</li>
+      <li>次のアクション期日を設定（「来週水曜に見積送付」など）</li>
+      <li>→ <strong>ステージは自動更新</strong>（通電済 → 商談・現調 等）</li>
+    </ol>
+
+    <h3 class="subsection-title">④ 見積を出した時</h3>
+    <ol>
+      <li>活動を追加 → 種類: <strong>📋 見積提出</strong></li>
+      <li>同じ案件で<strong>「関連ドキュメント」</strong>に見積書を紐付け（URL or PDFアップロード）</li>
+      <li>確度を更新（B〜A に上げる目安は <a href="#probability">確度ガイド</a> 参照）</li>
+      <li>次のフォロー期日（例: 3日後にフォロー架電）</li>
+    </ol>
+
+    <h3 class="subsection-title">⑤ 成約 or 失注になった時</h3>
+    <p><strong>成約時</strong>：パイプラインでカードを「成約」列にドラッグ。確度を「発注済」に変更。</p>
+    <p><strong>失注時</strong>：「失注」列にドラッグ。<strong>失注理由を必ず記入</strong>（予算オーバー / 設置条件NG / 競合採用 / 計画延期 / 連絡途絶 / その他）。</p>
+
+    <div class="danger-box">
+      <strong>🚨 失注理由の記入は超重要</strong>：月次でAIが失注パターンを分析し、商品開発・営業改善の材料になります。空欄だと分析できません。
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <section id="screens">
+    <h2 class="section-title">🖥 画面別ガイド</h2>
+
+    <table>
+      <thead>
+        <tr><th>画面</th><th>用途</th><th>使うタイミング</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>パイプライン</strong><br><code>/board</code></td>
+          <td>ステージごとにカードが並ぶ。ドラッグ&ドロップでステージ移動可能。</td>
+          <td>全体感を見たいとき。ステージ移動を一括でしたいとき。</td>
+        </tr>
+        <tr>
+          <td><strong>案件一覧</strong><br><code>/deals</code></td>
+          <td>表形式で全案件。フィルタ・検索・ソートが効く。</td>
+          <td>特定の条件で案件を絞り込みたいとき。<br>例: A案件だけ見たい、岡村さんの案件だけ、東京の案件だけ。</td>
+        </tr>
+        <tr>
+          <td><strong>フォローアップ</strong><br><code>/follow-ups</code></td>
+          <td>次アクション期日順に並ぶ。担当者別カード付き。</td>
+          <td>毎朝のルーティン。今日やるべきことを確認。</td>
+        </tr>
+        <tr>
+          <td><strong>ダッシュボード</strong><br><code>/dashboard</code></td>
+          <td>全社・担当者別・月次推移・AI洞察の4タブ。</td>
+          <td>週次・月次の数字確認。経営報告用データ取得。</td>
+        </tr>
+        <tr>
+          <td><strong>案件詳細</strong><br><code>/deals/JS-2026-05-XXX</code></td>
+          <td>1案件の全情報（基本情報・進捗・金額・活動履歴・ドキュメント）。</td>
+          <td>1件を深掘りしたいとき。<br>編集ボタンから情報更新も可能。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="subsection-title">便利な機能</h3>
+    <ul>
+      <li><strong>検索</strong>：案件一覧で「顧客名・案件ID・メモ」を全文検索</li>
+      <li><strong>絞り込み</strong>：担当者・ステージ・確度・流入経路でフィルタ</li>
+      <li><strong>ソート</strong>：問合せ日・確度・見込売上・ヨミ金額・最終アクションで並び替え</li>
+      <li><strong>要フォローボタン</strong>：右上の赤いボタンで「7日以上アクションなし」案件だけ表示</li>
+    </ul>
+  </section>
+
+  <!-- ============================================== -->
+  <section id="probability">
+    <h2 class="section-title">🎯 確度の判定基準</h2>
+    <p>確度の判定はチーム全員で揃えることが重要。下記の基準を満たしたら、その確度を付けてください。</p>
+
+    <table>
+      <thead>
+        <tr><th>確度</th><th>要約</th><th>判定基準（3つ以上満たす）</th><th>想定LT</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="prob-pill prob-A">A</span></td>
+          <td>発注ほぼ確実</td>
+          <td>意思決定者と話済・現調済・見積合意済・発注時期確定・競合終了</td>
+          <td>1ヶ月以内</td>
+        </tr>
+        <tr>
+          <td><span class="prob-pill prob-B">B</span></td>
+          <td>見積OK・予算OK</td>
+          <td>見積提出済・設置場所確認済・予算範囲OK・競合検討段階</td>
+          <td>1〜2ヶ月</td>
+        </tr>
+        <tr>
+          <td><span class="prob-pill prob-C">C</span></td>
+          <td>商談・現調済</td>
+          <td>商談or現地調査済・仕様詰め中・予算未確定だが意向あり</td>
+          <td>2〜4ヶ月</td>
+        </tr>
+        <tr>
+          <td><span class="prob-pill prob-D">D</span></td>
+          <td>興味あり程度</td>
+          <td>通電済・一次商談済・興味はあるが具体化はこれから</td>
+          <td>半年〜不明</td>
+        </tr>
+        <tr>
+          <td><span class="prob-pill prob-E">E</span></td>
+          <td>問合せのみ</td>
+          <td>問い合わせのみ・情報収集段階・数年先案件</td>
+          <td>1年以上</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <strong>📖 詳細はCRM内のヘルプページ</strong>に：CRMにログイン後、フォーム編集画面の確度欄に「確度の業務基準を見る →」リンクあり。
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <section id="rules">
+    <h2 class="section-title">📐 運用ルール</h2>
+
+    <h3 class="subsection-title">入力ルール</h3>
+    <ul>
+      <li><strong>新規問合せは1営業日以内に登録</strong>（フォーム自動連携が動けば自動）</li>
+      <li><strong>架電・メール・商談のたびに必ず活動履歴を記録</strong>。「言った言わない」を防ぐ。</li>
+      <li><strong>次のアクション期日を必ず設定</strong>。空欄だとフォローアップ画面に出てこない＝放置される。</li>
+      <li><strong>確度の変更は判定基準に従う</strong>。「Aを付けるなら3つ以上満たす」を厳守。</li>
+      <li><strong>失注時は理由を必ず記入</strong>。月次AI分析の精度が決まる。</li>
+    </ul>
+
+    <h3 class="subsection-title">フォローアップの目安</h3>
+    <table>
+      <thead>
+        <tr><th>状況</th><th>次のアクション期日</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>架電不在</td><td>1〜2日後に再架電</td></tr>
+        <tr><td>メール送信後（返信待ち）</td><td>3日後にフォロー</td></tr>
+        <tr><td>商談後（次回未定）</td><td>3日〜1週間後に近況確認</td></tr>
+        <tr><td>見積提出後（検討中）</td><td>1週間後にフォロー架電</td></tr>
+        <tr><td>長期検討（D / E）</td><td>1〜3ヶ月後に状況確認</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="subsection-title">禁止事項・注意点</h3>
+    <ul>
+      <li><strong>個人情報を SNS や外部メモアプリに転記しない</strong>。CRM内で完結させる。</li>
+      <li><strong>確度の感覚的な上げ下げをしない</strong>。判定基準ベースで。</li>
+      <li><strong>同じ顧客の重複登録に注意</strong>。先に検索して確認。</li>
+    </ul>
+  </section>
+
+  <!-- ============================================== -->
+  <section id="faq">
+    <h2 class="section-title">❓ よくある質問</h2>
+
+    <table>
+      <thead>
+        <tr><th>質問</th><th>回答</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ログインできなくなった</td>
+          <td>許可リストから外れていないか Hal に確認。または、シークレットウィンドウで再ログイン。</td>
+        </tr>
+        <tr>
+          <td>間違って入力した。元に戻したい</td>
+          <td>案件詳細の「編集」から修正可能。活動履歴は削除アイコンで削除可。</td>
+        </tr>
+        <tr>
+          <td>案件を間違って作ってしまった</td>
+          <td>失注理由を「重複登録」として失注扱いに。完全削除は Hal に依頼。</td>
+        </tr>
+        <tr>
+          <td>スマホからも使える？</td>
+          <td>はい、ブラウザでアクセス可能。レスポンシブ対応済。</td>
+        </tr>
+        <tr>
+          <td>毎朝のSlack通知が来ない</td>
+          <td>該当チャンネルに「JapanSauna CRM Bot」が招待されているか、Slack設定を Hal に確認。</td>
+        </tr>
+        <tr>
+          <td>ドキュメントをまとめてダウンロードしたい</td>
+          <td>各ドキュメントは個別にダウンロード可。一括は Hal に依頼。</td>
+        </tr>
+        <tr>
+          <td>確度の判定で迷う</td>
+          <td>確度ガイド <code>/help/probability</code> 参照。または Hal・先輩に相談。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <strong>📞 困ったときは</strong>：Slackの営業チャンネル or Hal に直接連絡。
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <div class="report-footer">
+    JapanSauna CRM 利用マニュアル v1.0<br>
+    📅 2026-05-14 / 👤 編集：春川 隆也 (Hal)<br>
+    🔄 仕様変更時は更新。気付き・改善要望は Slack で気軽に。
+  </div>
+
+</div>
+
+<script>
+  const links = document.querySelectorAll('#sticky-nav .pill');
+  const sections = Array.from(links).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  function update() {
+    let active = sections[0];
+    for (const s of sections) {
+      if (s.getBoundingClientRect().top - 100 <= 0) active = s;
+    }
+    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + active.id));
+  }
+  window.addEventListener('scroll', update);
+  update();
+</script>
+
+</body>
+</html>
