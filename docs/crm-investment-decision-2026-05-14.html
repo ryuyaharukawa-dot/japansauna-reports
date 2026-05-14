@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM投資判断レポート — JapanSauna</title>
+  <style>
+    body {
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      color: #1a1a1a;
+      background: #fff;
+      line-height: 1.7;
+      margin: 0;
+    }
+    html { font-size: 15px; }
+    #sticky-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid #ccc;
+      padding: 12px 20px;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    #sticky-nav .nav-label {
+      font-size: 0.72rem; font-weight: 700; color: #777;
+      letter-spacing: 0.05em; margin-right: 4px; white-space: nowrap;
+    }
+    .pill {
+      display: inline-block; padding: 5px 16px;
+      font-size: 0.78rem; font-weight: 600; color: #555;
+      text-decoration: none; border: 1px solid #ccc;
+      border-radius: 999px; transition: all 0.2s ease; white-space: nowrap;
+    }
+    .pill:hover, .pill.active {
+      background: #1a1a1a; color: #fff; border-color: #1a1a1a;
+    }
+    #main { max-width: 920px; margin: 0 auto; padding: 40px 48px 80px; }
+    .report-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 20px; margin-bottom: 32px; }
+    .report-header h1 { font-size: 1.6rem; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+    .report-header .subtitle { font-size: 0.9rem; color: #555; margin-bottom: 16px; }
+    .report-header .meta-row {
+      display: flex; gap: 24px; font-size: 0.8rem; color: #555; flex-wrap: wrap;
+    }
+    .summary-box {
+      background: #f7f7f7; border: 1px solid #ddd; padding: 18px 22px; margin: 20px 0 0;
+    }
+    .summary-box h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.04em; }
+    .summary-box ul { padding-left: 20px; font-size: 0.85rem; margin: 0; }
+    .summary-box li { margin-bottom: 5px; }
+    .decision-banner {
+      background: #1a1a1a; color: #fff; padding: 16px 22px;
+      margin-top: 18px; display: flex; align-items: center; gap: 16px;
+    }
+    .decision-banner .label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      padding: 4px 10px; border: 1px solid #fff; flex-shrink: 0;
+    }
+    .decision-banner .text {
+      font-size: 1.0rem; font-weight: 700;
+    }
+    h2.section-title {
+      font-size: 1.2rem; font-weight: 700;
+      border-bottom: 1px solid #999; padding-bottom: 6px;
+      margin-top: 44px; margin-bottom: 20px;
+    }
+    h3.subsection-title {
+      font-size: 1.0rem; font-weight: 700;
+      margin-top: 28px; margin-bottom: 12px;
+      padding-left: 10px; border-left: 3px solid #555;
+    }
+    p { margin-bottom: 10px; font-size: 0.88rem; }
+    ul, ol { margin-bottom: 10px; padding-left: 22px; font-size: 0.88rem; }
+    ul li, ol li { margin-bottom: 3px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 0.82rem; }
+    table th, table td { border: 1px solid #bbb; padding: 8px 10px; text-align: left; vertical-align: top; }
+    table th { background: #f0f0f0; font-weight: 700; white-space: nowrap; }
+    table td { background: #fff; }
+    table tr:nth-child(even) td { background: #fafafa; }
+    table.cost-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    table.cost-table tr.total td { background: #1a1a1a; color: #fff; font-weight: 700; }
+    .highlight-box {
+      background: #f7f7f7; border: 1px solid #ddd;
+      padding: 14px 18px; margin: 12px 0 20px; font-size: 0.85rem;
+    }
+    .note-box {
+      background: #fffbeb; border-left: 4px solid #f59e0b;
+      padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #78350f;
+    }
+    .info-box {
+      background: #eff6ff; border-left: 4px solid #3b82f6;
+      padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #1e3a5f;
+    }
+    .confirm-box {
+      background: #f0fdf4; border-left: 4px solid #22c55e;
+      padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #14532d;
+    }
+    .badge {
+      display: inline-block; padding: 2px 8px;
+      font-size: 0.7rem; font-weight: 700;
+      border-radius: 999px; letter-spacing: 0.03em;
+    }
+    .badge-ok { background: #d4edda; color: #155724; }
+    .badge-warn { background: #fff3cd; color: #856404; }
+    .badge-info { background: #d1ecf1; color: #0c5460; }
+    .badge-ng { background: #f8d7da; color: #721c24; }
+    .badge-done { background: #1a1a1a; color: #fff; }
+    .kpi-row {
+      display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0 20px;
+    }
+    .kpi-card {
+      border: 1px solid #ddd; padding: 14px 18px; flex: 1; min-width: 200px;
+    }
+    .kpi-card .label { font-size: 0.72rem; color: #777; font-weight: 600; letter-spacing: 0.03em; }
+    .kpi-card .value { font-size: 1.4rem; font-weight: 700; margin: 4px 0 2px; color: #1a1a1a; }
+    .kpi-card .sub { font-size: 0.74rem; color: #888; }
+    .kpi-card.accent { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .kpi-card.accent .label, .kpi-card.accent .sub { color: rgba(255,255,255,0.7); }
+    .kpi-card.accent .value { color: #fff; }
+    .report-footer {
+      border-top: 1px solid #999; margin-top: 48px; padding-top: 16px;
+      font-size: 0.78rem; color: #777;
+    }
+    @media (max-width: 640px) {
+      #main { padding: 24px 20px 60px; }
+      .report-header h1 { font-size: 1.3rem; }
+      h2.section-title { font-size: 1.05rem; }
+      table { font-size: 0.78rem; }
+      table th, table td { padding: 6px 7px; }
+      #sticky-nav { padding: 10px 12px; gap: 6px; }
+      .pill { padding: 4px 12px; font-size: 0.72rem; }
+      .kpi-row { flex-direction: column; }
+      .decision-banner { flex-direction: column; align-items: flex-start; }
+    }
+    @media print {
+      #sticky-nav { display: none; }
+      body { background: #fff; }
+      #main { padding: 0; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="sticky-nav">
+  <span class="nav-label">SECTIONS</span>
+  <a class="pill" href="#summary">サマリ</a>
+  <a class="pill" href="#background">背景</a>
+  <a class="pill" href="#comparison">比較分析</a>
+  <a class="pill" href="#decision">判断根拠</a>
+  <a class="pill" href="#roi">投資対効果</a>
+  <a class="pill" href="#status">実装状況</a>
+  <a class="pill" href="#roadmap">ロードマップ</a>
+</nav>
+
+<div id="main">
+
+  <header class="report-header">
+    <h1>CRM投資判断レポート</h1>
+    <div class="subtitle">HubSpot導入提案 vs オリジナルCRM継続 — 投資判断と実装ロードマップ</div>
+    <div class="meta-row">
+      <span>📅 2026-05-14</span>
+      <span>👤 春川 隆也 (JapanSauna 事業責任者)</span>
+      <span>📊 報告先：Sevenrich Group 経営陣</span>
+    </div>
+
+    <div class="decision-banner">
+      <span class="label">DECISION</span>
+      <span class="text">オリジナルCRM継続を決定。HubSpot提案を不採用とし、4年で約¥774万円のコストを商品開発・広告投資に転用。</span>
+    </div>
+
+    <div class="summary-box">
+      <h3>📋 エグゼクティブサマリ</h3>
+      <ul>
+        <li><strong>背景</strong>：月間約150件の問い合わせ、平均成約単価¥150万円。スプレッドシート運用の限界が課題。</li>
+        <li><strong>選択肢</strong>：HubSpot Japan社より月額¥160,000の提案を受領。並行してオリジナルCRMを内製開発中。</li>
+        <li><strong>結論</strong>：オリジナルCRM継続。<strong>4年TCO差額：約¥774万円</strong>。既に基本機能の8割を実装済み。</li>
+        <li><strong>独自価値</strong>：(1) サウナ販売特化の業務フィット、(2) 後工程（施工〜入金〜粗利）一気通貫、(3) DASH連携で予実管理統合、(4) Claude Opus 4.7 によるAI機能。</li>
+        <li><strong>リスク対応</strong>：HubSpot提案の「再検討タイミング検知」機能はMicrosoft Clarity（無料）等で補完。月額¥0〜¥5,000の追加投資で代替実現。</li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <h2 id="background" class="section-title">1. 背景と検討経緯</h2>
+
+  <p>JapanSauna事業（サウナキャビン製造・販売、サウナ施設運営）の事業規模拡大に伴い、現状のGoogleスプレッドシートによる顧客管理体制が限界を迎えている。</p>
+
+  <h3 class="subsection-title">現状の業務課題</h3>
+  <ul>
+    <li><strong>追客漏れ</strong>：月150件の問合せに対し、最終アクションから7日以上経過した「要フォロー案件」が575件中494件（86%）に達する</li>
+    <li><strong>属人化</strong>：担当者の記憶頼みのフォローアップ、ナレッジ共有が困難</li>
+    <li><strong>再検討検知の不在</strong>：失注顧客の再検討タイミングを捕捉できず、機会損失が発生</li>
+    <li><strong>データ分散</strong>：マスター/月別/担当者別シートで30以上のシートに分散、二重管理</li>
+  </ul>
+
+  <h3 class="subsection-title">検討した選択肢</h3>
+  <ol>
+    <li><strong>HubSpot導入</strong>：Sales Hub + Marketing Hub。HubSpot Japan株式会社（営業担当：石戸 裕大氏）より公式提案受領</li>
+    <li><strong>オリジナルCRM内製</strong>：Next.js + PostgreSQL + Claude API で自社開発（着手済み）</li>
+  </ol>
+
+  <!-- ============================================== -->
+  <h2 id="comparison" class="section-title">2. 詳細比較</h2>
+
+  <h3 class="subsection-title">2.1 コスト比較（4年TCO）</h3>
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th>HubSpot</th>
+        <th>オリジナルCRM</th>
+        <th class="num">差額</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>初期費用</td>
+        <td class="num">¥540,000</td>
+        <td class="num">¥0（既存資産活用）</td>
+        <td class="num">¥540,000</td>
+      </tr>
+      <tr>
+        <td>初年度ランニング</td>
+        <td class="num">¥1,920,000</td>
+        <td class="num">¥120,000</td>
+        <td class="num">¥1,800,000</td>
+      </tr>
+      <tr>
+        <td>2年目〜4年目（年¥1,920,000 vs 年¥120,000）</td>
+        <td class="num">¥5,760,000</td>
+        <td class="num">¥360,000</td>
+        <td class="num">¥5,400,000</td>
+      </tr>
+      <tr class="total">
+        <td>4年合計</td>
+        <td class="num">¥8,220,000</td>
+        <td class="num">¥480,000</td>
+        <td class="num">¥7,740,000</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.78rem; color:#777;">※HubSpot：月¥160,000 × 12ヶ月 + 初期費用。マーケティングコンタクト増加で従量課金増の可能性あり。<br>
+  ※オリジナルCRM内訳：Vercel ¥3,000/月 + Neon Postgres ¥0〜¥3,000/月 + Claude API ¥3,000/月 + Microsoft Clarity ¥0（補完ツール）。</p>
+
+  <h3 class="subsection-title">2.2 機能比較（HubSpot提案の3つのCASE別）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>HubSpot提案機能</th>
+        <th>オリジナルCRMの状況</th>
+        <th>判定</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>CASE 01：施工時期ベースの自動追客</strong><br>HOT/WARM/COLD分類、Slack通知</td>
+        <td>確度A〜E + フォローアップ機能で類似実装済み。施工時期分類は追加実装で対応（1日想定）</td>
+        <td><span class="badge badge-ok">対応可</span></td>
+      </tr>
+      <tr>
+        <td><strong>CASE 02：見積管理 + 30/60/90日自動フォロー</strong></td>
+        <td>活動履歴・次アクション期日・フォロー一覧画面・Slack通知を実装済み。自動メール送信のみ未対応</td>
+        <td><span class="badge badge-ok">ほぼ対応済</span></td>
+      </tr>
+      <tr>
+        <td><strong>CASE 03：Web再訪検知 + 即時アラート</strong></td>
+        <td>Microsoft Clarity（無料）+ Resend連携で補完可能。実装工数：3日想定</td>
+        <td><span class="badge badge-warn">補完で対応</span></td>
+      </tr>
+      <tr>
+        <td>パイプライン管理・ドラッグ&ドロップ</td>
+        <td>実装済み</td>
+        <td><span class="badge badge-ok">同等</span></td>
+      </tr>
+      <tr>
+        <td>ダッシュボード・レポート</td>
+        <td>全社/担当者別/月次推移/AI洞察 4タブ実装済み</td>
+        <td><span class="badge badge-ok">同等</span></td>
+      </tr>
+      <tr>
+        <td>見積管理・請求書発行</td>
+        <td>請求書発行ベースのPL管理を実装済み（管理者専用）</td>
+        <td><span class="badge badge-ok">同等以上</span></td>
+      </tr>
+      <tr>
+        <td><strong>サウナ販売特化機能</strong><br>製造原価・紹介フィー・施工管理</td>
+        <td>初期から組み込み済み</td>
+        <td><span class="badge badge-done">独自優位</span></td>
+      </tr>
+      <tr>
+        <td><strong>DASH連携</strong>（予実管理一気通貫）</td>
+        <td>Sevenrich Group内システムとして連携可能（HubSpotでは実装不可）</td>
+        <td><span class="badge badge-done">独自優位</span></td>
+      </tr>
+      <tr>
+        <td><strong>AI機能</strong></td>
+        <td>Claude Opus 4.7（業界最高水準）で失注分析実装済み。メール草案・要約等を順次実装</td>
+        <td><span class="badge badge-done">独自優位</span></td>
+      </tr>
+      <tr>
+        <td>モバイルアプリ</td>
+        <td>PWA化で対応予定</td>
+        <td><span class="badge badge-info">PWA対応</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ============================================== -->
+  <h2 id="decision" class="section-title">3. 判断根拠</h2>
+
+  <h3 class="subsection-title">3.1 オリジナルCRM継続を選択した4つの理由</h3>
+
+  <div class="kpi-row">
+    <div class="kpi-card accent">
+      <div class="label">理由①</div>
+      <div class="value">¥774万円</div>
+      <div class="sub">4年TCO差額。商品開発・広告・採用に転用可能</div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">理由②</div>
+      <div class="value">80%</div>
+      <div class="sub">既に実装完了している主要機能の割合</div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">理由③</div>
+      <div class="value">完全フィット</div>
+      <div class="sub">サウナ販売特有の業務に最適化可能</div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">理由④</div>
+      <div class="value">独自価値</div>
+      <div class="sub">後工程・DASH・AI連携で他社では実現不可</div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">3.2 HubSpot提案を不採用とした個別理由</h3>
+  <ul>
+    <li><strong>サウナ販売特化機能の不在</strong>：製造原価・紹介フィー・施工管理など、HubSpotではカスタマイズが必要で追加開発コストが発生</li>
+    <li><strong>DASH連携不可</strong>：Sevenrich Group内部の予実管理基盤との統合がHubSpotでは実現できない</li>
+    <li><strong>AI機能の限定性</strong>：HubSpotのBreezeは限定的。Claude Opus 4.7 を自由に組み込める内製のほうが将来性が高い</li>
+    <li><strong>コンタクト数による従量課金</strong>：問合せ増加でコストが上振れするリスク</li>
+    <li><strong>データロックイン</strong>：HubSpotにデータが集約され、移行困難になる</li>
+  </ul>
+
+  <h3 class="subsection-title">3.3 HubSpot提案から取り入れる要素</h3>
+  <div class="info-box">
+    HubSpotの提案資料で最も評価できる点は「再検討タイミング検知」のコンセプト。これは別ツールで以下のように補完する：
+    <table style="margin-top:8px;">
+      <thead>
+        <tr><th>機能</th><th>採用ツール</th><th>月額</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Web行動追跡</td><td>Microsoft Clarity</td><td class="num">¥0（無料）</td></tr>
+        <tr><td>メール開封・クリック追跡</td><td>Resend / Postmark</td><td class="num">¥0〜¥3,000</td></tr>
+        <tr><td>HOT/WARM/COLD自動分類</td><td>自社実装（問合せフォーム改修）</td><td class="num">¥0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="roi" class="section-title">4. 投資対効果（ROI）試算</h2>
+
+  <p>HubSpot提案資料に記載された ROI 試算（月+1〜2件受注で年¥1,600万〜¥3,400万円改善）は、<strong>HubSpot固有の効果ではなく、適切な顧客管理の効果</strong>。オリジナルCRMでも同等のリターンを期待できる。</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>シナリオ</th>
+        <th>年間売上増</th>
+        <th>システムコスト（年）</th>
+        <th>純益改善</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>HubSpot案：月+1件成約</td>
+        <td class="num">+¥1,800万円</td>
+        <td class="num">¥192万円</td>
+        <td class="num">+¥1,608万円</td>
+      </tr>
+      <tr>
+        <td>HubSpot案：月+2件成約</td>
+        <td class="num">+¥3,600万円</td>
+        <td class="num">¥192万円</td>
+        <td class="num">+¥3,408万円</td>
+      </tr>
+      <tr style="background:#1a1a1a; color:#fff;">
+        <td><strong>オリジナルCRM案：月+1件成約</strong></td>
+        <td class="num"><strong>+¥1,800万円</strong></td>
+        <td class="num"><strong>¥12万円</strong></td>
+        <td class="num"><strong>+¥1,788万円</strong></td>
+      </tr>
+      <tr style="background:#1a1a1a; color:#fff;">
+        <td><strong>オリジナルCRM案：月+2件成約</strong></td>
+        <td class="num"><strong>+¥3,600万円</strong></td>
+        <td class="num"><strong>¥12万円</strong></td>
+        <td class="num"><strong>+¥3,588万円</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.78rem; color:#777;">※平均成約単価¥150万円で算定。月+1件成約時、オリジナルCRMはHubSpotより<strong>年¥180万円多い純益改善</strong>を実現。</p>
+
+  <!-- ============================================== -->
+  <h2 id="status" class="section-title">5. 実装状況（2026-05-14時点）</h2>
+
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="label">本日時点の進捗</div>
+      <div class="value">35タスク中24完了</div>
+      <div class="sub">完了率 69%（残：自動化・補完機能）</div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">DB移行</div>
+      <div class="value">575件</div>
+      <div class="sub">既存スプレッドシートから移行完了</div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">開発期間</div>
+      <div class="value">約2週間</div>
+      <div class="sub">2026/05/01〜現在（Claude Code活用）</div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">5.1 実装済み機能</h3>
+  <table>
+    <thead>
+      <tr><th>カテゴリ</th><th>機能</th><th>ステータス</th></tr>
+    </thead>
+    <tbody>
+      <tr><td rowspan="4">基本CRM</td><td>案件CRUD・パイプライン（DnD）</td><td><span class="badge badge-ok">完了</span></td></tr>
+      <tr><td>検索・フィルタ・ソート（複数条件）</td><td><span class="badge badge-ok">完了</span></td></tr>
+      <tr><td>放置アラート（最終アクション7日経過検知）</td><td><span class="badge badge-ok">完了</span></td></tr>
+      <tr><td>確度ガイド（A〜E業務基準）</td><td><span class="badge badge-ok">完了</span></td></tr>
+      <tr><td rowspan="3">活動管理</td><td>活動履歴（9種類のアクションタイプ）</td><td><span class="badge badge-ok">完了</span></td></tr>
+      <tr><td>フォローアップ一覧（担当者別・期日別）</td><td><span class="badge badge-ok">完了</span></td></tr>
+      <tr><td>Slack自動通知（毎朝9時・期限切れ通知）</td><td><span class="badge badge-ok">完了</span></td></tr>
+      <tr><td rowspan="3">分析</td><td>担当者別パフォーマンス</td><td><span class="badge badge-ok">完了</span></td></tr>
+      <tr><td>月次コホート分析（問合月別CVR）</td><td><span class="badge badge-ok">完了</span></td></tr>
+      <tr><td>AI失注分析（Claude Opus 4.7）</td><td><span class="badge badge-ok">完了</span></td></tr>
+      <tr><td rowspan="3">管理者機能</td><td>認証・ロール（admin/member）</td><td><span class="badge badge-ok">完了</span></td></tr>
+      <tr><td>月次目標管理（売上・粗利）</td><td><span class="badge badge-ok">完了</span></td></tr>
+      <tr><td>PL管理（請求書発行ベース）</td><td><span class="badge badge-ok">完了</span></td></tr>
+      <tr><td rowspan="2">入出力</td><td>Webhook API（外部連携の基盤）</td><td><span class="badge badge-ok">完了</span></td></tr>
+      <tr><td>ドキュメント管理（見積書・発注書）</td><td><span class="badge badge-ok">完了</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============================================== -->
+  <h2 id="roadmap" class="section-title">6. 今後のロードマップ</h2>
+
+  <h3 class="subsection-title">6.1 短期（2026年5〜6月）</h3>
+  <table>
+    <thead>
+      <tr><th>項目</th><th>内容</th><th>備考</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>HOT/WARM/COLD自動分類</td><td>施工希望時期で問合せを自動分類</td><td>HubSpotのCASE 01対応</td></tr>
+      <tr><td>Web行動追跡</td><td>Microsoft Clarity導入</td><td>HubSpotのCASE 03対応①</td></tr>
+      <tr><td>メール開封追跡</td><td>Resend / Postmark連携</td><td>HubSpotのCASE 03対応②</td></tr>
+      <tr><td>WordPressフォーム連携</td><td>問合せ自動転記</td><td>転記工数ゼロ化</td></tr>
+      <tr><td>Vercelデプロイ・チーム公開</td><td>4名（Hal+岡村+採用2名）で運用開始</td><td>本番稼働</td></tr>
+      <tr><td>Google SSO認証</td><td>NextAuth + Google OAuth</td><td>セキュリティ強化</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">6.2 中期（2026年7〜9月）</h3>
+  <ul>
+    <li>商談記録基盤（Zoom/Meet録画 + Whisper文字起こし + Claude要約）</li>
+    <li>LINE公式アカウント連携</li>
+    <li>Gmail監視 → 自動取込</li>
+    <li>AI機能拡充：メール草案生成、次アクション提案、案件サマリ自動生成</li>
+    <li>DASH連携（OAuth問題解決後）</li>
+  </ul>
+
+  <h3 class="subsection-title">6.3 長期（2026年10月〜）</h3>
+  <ul>
+    <li>バクラク・マネフォクラウド連携（請求書自動発行・入金自動取込）</li>
+    <li>CRMチャットアシスタント（自然言語で社内データに質問）</li>
+    <li>代理店管理・LP流入分析の高度化</li>
+    <li>PWA化（モバイル運用）</li>
+  </ul>
+
+  <!-- ============================================== -->
+  <h2 class="section-title">7. リスクと対応</h2>
+
+  <table>
+    <thead>
+      <tr><th>リスク</th><th>影響度</th><th>対応策</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>開発担当者の離脱</td>
+        <td><span class="badge badge-warn">中</span></td>
+        <td>Claude Code活用によりコードを誰でも保守可能。技術スタックは標準的（Next.js・PostgreSQL）。</td>
+      </tr>
+      <tr>
+        <td>仕様バグ・障害</td>
+        <td><span class="badge badge-warn">中</span></td>
+        <td>Vercel・NeonのSLA活用。日次バックアップ。Sentryでエラー監視。</td>
+      </tr>
+      <tr>
+        <td>マーケ機能の不足</td>
+        <td><span class="badge badge-ok">低</span></td>
+        <td>Microsoft Clarity・Resend等の補完ツールで対応（月¥0〜¥5,000）。</td>
+      </tr>
+      <tr>
+        <td>業務スピード低下</td>
+        <td><span class="badge badge-ok">低</span></td>
+        <td>主要機能は既に完成済み。新機能はClaude Codeで1日〜数日で追加可能。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ============================================== -->
+  <h2 class="section-title">8. 経営陣への確認事項</h2>
+
+  <div class="confirm-box">
+    <strong>判断いただきたいこと</strong>
+    <ol style="margin-top:6px;">
+      <li>本方針（オリジナルCRM継続）の承認</li>
+      <li>HubSpot提案の不採用通知（HubSpot Japan株式会社・石戸氏宛て）の実施可否</li>
+      <li>4年TCO差額¥774万円のうち、初年度¥190万円の活用方針（商品開発・広告・採用のいずれを優先するか）</li>
+    </ol>
+  </div>
+
+  <!-- ============================================== -->
+  <div class="report-footer">
+    JapanSauna / Kiuas Project<br>
+    📅 2026-05-14｜👤 春川 隆也（事業責任者）<br>
+    📎 関連資料：HubSpot提案資料（Japan Sauna 御中｜HubSpotご提案資料）／ CRM仕様書（engineering/docs/crm-spec.md）／ 戦略方針メモ
+  </div>
+
+</div>
+
+<script>
+  // Sticky nav active state
+  const links = document.querySelectorAll('#sticky-nav .pill');
+  const sections = Array.from(links).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  function update() {
+    let active = sections[0];
+    for (const s of sections) {
+      if (s.getBoundingClientRect().top - 100 <= 0) active = s;
+    }
+    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + active.id));
+  }
+  window.addEventListener('scroll', update);
+  update();
+</script>
+
+</body>
+</html>
