@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BtoC汎用チラシ A4片面 Canva作業指示書 | JapanSauna</title>
+  <style>
+    body {
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      color: #1a1a1a;
+      background: #fafafa;
+      line-height: 1.7;
+      margin: 0;
+    }
+    html { font-size: 15px; }
+
+    /* Sticky nav */
+    #sticky-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid #ccc;
+      padding: 12px 20px;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    #sticky-nav .nav-label {
+      font-size: 0.72rem; font-weight: 700; color: #777;
+      letter-spacing: 0.05em; margin-right: 4px; white-space: nowrap;
+    }
+    .pill {
+      display: inline-block; padding: 5px 12px;
+      font-size: 0.74rem; font-weight: 600; color: #555;
+      text-decoration: none; border: 1px solid #ccc;
+      border-radius: 999px; transition: all 0.2s ease; white-space: nowrap;
+    }
+    .pill:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+
+    #main { max-width: 1080px; margin: 0 auto; padding: 40px 48px 80px; }
+
+    /* Header */
+    .doc-header {
+      border-bottom: 2px solid #1a1a1a;
+      padding-bottom: 24px;
+      margin-bottom: 40px;
+    }
+    .doc-header .tag {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      color: #777; border: 1px solid #bbb; padding: 3px 12px;
+      border-radius: 999px; margin-bottom: 12px;
+    }
+    .doc-header h1 {
+      font-size: 1.8rem; font-weight: 700; line-height: 1.4;
+      margin: 0 0 12px 0;
+    }
+    .doc-header .meta {
+      font-size: 0.85rem; color: #555;
+    }
+
+    /* Sections */
+    section {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 32px 36px;
+      margin-bottom: 24px;
+    }
+    section h2 {
+      font-size: 1.2rem; font-weight: 700;
+      margin: 0 0 20px 0;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex; align-items: center; gap: 12px;
+    }
+    section h2 .num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+      background: #1a1a1a; color: #fff;
+      border-radius: 50%;
+      font-size: 0.92rem; font-weight: 700;
+    }
+
+    /* Tables */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 12px 0;
+      font-size: 0.88rem;
+    }
+    th, td {
+      border: 1px solid #e0e0e0;
+      padding: 10px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+
+    /* Code/copy blocks */
+    .copy-block {
+      background: #1a1a1a;
+      color: #f0f0f0;
+      padding: 20px 24px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-family: "Menlo", "Monaco", "Courier New", monospace;
+      font-size: 0.92rem;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      position: relative;
+    }
+    .copy-block::before {
+      content: "コピペ用";
+      position: absolute;
+      top: 8px; right: 12px;
+      font-size: 0.65rem;
+      color: #888;
+      letter-spacing: 0.1em;
+    }
+
+    /* Color swatch */
+    .swatch {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    code.color-code {
+      font-family: "Menlo", "Monaco", monospace;
+      font-size: 0.85rem;
+      background: #f0f0f0;
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+
+    /* Layout diagram */
+    .layout-diagram {
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 20px;
+      margin: 16px 0;
+      font-family: "Menlo", "Monaco", "Courier New", monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      white-space: pre;
+      color: #333;
+      overflow-x: auto;
+    }
+
+    /* Style hint box */
+    .style-hint {
+      background: #fff8e7;
+      border-left: 4px solid #c9a961;
+      padding: 14px 18px;
+      margin: 12px 0;
+      font-size: 0.88rem;
+      border-radius: 0 4px 4px 0;
+    }
+    .style-hint strong { color: #8b6914; }
+
+    /* Checklist */
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+    .checklist li {
+      padding: 8px 0;
+      border-bottom: 1px dashed #e0e0e0;
+      font-size: 0.92rem;
+    }
+    .checklist li::before {
+      content: "☐ ";
+      color: #999;
+      margin-right: 6px;
+      font-weight: bold;
+    }
+
+    /* Highlight box */
+    .highlight {
+      background: #1a1a1a;
+      color: #c9a961;
+      padding: 24px;
+      text-align: center;
+      border-radius: 6px;
+      margin: 16px 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+    .highlight .big-num {
+      font-family: "Playfair Display", "Cormorant", serif;
+      font-size: 3.2rem;
+      display: block;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    ul, ol { padding-left: 24px; }
+    li { margin: 4px 0; }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.78rem;
+      color: #999;
+      text-align: center;
+    }
+
+    @media (max-width: 720px) {
+      #main { padding: 24px 20px 60px; }
+      section { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="sticky-nav">
+  <span class="nav-label">JUMP</span>
+  <a class="pill" href="#setup">設定</a>
+  <a class="pill" href="#layout">全体図</a>
+  <a class="pill" href="#sec1">①ビジュアル</a>
+  <a class="pill" href="#sec2">②ヘッド</a>
+  <a class="pill" href="#sec3">③サブ</a>
+  <a class="pill" href="#sec4">④新築理由</a>
+  <a class="pill" href="#sec5">⑤3つの理由</a>
+  <a class="pill" href="#sec6">⑥事例</a>
+  <a class="pill" href="#sec7">⑦特典</a>
+  <a class="pill" href="#sec8">⑧フッター</a>
+  <a class="pill" href="#checklist">✓チェック</a>
+</nav>
+
+<div id="main">
+
+  <div class="doc-header">
+    <span class="tag">CREATIVE BRIEF</span>
+    <h1>BtoC汎用チラシ A4片面 Canva作業指示書</h1>
+    <div class="meta">2026-05-25 ／ サイズ：A4タテ（210×297mm）／ 塗り足し：3mm ／ 書き出し：PDF印刷用（CMYK）／ 部数：2,500部 ／ 入稿：ラクスル推奨</div>
+  </div>
+
+  <!-- セットアップ -->
+  <section id="setup">
+    <h2><span class="num">⚙</span>カラー & フォント（最初に設定）</h2>
+
+    <h3 style="font-size:1rem; margin-top:0;">カラー</h3>
+    <table>
+      <tr><th width="20%">役割</th><th>カラーコード</th><th>備考</th></tr>
+      <tr><td>背景</td><td><span class="swatch" style="background:#1a1a1a"></span><code class="color-code">#1a1a1a</code> 黒</td><td>メイン背景</td></tr>
+      <tr><td>背景（サブ）</td><td><span class="swatch" style="background:#0a1a2e"></span><code class="color-code">#0a1a2e</code> 濃紺</td><td>セクション切替時</td></tr>
+      <tr><td>アクセント</td><td><span class="swatch" style="background:#c9a961"></span><code class="color-code">#c9a961</code> ゴールド</td><td>強調・枠線</td></tr>
+      <tr><td>本文</td><td><span class="swatch" style="background:#ffffff;border:1px solid #ccc"></span><code class="color-code">#ffffff</code> 白</td><td>テキスト</td></tr>
+    </table>
+
+    <h3 style="font-size:1rem;">フォント</h3>
+    <table>
+      <tr><th width="20%">用途</th><th>フォント</th></tr>
+      <tr><td>和文</td><td><strong>Noto Serif JP</strong> または <strong>Shippori Mincho</strong>（明朝）</td></tr>
+      <tr><td>数字（強調）</td><td><strong>Playfair Display</strong> または <strong>Cormorant</strong>（セリフ）</td></tr>
+    </table>
+
+    <div class="style-hint">
+      <strong>雰囲気</strong>：ホテル広告・高級住宅広告のような上質感。<br>
+      <strong>NG</strong>：ポップ調・赤黄多用・割引チラシ感
+    </div>
+  </section>
+
+  <!-- 全体レイアウト -->
+  <section id="layout">
+    <h2><span class="num">📐</span>全体レイアウト（上から下へ作業）</h2>
+    <div class="layout-diagram">┌─────────────────────────────────┐
+│  ① ビジュアル（高さ約30%）       │ ← 上部
+├─────────────────────────────────┤
+│  ② ヘッドコピー（3,700円を巨大化）│
+│  ③ サブコピー                     │
+├─────────────────────────────────┤
+│  ④ なぜ新築なのか                 │
+├─────────────────────────────────┤
+│  ⑤ 選ばれる3つの理由              │
+├─────────────────────────────────┤
+│  ⑥ 導入事例 写真3点               │
+├─────────────────────────────────┤
+│  ⑦ ショールーム特典               │
+├─────────────────────────────────┤
+│  ⑧ フッター（QR・連絡先）         │ ← 下部
+└─────────────────────────────────┘</div>
+  </section>
+
+  <!-- ① -->
+  <section id="sec1">
+    <h2><span class="num">1</span>メインビジュアル</h2>
+    <ul>
+      <li><strong>配置</strong>：紙面最上部、高さ全体の約30%</li>
+      <li><strong>内容</strong>：新築住宅×サウナキャビンの上質な暮らし写真</li>
+      <li><strong>トーン</strong>：暖色寄り・暗めの照明・人物入り推奨</li>
+      <li><strong>素材</strong>：Hal手持ち or Canva素材「luxury home interior」「modern sauna」検索</li>
+    </ul>
+  </section>
+
+  <!-- ② -->
+  <section id="sec2">
+    <h2><span class="num">2</span>ヘッドコピー（最大の見せ場）</h2>
+    <div class="copy-block">月々3,700円〜。
+家を建てるなら、サウナも一緒に。</div>
+
+    <div class="highlight">
+      <span class="big-num">3,700円</span>
+      ← この数字を紙面全体の25〜30%を占めるサイズに
+    </div>
+
+    <div class="style-hint">
+      <strong>「3,700円」</strong>：紙面全体の<strong>25〜30%</strong>・<strong>ゴールド</strong>・数字フォント<br>
+      <strong>「月々」「〜。」</strong>：数字より一回り小さく・白<br>
+      <strong>「家を建てるなら、サウナも一緒に。」</strong>：明朝・白・中サイズ・<strong>改行位置厳守</strong>
+    </div>
+  </section>
+
+  <!-- ③ -->
+  <section id="sec3">
+    <h2><span class="num">3</span>サブコピー</h2>
+    <div class="copy-block">住宅ローンに組み込めば、初期費用ゼロで
+「サウナのある暮らし」が実現します。</div>
+    <div class="style-hint">
+      明朝・白・小サイズ（本文サイズ）／「<strong>初期費用ゼロ</strong>」を<strong>ゴールドで強調</strong>
+    </div>
+  </section>
+
+  <!-- ④ -->
+  <section id="sec4">
+    <h2><span class="num">4</span>なぜ"新築のタイミング"なのか？</h2>
+
+    <h4 style="margin-top:0;">見出し</h4>
+    <div class="copy-block">なぜ"新築のタイミング"なのか？</div>
+
+    <h4>本文</h4>
+    <div class="copy-block">✓ 住宅ローンに組み込めるのは新築時だけ
+✓ 後付けより工事費が大幅に安い
+✓ 間取り・配管・換気を最初から最適化できる</div>
+
+    <h4>締めコピー（強調枠で囲む）</h4>
+    <div class="copy-block">→ 新築のタイミングが、
+  最もコストを抑える唯一の機会です。</div>
+
+    <div class="style-hint">
+      見出し → ゴールド・中サイズ／ チェックマーク（✓）→ ゴールド／ 締めコピー → <strong>ゴールド枠線で囲む</strong> or ゴールドテキスト
+    </div>
+  </section>
+
+  <!-- ⑤ -->
+  <section id="sec5">
+    <h2><span class="num">5</span>JapanSaunaが選ばれる3つの理由</h2>
+
+    <h4 style="margin-top:0;">見出し</h4>
+    <div class="copy-block">JapanSaunaが選ばれる3つの理由</div>
+
+    <h4>3カラム（横並び推奨）</h4>
+    <table>
+      <tr>
+        <th>① 工務店連携の豊富な実績</th>
+        <th>② 国産・高品質</th>
+        <th>③ 継続サポート</th>
+      </tr>
+      <tr>
+        <td>施主様の手間ゼロ。工務店との直接調整まで対応。</td>
+        <td>PSE認証取得・国産ヒノキ材使用。</td>
+        <td>施工後のメンテナンスまで一貫対応。10年保証付き。</td>
+      </tr>
+    </table>
+
+    <h4>コピペ用（各カラム）</h4>
+    <div class="copy-block">① 工務店連携の豊富な実績
+施主様の手間ゼロ。工務店との直接調整まで対応。
+
+② 国産・高品質
+PSE認証取得・国産ヒノキ材使用。
+
+③ 継続サポート
+施工後のメンテナンスまで一貫対応。10年保証付き。</div>
+
+    <div class="style-hint">
+      見出し → ゴールド・中サイズ／ 番号（①②③）→ 大きめ・ゴールド／ アイコン → Canva素材から線画系（家・品質マーク・サポート）
+    </div>
+  </section>
+
+  <!-- ⑥ -->
+  <section id="sec6">
+    <h2><span class="num">6</span>導入事例</h2>
+    <div class="copy-block">導入事例</div>
+    <div class="style-hint">
+      写真3点・同じ縦横比で統一／ キャプション不要 or 一行（例：「30代・新築戸建」）
+    </div>
+  </section>
+
+  <!-- ⑦ -->
+  <section id="sec7">
+    <h2><span class="num">7</span>ショールーム予約特典</h2>
+
+    <h4 style="margin-top:0;">見出し（🎁アイコン付き）</h4>
+    <div class="copy-block">ショールーム予約特典</div>
+
+    <h4>リード</h4>
+    <div class="copy-block">ショールームへご来場・ご予約された方へ、
+以下2点をプレゼントいたします。</div>
+
+    <h4>特典リスト</h4>
+    <div class="copy-block">① 敷地条件に合わせた設計プラン無料作成
+② The・のサウナ 無料招待券（ペア）</div>
+
+    <div class="style-hint">
+      セクション全体 → <strong>ゴールド枠線で囲む</strong>（目立たせる）／ 見出し → ゴールド・大サイズ／ 背景 → わずかにグラデかゴールドの薄い帯
+    </div>
+  </section>
+
+  <!-- ⑧ -->
+  <section id="sec8">
+    <h2><span class="num">8</span>フッター</h2>
+
+    <h4 style="margin-top:0;">左側（QR・案内）</h4>
+    <div class="copy-block">施工事例・住宅ローンシミュレーションは
+公式サイトから ▶︎
+
+[ QRコード ]
+japansauna.jp</div>
+
+    <h4>右側（連絡先）</h4>
+    <div class="copy-block">[ JapanSauna ロゴ ]
+
+JapanSauna株式会社
+TEL: 03-6455-0697</div>
+
+    <div class="style-hint">
+      QRコード → Canva「QRコード」エレメント・遷移先 <code class="color-code">https://japansauna.jp/</code>／ QRサイズ → <strong>縦25mm前後</strong>（スマホで読み取りやすい）／ TEL番号 → 大きめ・読みやすく
+    </div>
+  </section>
+
+  <!-- チェックリスト -->
+  <section id="checklist">
+    <h2><span class="num">✓</span>作業チェックリスト</h2>
+    <ul class="checklist">
+      <li>テンプレ選定（A4 チラシ ラグジュアリー/ホテル/住宅 高級 で検索）</li>
+      <li>カラーパレット設定（黒・ゴールド・白）</li>
+      <li>フォント設定（明朝＋セリフ）</li>
+      <li>① メインビジュアル配置</li>
+      <li>② ヘッドコピー（3,700円を最大強調）</li>
+      <li>③ サブコピー</li>
+      <li>④ なぜ新築なのか（チェックマーク＋締めコピー）</li>
+      <li>⑤ 選ばれる3つの理由（3カラム）</li>
+      <li>⑥ 導入事例 写真3点</li>
+      <li>⑦ ショールーム特典（ゴールド枠で強調）</li>
+      <li>⑧ フッター（QR・電話・ロゴ）</li>
+      <li>PDF印刷用（CMYK・塗り足し3mm）で書き出し</li>
+      <li>ラクスル入稿</li>
+    </ul>
+  </section>
+
+  <!-- 準備物 -->
+  <section>
+    <h2><span class="num">📦</span>Hal準備物</h2>
+    <ul>
+      <li>導入事例 写真3点</li>
+      <li>メインビジュアル写真（or Canva素材）</li>
+      <li>JapanSaunaロゴ最新版データ</li>
+    </ul>
+  </section>
+
+  <footer>JapanSauna / Kiuas ／ 2026-05-25</footer>
+</div>
+</body>
+</html>
