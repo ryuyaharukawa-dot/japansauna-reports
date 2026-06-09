@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI活用成果発表 — サウナ販売特化CRMの内製 ｜ JapanSauna</title>
+  <style>
+    body {
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      color: #1a1a1a;
+      background: #fff;
+      line-height: 1.7;
+      margin: 0;
+    }
+    html { font-size: 15px; }
+    #sticky-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid #ccc;
+      padding: 12px 20px;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    #sticky-nav .nav-label {
+      font-size: 0.72rem; font-weight: 700; color: #777;
+      letter-spacing: 0.05em; margin-right: 4px; white-space: nowrap;
+    }
+    .pill {
+      display: inline-block; padding: 5px 16px;
+      font-size: 0.78rem; font-weight: 600; color: #555;
+      text-decoration: none; border: 1px solid #ccc;
+      border-radius: 999px; transition: all 0.2s ease; white-space: nowrap;
+    }
+    .pill:hover, .pill.active {
+      background: #2E50E6; color: #fff; border-color: #2E50E6;
+    }
+    #main { max-width: 920px; margin: 0 auto; padding: 40px 48px 80px; }
+    .report-header { border-bottom: 3px solid #2E50E6; padding-bottom: 20px; margin-bottom: 32px; }
+    .eyebrow { font-size: 0.74rem; font-weight: 700; color: #2E50E6; letter-spacing: 0.12em; margin-bottom: 8px; }
+    .report-header h1 { font-size: 1.7rem; font-weight: 700; line-height: 1.3; margin: 0 0 6px; color: #17245c; }
+    .report-header .subtitle { font-size: 0.92rem; color: #555; margin-bottom: 16px; }
+    .report-header .meta-row {
+      display: flex; gap: 24px; font-size: 0.8rem; color: #555; flex-wrap: wrap;
+    }
+    .result-banner {
+      background: linear-gradient(110deg, #2E50E6 0%, #1e37b0 100%); color: #fff; padding: 18px 24px;
+      margin-top: 18px; border-radius: 6px; display: flex; align-items: center; gap: 18px;
+    }
+    .result-banner .label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      padding: 4px 10px; border: 1px solid rgba(255,255,255,0.7); border-radius: 4px; flex-shrink: 0;
+    }
+    .result-banner .text { font-size: 1.02rem; font-weight: 700; line-height: 1.5; }
+    .summary-box {
+      background: #f5f8ff; border: 1px solid #d8e0f3; border-radius: 6px; padding: 18px 22px; margin: 18px 0 0;
+    }
+    .summary-box h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.04em; color: #17245c; }
+    .summary-box ul { padding-left: 20px; font-size: 0.85rem; margin: 0; }
+    .summary-box li { margin-bottom: 6px; }
+    .section-num {
+      display:inline-flex; align-items:center; justify-content:center;
+      width: 30px; height: 30px; border-radius: 8px; background:#2E50E6; color:#fff;
+      font-size: 0.9rem; font-weight:700; margin-right: 10px; vertical-align: middle;
+    }
+    h2.section-title {
+      font-size: 1.22rem; font-weight: 700; color:#17245c;
+      border-bottom: 1px solid #cdd6ee; padding-bottom: 8px;
+      margin-top: 46px; margin-bottom: 20px;
+    }
+    h3.subsection-title {
+      font-size: 1.0rem; font-weight: 700; color:#17245c;
+      margin-top: 28px; margin-bottom: 12px;
+      padding-left: 10px; border-left: 3px solid #2E50E6;
+    }
+    p { margin-bottom: 10px; font-size: 0.88rem; }
+    ul, ol { margin-bottom: 10px; padding-left: 22px; font-size: 0.88rem; }
+    ul li, ol li { margin-bottom: 4px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 0.82rem; }
+    table th, table td { border: 1px solid #c4cde4; padding: 8px 10px; text-align: left; vertical-align: top; }
+    table th { background: #eaf0ff; font-weight: 700; white-space: nowrap; color:#17245c; }
+    table td { background: #fff; }
+    table tr:nth-child(even) td { background: #f7f9ff; }
+    table.cost-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    table.cost-table tr.total td { background: #2E50E6; color: #fff; font-weight: 700; }
+    .wall-grid { display:flex; gap:16px; flex-wrap:wrap; margin: 14px 0 8px; }
+    .wall-card { flex:1; min-width: 280px; border:1px solid #d8e0f3; border-radius:8px; padding:18px 20px; background:#f5f8ff; }
+    .wall-card .tag { font-size:0.72rem; font-weight:700; color:#2E50E6; letter-spacing:0.06em; }
+    .wall-card h4 { font-size:1.0rem; font-weight:700; margin:6px 0 8px; color:#17245c; }
+    .wall-card p { font-size:0.82rem; color:#444; margin:0; }
+    .flow { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin:14px 0 18px; }
+    .flow .step { background:#eaf0ff; border:1px solid #c4cde4; border-radius:999px; padding:7px 14px; font-size:0.8rem; font-weight:600; color:#17245c; white-space:nowrap; }
+    .flow .step.accent { background:#2E50E6; color:#fff; border-color:#2E50E6; }
+    .flow .arrow { color:#2E50E6; font-weight:700; }
+    .feat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:14px 0 20px; }
+    .feat { border:1px solid #d8e0f3; border-radius:8px; padding:14px 16px; background:#fff; }
+    .feat .ico { font-size:1.2rem; }
+    .feat h4 { font-size:0.9rem; font-weight:700; margin:6px 0 4px; color:#17245c; }
+    .feat p { font-size:0.78rem; color:#555; margin:0; }
+    .highlight-box { background: #f5f8ff; border: 1px solid #d8e0f3; border-radius:6px; padding: 14px 18px; margin: 12px 0 20px; font-size: 0.85rem; }
+    .note-box { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #78350f; }
+    .info-box { background: #eff6ff; border-left: 4px solid #2E50E6; padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #1e3a5f; }
+    .badge { display: inline-block; padding: 2px 8px; font-size: 0.7rem; font-weight: 700; border-radius: 999px; letter-spacing: 0.03em; }
+    .badge-ok { background: #d4edda; color: #155724; }
+    .badge-warn { background: #fff3cd; color: #856404; }
+    .badge-done { background: #2E50E6; color: #fff; }
+    .badge-ng { background: #f8d7da; color: #721c24; }
+    .kpi-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0 20px; }
+    .kpi-card { border: 1px solid #d8e0f3; border-radius:8px; padding: 16px 18px; flex: 1; min-width: 200px; background:#fff; }
+    .kpi-card .label { font-size: 0.72rem; color: #777; font-weight: 600; letter-spacing: 0.03em; }
+    .kpi-card .value { font-size: 1.5rem; font-weight: 700; margin: 4px 0 2px; color: #17245c; }
+    .kpi-card .sub { font-size: 0.74rem; color: #888; }
+    .kpi-card.accent { background: linear-gradient(135deg,#2E50E6,#1e37b0); color: #fff; border-color: #2E50E6; }
+    .kpi-card.accent .label, .kpi-card.accent .sub { color: rgba(255,255,255,0.78); }
+    .kpi-card.accent .value { color: #fff; }
+    .closing { background:#17245c; color:#fff; border-radius:8px; padding:24px 28px; margin:32px 0 0; }
+    .closing .big { font-size:1.15rem; font-weight:700; line-height:1.6; }
+    .closing .small { font-size:0.85rem; color:rgba(255,255,255,0.8); margin-top:8px; }
+    .report-footer { border-top: 1px solid #cdd6ee; margin-top: 48px; padding-top: 16px; font-size: 0.78rem; color: #777; }
+    @media (max-width: 640px) {
+      #main { padding: 24px 20px 60px; }
+      .report-header h1 { font-size: 1.35rem; }
+      h2.section-title { font-size: 1.05rem; }
+      table { font-size: 0.78rem; } table th, table td { padding: 6px 7px; }
+      #sticky-nav { padding: 10px 12px; gap: 6px; } .pill { padding: 4px 12px; font-size: 0.72rem; }
+      .kpi-row, .wall-grid { flex-direction: column; }
+      .feat-grid { grid-template-columns: 1fr; }
+      .result-banner { flex-direction: column; align-items: flex-start; }
+    }
+    @media print {
+      #sticky-nav { display: none; }
+      body { background: #fff; } #main { padding: 0; max-width: none; }
+      .result-banner, .kpi-card.accent, .closing { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="sticky-nav">
+  <span class="nav-label">SECTIONS</span>
+  <a class="pill" href="#summary">サマリ</a>
+  <a class="pill" href="#background">なぜ作ったか</a>
+  <a class="pill" href="#hubspot">HubSpot断念</a>
+  <a class="pill" href="#system">何を作ったか</a>
+  <a class="pill" href="#ai">AI活用</a>
+  <a class="pill" href="#impact">成果</a>
+  <a class="pill" href="#roadmap">今後</a>
+</nav>
+
+<div id="main">
+
+  <header class="report-header">
+    <div class="eyebrow">SEVENRICH GROUP ｜ AI活用成果発表</div>
+    <h1>サウナ販売特化CRMを、AIで内製した。</h1>
+    <div class="subtitle">HubSpotをやめ、自分たちの業務に“効く”営業基盤をつくるまで — JapanSauna CRM</div>
+    <div class="meta-row">
+      <span>📅 2026-06-09</span>
+      <span>👤 春川 龍哉（JapanSauna 事業責任者）</span>
+      <span>📊 報告先：Sevenrich Group 経営陣</span>
+    </div>
+
+    <div class="result-banner">
+      <span class="label">RESULT</span>
+      <span class="text">HubSpot比 4年で約¥774万円のコストを抑えつつ、サウナ販売特化の営業基盤を内製。問合せメールのAI自動転記まで実現し、本番稼働中。</span>
+    </div>
+
+    <div class="summary-box">
+      <h3>📋 エグゼクティブサマリ</h3>
+      <ul>
+        <li><strong>背景</strong>：月約150件の問合せ・平均成約単価¥150万円。スプレッドシート運用が限界で、追客漏れと後工程の分断が課題だった。</li>
+        <li><strong>選択肢</strong>：HubSpot Japan社より月¥160,000の提案を受領。だが「①費用が高い」「②やりたい機能が標準でできない」の2つの壁に直面。</li>
+        <li><strong>判断</strong>：HubSpotを不採用とし、サウナ販売特化のCRMをAI（Claude Code / Claude Opus）で内製。<strong>4年TCO差額 約¥774万円</strong>。</li>
+        <li><strong>成果</strong>：案件→受注→施工→入金→粗利確定までの一気通貫業務システムを構築。Gmail監視→AIで問合せを自動案件化、計画vs実績の可視化、流入経路別の成約率分析まで実装。</li>
+        <li><strong>意味</strong>：「ツールを導入する」から「業務に合わせて作る」へ。浮いたコストを商品開発・集客に転用できる。</li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <h2 id="background" class="section-title"><span class="section-num">1</span>なぜ作ったのか</h2>
+
+  <p>JapanSauna事業（サウナキャビン製造・販売、サウナ施設運営）の拡大に伴い、Googleスプレッドシートによる顧客管理が限界を迎えていた。</p>
+
+  <h3 class="subsection-title">解決したかった3つの課題</h3>
+  <div class="wall-grid">
+    <div class="wall-card">
+      <div class="tag">課題 01</div>
+      <h4>追客漏れ・対応遅れ</h4>
+      <p>月150件の問合せに対し、最終アクションから7日以上放置された案件が多発。「誰が・いつ・次に何を」が見えない。</p>
+    </div>
+    <div class="wall-card">
+      <div class="tag">課題 02</div>
+      <h4>情報の分散・属人化</h4>
+      <p>30以上のシートに情報が散在し、最新がどれか分からない。担当者の記憶頼みでナレッジ共有が困難。</p>
+    </div>
+    <div class="wall-card">
+      <div class="tag">課題 03</div>
+      <h4>後工程の分断</h4>
+      <p>受注後（施工・入金・粗利確定）が営業データと切り離され、粗利の着地が見えない。</p>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="hubspot" class="section-title"><span class="section-num">2</span>HubSpotを検討。だが2つの壁。</h2>
+
+  <p>解決策としてまずHubSpot導入を検討し、HubSpot Japan株式会社（営業担当：石戸氏）より公式提案（月¥160,000）を受領した。しかし、2つの壁により不採用とした。</p>
+
+  <h3 class="subsection-title">壁① 費用が高い（4年TCO比較）</h3>
+  <table class="cost-table">
+    <thead>
+      <tr><th>項目</th><th>HubSpot</th><th>内製CRM</th><th class="num">差額</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>初期費用</td><td class="num">¥540,000</td><td class="num">¥0（既存資産活用）</td><td class="num">¥540,000</td></tr>
+      <tr><td>初年度ランニング</td><td class="num">¥1,920,000</td><td class="num">¥120,000</td><td class="num">¥1,800,000</td></tr>
+      <tr><td>2〜4年目</td><td class="num">¥5,760,000</td><td class="num">¥360,000</td><td class="num">¥5,400,000</td></tr>
+      <tr class="total"><td>4年合計</td><td class="num">¥8,220,000</td><td class="num">¥480,000</td><td class="num">¥7,740,000</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.78rem; color:#777;">※HubSpot：月¥160,000×12ヶ月＋初期費用。問合せ（コンタクト）増で従量課金が上振れするリスクあり。<br>
+  ※内製：Vercel ¥3,000/月 ＋ Neon Postgres ¥0〜3,000/月 ＋ Claude API ¥3,000/月 程度（年¥3〜6万）。</p>
+
+  <h3 class="subsection-title">壁② やりたい機能が、標準ではできない</h3>
+  <p>HubSpotは汎用CRMとして優秀だが、サウナ販売特有の業務とAIネイティブな作り込みは標準機能の外だった。</p>
+  <table>
+    <thead>
+      <tr><th>やりたかったこと</th><th>HubSpot</th><th>内製CRM</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>サウナ販売特化</strong>（製造原価・紹介フィー・施工管理）</td><td>標準になく追加開発が必要</td><td><span class="badge badge-done">初期から組込</span></td></tr>
+      <tr><td><strong>後工程の一気通貫</strong>（受注→施工→入金→粗利確定）</td><td>分断・実現困難</td><td><span class="badge badge-done">CRM内で完結</span></td></tr>
+      <tr><td><strong>DASH連携</strong>（Sevenrich予実管理基盤との統合）</td><td><span class="badge badge-ng">実現不可</span></td><td><span class="badge badge-done">連携可能</span></td></tr>
+      <tr><td><strong>AIネイティブ</strong>（Claudeで自動転記・失注分析・要約）</td><td>Breezeで限定的</td><td><span class="badge badge-done">自由に実装</span></td></tr>
+      <tr><td>データ所有権</td><td>HubSpotにロックイン</td><td><span class="badge badge-done">自社保有</span></td></tr>
+    </tbody>
+  </table>
+  <div class="info-box">
+    HubSpot提案で最も評価できた「再検討タイミング検知」は、Microsoft Clarity（無料）＋メール開封追跡など月¥0〜5,000の補完ツールで代替する方針。コアは内製で持ち、周辺は安価な既製ツールで補う。
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="system" class="section-title"><span class="section-num">3</span>何を作ったか</h2>
+
+  <h3 class="subsection-title">案件から粗利確定まで、ひとつなぎ</h3>
+  <p>HubSpotでは分断していた“後工程”まで、ひとつのシステムで完結させた。</p>
+  <div class="flow">
+    <span class="step accent">問合せ</span><span class="arrow">→</span>
+    <span class="step">通電・商談</span><span class="arrow">→</span>
+    <span class="step">見積</span><span class="arrow">→</span>
+    <span class="step">受注</span><span class="arrow">→</span>
+    <span class="step">施工</span><span class="arrow">→</span>
+    <span class="step">入金</span><span class="arrow">→</span>
+    <span class="step accent">粗利確定</span>
+  </div>
+
+  <h3 class="subsection-title">主要機能</h3>
+  <div class="feat-grid">
+    <div class="feat"><div class="ico">🗂️</div><h4>パイプライン</h4><p>ドラッグ＆ドロップで状態更新。KPIサマリと加重ヨミを一目で。</p></div>
+    <div class="feat"><div class="ico">🔔</div><h4>フォローアップ</h4><p>次アクション期日で管理。対応漏れ・期限切れを自動で可視化。</p></div>
+    <div class="feat"><div class="ico">📊</div><h4>ダッシュボード</h4><p>全社/担当者別/月次推移、売上着地見込をリアルタイム表示。</p></div>
+    <div class="feat"><div class="ico">💰</div><h4>PL × 月次目標</h4><p>請求書ベースのPLを計画値と連動。計画vs実績・年間ペースを表示。</p></div>
+    <div class="feat"><div class="ico">📈</div><h4>流入経路分析</h4><p>meta/Google/SEO/紹介別に件数・成約率・売上を比較。</p></div>
+    <div class="feat"><div class="ico">📝</div><h4>活動・ドキュメント</h4><p>架電・商談・見積等の記録と書類を案件単位で蓄積。</p></div>
+  </div>
+  <div class="highlight-box">
+    <strong>技術スタック</strong>：Next.js 16 ／ Vercel ／ Neon Postgres ／ Drizzle ORM ／ NextAuth（Google SSO）／ Claude Opus。
+    開発は <strong>Claude Code</strong> を活用し、標準的な構成で「誰でも保守できる」状態を維持。
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="ai" class="section-title"><span class="section-num">4</span>AIの活用</h2>
+
+  <h3 class="subsection-title">問合せメールを、AIが案件化する</h3>
+  <p>受信トレイを5分おきに監視し、問合せメールをAIが構造化してCRMに自動登録。手入力ゼロでリードが積み上がる。</p>
+  <div class="flow">
+    <span class="step accent">Gmail受信</span><span class="arrow">→</span>
+    <span class="step">Fromルールで抽出</span><span class="arrow">→</span>
+    <span class="step">Claude Opusが構造化</span><span class="arrow">→</span>
+    <span class="step">CRMに自動登録</span><span class="arrow">→</span>
+    <span class="step accent">HOT/WARM/COLD判定・Slack通知</span>
+  </div>
+
+  <h3 class="subsection-title">そのほかのAI活用</h3>
+  <div class="wall-grid">
+    <div class="wall-card">
+      <div class="tag">AI 01</div>
+      <h4>AI失注分析</h4>
+      <p>Claude Opus が失注案件のパターンを要約し、改善の示唆を提示。</p>
+    </div>
+    <div class="wall-card">
+      <div class="tag">AI 02</div>
+      <h4>確度・緊急度の自動判定</h4>
+      <p>施工希望時期からHOT/WARM/COLDを自動付与し、優先順位づけを支援。</p>
+    </div>
+    <div class="wall-card">
+      <div class="tag">AI 03</div>
+      <h4>AIで“作る”開発体制</h4>
+      <p>Claude Code活用で、新機能を1日〜数日単位で追加・改善できる。</p>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="impact" class="section-title"><span class="section-num">5</span>成果とインパクト</h2>
+
+  <div class="kpi-row">
+    <div class="kpi-card accent">
+      <div class="label">コスト差（HubSpot比・4年）</div>
+      <div class="value">▲¥774万円</div>
+      <div class="sub">浮いた原資を商品開発・集客・採用へ転用</div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">月額ランニング</div>
+      <div class="value">¥1万円前後</div>
+      <div class="sub">HubSpot 月¥16万 → 内製 年¥3〜6万</div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">問合せ転記</div>
+      <div class="value">自動化</div>
+      <div class="sub">Gmail監視→AIで案件化。手入力ゼロ</div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">開発スピード</div>
+      <div class="value">AIで内製</div>
+      <div class="sub">Claude Code活用で短サイクル改善</div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">業務へのインパクト</h3>
+  <div class="feat-grid">
+    <div class="feat"><div class="ico">🔎</div><h4>探す手間ゼロ</h4><p>全案件とKPIが一目。担当者・要フォローでその場絞り込み。</p></div>
+    <div class="feat"><div class="ico">⚡</div><h4>入力レス</h4><p>AI自動転記＋ドラッグ操作で、入力作業を最小化。</p></div>
+    <div class="feat"><div class="ico">🎯</div><h4>経営の可視化</h4><p>計画vs実績・流入経路別の成約率で、打ち手の根拠が持てる。</p></div>
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="roadmap" class="section-title"><span class="section-num">6</span>今後の展望</h2>
+  <table>
+    <thead><tr><th>時期</th><th>取り組み</th></tr></thead>
+    <tbody>
+      <tr><td>短期</td><td>商談記録基盤（録画→Whisper文字起こし→Claude要約）／ メール開封・Web行動追跡の補完ツール導入</td></tr>
+      <tr><td>中期</td><td>DASH連携で予実管理を統合 ／ LINE公式・各種フォーム連携の拡充</td></tr>
+      <tr><td>長期</td><td>バクラク・マネフォ連携（請求自動発行・入金自動取込）／ 自然言語で社内データに質問できるAIアシスタント</td></tr>
+    </tbody>
+  </table>
+
+  <div class="closing">
+    <div class="big">「ツールを導入する」から、「業務に合わせて作る」へ。</div>
+    <div class="small">AIによって、自社の業務に“効く”システムを、現実的なコストとスピードで内製できる時代になった。JapanSaunaのCRMは、その横展開可能なモデルケース。</div>
+  </div>
+
+  <!-- ============================================== -->
+  <div class="report-footer">
+    JapanSauna / Kiuas Project<br>
+    📅 2026-06-09｜👤 春川 龍哉（事業責任者）<br>
+    📎 関連資料：CRM投資判断レポート（2026-05-14）／ CRM利用マニュアル（2026-05-14）／ 本番環境 https://japansauna-crm.vercel.app
+  </div>
+
+</div>
+
+<script>
+  const links = document.querySelectorAll('#sticky-nav .pill');
+  const sections = Array.from(links).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  function update() {
+    let active = sections[0];
+    for (const s of sections) {
+      if (s.getBoundingClientRect().top - 100 <= 0) active = s;
+    }
+    if (active) links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + active.id));
+  }
+  window.addEventListener('scroll', update);
+  update();
+</script>
+
+</body>
+</html>
