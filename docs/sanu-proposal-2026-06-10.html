@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SANU様へのご提案｜サウナ設備運用の課題解決パートナーシップ — JapanSauna</title>
+  <style>
+    body {
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      color: #1a1a1a;
+      background: #fff;
+      line-height: 1.7;
+      margin: 0;
+    }
+    html { font-size: 15px; }
+    #sticky-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid #ccc;
+      padding: 12px 20px;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    #sticky-nav .nav-label {
+      font-size: 0.72rem; font-weight: 700; color: #777;
+      letter-spacing: 0.05em; margin-right: 4px; white-space: nowrap;
+    }
+    .pill {
+      display: inline-block; padding: 5px 16px;
+      font-size: 0.78rem; font-weight: 600; color: #555;
+      text-decoration: none; border: 1px solid #ccc;
+      border-radius: 999px; transition: all 0.2s ease; white-space: nowrap;
+    }
+    .pill:hover, .pill.active {
+      background: #2E50E6; color: #fff; border-color: #2E50E6;
+    }
+    #main { max-width: 920px; margin: 0 auto; padding: 40px 48px 80px; }
+    .report-header { border-bottom: 3px solid #2E50E6; padding-bottom: 20px; margin-bottom: 32px; }
+    .eyebrow { font-size: 0.74rem; font-weight: 700; color: #2E50E6; letter-spacing: 0.12em; margin-bottom: 8px; }
+    .report-header h1 { font-size: 1.7rem; font-weight: 700; line-height: 1.3; margin: 0 0 6px; color: #17245c; }
+    .report-header .subtitle { font-size: 0.92rem; color: #555; margin-bottom: 16px; }
+    .report-header .meta-row {
+      display: flex; gap: 24px; font-size: 0.8rem; color: #555; flex-wrap: wrap;
+    }
+    .result-banner {
+      background: linear-gradient(110deg, #2E50E6 0%, #1e37b0 100%); color: #fff; padding: 18px 24px;
+      margin-top: 18px; border-radius: 6px; display: flex; align-items: center; gap: 18px;
+    }
+    .result-banner .label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      padding: 4px 10px; border: 1px solid rgba(255,255,255,0.7); border-radius: 4px; flex-shrink: 0;
+    }
+    .result-banner .text { font-size: 1.02rem; font-weight: 700; line-height: 1.5; }
+    .summary-box {
+      background: #f5f8ff; border: 1px solid #d8e0f3; border-radius: 6px; padding: 18px 22px; margin: 18px 0 0;
+    }
+    .summary-box h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.04em; color: #17245c; }
+    .summary-box ul { padding-left: 20px; font-size: 0.85rem; margin: 0; }
+    .summary-box li { margin-bottom: 6px; }
+    .section-num {
+      display:inline-flex; align-items:center; justify-content:center;
+      width: 30px; height: 30px; border-radius: 8px; background:#2E50E6; color:#fff;
+      font-size: 0.9rem; font-weight:700; margin-right: 10px; vertical-align: middle;
+    }
+    h2.section-title {
+      font-size: 1.22rem; font-weight: 700; color:#17245c;
+      border-bottom: 1px solid #cdd6ee; padding-bottom: 8px;
+      margin-top: 46px; margin-bottom: 20px;
+    }
+    h3.subsection-title {
+      font-size: 1.0rem; font-weight: 700; color:#17245c;
+      margin-top: 28px; margin-bottom: 12px;
+      padding-left: 10px; border-left: 3px solid #2E50E6;
+    }
+    p { margin-bottom: 10px; font-size: 0.88rem; }
+    ul, ol { margin-bottom: 10px; padding-left: 22px; font-size: 0.88rem; }
+    ul li, ol li { margin-bottom: 4px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 0.82rem; }
+    table th, table td { border: 1px solid #c4cde4; padding: 8px 10px; text-align: left; vertical-align: top; }
+    table th { background: #eaf0ff; font-weight: 700; white-space: nowrap; color:#17245c; }
+    table td { background: #fff; }
+    table tr:nth-child(even) td { background: #f7f9ff; }
+    .wall-grid { display:flex; gap:16px; flex-wrap:wrap; margin: 14px 0 8px; }
+    .wall-card { flex:1; min-width: 260px; border:1px solid #d8e0f3; border-radius:8px; padding:18px 20px; background:#f5f8ff; }
+    .wall-card .tag { font-size:0.72rem; font-weight:700; color:#2E50E6; letter-spacing:0.06em; }
+    .wall-card h4 { font-size:1.0rem; font-weight:700; margin:6px 0 8px; color:#17245c; }
+    .wall-card p { font-size:0.82rem; color:#444; margin:0; }
+    .flow { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin:14px 0 18px; }
+    .flow .step { background:#eaf0ff; border:1px solid #c4cde4; border-radius:999px; padding:7px 14px; font-size:0.8rem; font-weight:600; color:#17245c; white-space:nowrap; }
+    .flow .step.accent { background:#2E50E6; color:#fff; border-color:#2E50E6; }
+    .flow .arrow { color:#2E50E6; font-weight:700; }
+    .feat-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin:14px 0 20px; }
+    .feat { border:1px solid #d8e0f3; border-radius:8px; padding:16px 18px; background:#fff; }
+    .feat .ico { font-size:1.3rem; }
+    .feat h4 { font-size:0.9rem; font-weight:700; margin:6px 0 4px; color:#17245c; }
+    .feat p { font-size:0.78rem; color:#555; margin:0; }
+    .highlight-box { background: #f5f8ff; border: 1px solid #d8e0f3; border-radius:6px; padding: 14px 18px; margin: 12px 0 20px; font-size: 0.85rem; }
+    .info-box { background: #eff6ff; border-left: 4px solid #2E50E6; padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #1e3a5f; }
+    .warn-box { background: #fff8f0; border-left: 4px solid #f59e0b; padding: 10px 16px; margin: 12px 0 20px; font-size: 0.82rem; color: #7c3d00; }
+    .badge { display: inline-block; padding: 2px 8px; font-size: 0.7rem; font-weight: 700; border-radius: 999px; letter-spacing: 0.03em; }
+    .badge-ok { background: #d4edda; color: #155724; }
+    .badge-warn { background: #fff3cd; color: #856404; }
+    .badge-done { background: #2E50E6; color: #fff; }
+    .badge-ng { background: #f8d7da; color: #721c24; }
+    .kpi-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0 20px; }
+    .kpi-card { border: 1px solid #d8e0f3; border-radius:8px; padding: 16px 18px; flex: 1; min-width: 180px; background:#fff; }
+    .kpi-card .label { font-size: 0.72rem; color: #777; font-weight: 600; letter-spacing: 0.03em; }
+    .kpi-card .value { font-size: 1.5rem; font-weight: 700; margin: 4px 0 2px; color: #17245c; }
+    .kpi-card .sub { font-size: 0.74rem; color: #888; }
+    .kpi-card.accent { background: linear-gradient(135deg,#2E50E6,#1e37b0); color: #fff; border-color: #2E50E6; }
+    .kpi-card.accent .label, .kpi-card.accent .sub { color: rgba(255,255,255,0.78); }
+    .kpi-card.accent .value { color: #fff; }
+    .phase-block { border: 1px solid #d8e0f3; border-radius: 8px; margin-bottom: 14px; overflow: hidden; }
+    .phase-header { background: #17245c; color: #fff; padding: 10px 18px; display: flex; align-items: center; gap: 12px; }
+    .phase-header .phase-num { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; background: rgba(255,255,255,0.15); padding: 3px 10px; border-radius: 999px; }
+    .phase-header .phase-title { font-size: 0.95rem; font-weight: 700; }
+    .phase-header .phase-period { font-size: 0.78rem; color: rgba(255,255,255,0.7); margin-left: auto; }
+    .phase-body { padding: 14px 18px; font-size: 0.84rem; }
+    .phase-body ul { margin: 0; padding-left: 18px; }
+    .phase-body li { margin-bottom: 4px; }
+    .closing { background:#17245c; color:#fff; border-radius:8px; padding:24px 28px; margin:32px 0 0; }
+    .closing .big { font-size:1.15rem; font-weight:700; line-height:1.6; }
+    .closing .small { font-size:0.85rem; color:rgba(255,255,255,0.8); margin-top:8px; }
+    .closing a { color: #93b4ff; }
+    .report-footer { border-top: 1px solid #cdd6ee; margin-top: 48px; padding-top: 16px; font-size: 0.78rem; color: #777; }
+    @media (max-width: 640px) {
+      #main { padding: 24px 20px 60px; }
+      .report-header h1 { font-size: 1.35rem; }
+      h2.section-title { font-size: 1.05rem; }
+      table { font-size: 0.78rem; } table th, table td { padding: 6px 7px; }
+      #sticky-nav { padding: 10px 12px; gap: 6px; } .pill { padding: 4px 12px; font-size: 0.72rem; }
+      .kpi-row, .wall-grid { flex-direction: column; }
+      .feat-grid { grid-template-columns: 1fr; }
+      .result-banner { flex-direction: column; align-items: flex-start; }
+    }
+    @media print {
+      #sticky-nav { display: none; }
+      body { background: #fff; } #main { padding: 0; max-width: none; }
+      .result-banner, .kpi-card.accent, .closing, .phase-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="sticky-nav">
+  <span class="nav-label">SECTIONS</span>
+  <a class="pill" href="#summary">サマリー</a>
+  <a class="pill" href="#understanding">現状認識</a>
+  <a class="pill" href="#issues">課題の詳細</a>
+  <a class="pill" href="#solutions">ご提案</a>
+  <a class="pill" href="#roadmap">ロードマップ</a>
+  <a class="pill" href="#effects">期待効果</a>
+  <a class="pill" href="#nextsteps">Next Steps</a>
+</nav>
+
+<div id="main">
+
+  <header class="report-header">
+    <div class="eyebrow">JAPANSAUNA ｜ PARTNERSHIP PROPOSAL</div>
+    <h1>SANU様へのご提案<br>サウナ設備運用の課題解決パートナーシップ</h1>
+    <div class="subtitle">カスタムヒーター開発 × 運用マニュアル × メンテナンス × リプレイスの4点セット</div>
+    <div class="meta-row">
+      <span>提案日：2026年6月10日</span>
+      <span>提案者：JapanSauna</span>
+      <span>宛先：SANU 2nd Home Co-Owners 御中</span>
+    </div>
+
+    <div class="result-banner">
+      <span class="label">PROPOSAL</span>
+      <span class="text">36拠点240室に点在する「機種混在・不具合頻発・安全設備のばらつき」を、設計〜設置〜保守の一気通貫でまとめて解決します。</span>
+    </div>
+
+    <div class="summary-box">
+      <h3>📋 エグゼクティブサマリー</h3>
+      <ul>
+        <li><strong>課題：</strong>ヒーター不具合による体験品質のブレ / 機種混在で復旧手順が複雑 / インフラ停止時の現地対応負荷 / 安全設備基準のばらつき（既存施設）</li>
+        <li><strong>提案①：</strong>SANU専用カスタムヒーターシステムの共同開発（室内緊急停止・遠隔通知・高精度温度制御を標準搭載）</li>
+        <li><strong>提案②：</strong>全拠点統一の運用マニュアル作成（機種一本化後に即適用できる標準手順書）</li>
+        <li><strong>提案③：</strong>年間メンテナンスパッケージ（定期点検＋トラブル出張対応＋遠隔モニタリング）</li>
+        <li><strong>提案④：</strong>既存ストーブの買取 × 新型カスタムストーブへのリプレイス（移行コストを最小化）</li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <h2 id="understanding" class="section-title"><span class="section-num">1</span>SANUの現状認識</h2>
+
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="label">拠点数</div>
+      <div class="value">36</div>
+      <div class="sub">2026年5月時点</div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">客室数</div>
+      <div class="value">240<span style="font-size:1rem;">室</span></div>
+      <div class="sub">全国展開中</div>
+    </div>
+    <div class="kpi-card accent">
+      <div class="label">設備課題</div>
+      <div class="value">4項目</div>
+      <div class="sub">全拠点共通の構造的問題</div>
+    </div>
+  </div>
+
+  <p>SANUは「自然との暮らしをあらゆる人に」をミッションに、軽井沢・那須・白馬・奄美大島・淡路島など全国に展開するシェア型セカンドホームサービスです。急速な拠点拡大に伴い、サウナ設備の<strong>不具合・運用複雑化・安全基準のばらつき</strong>が構造的な課題として顕在化しています。</p>
+
+  <div class="info-box">
+    「自然がもうひとつの家になる」というコンセプトのもと、ゲストは高い体験品質を期待して来訪します。サウナが「温まらない」「止まっている」状態はブランド毀損に直結するリスクです。
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="issues" class="section-title"><span class="section-num">2</span>設備課題の詳細</h2>
+
+  <p>現在の設備面における最大の課題は、<strong>「機種・拠点ごとに機器の挙動が異なる中で、不具合の発生と復旧難易度の高さがゲスト体験の低下および運用負荷の増大を招いていること」</strong>に集約されます。</p>
+
+  <h3 class="subsection-title">課題① ヒーター不具合・性能低下による体験品質のブレ</h3>
+  <div class="wall-grid">
+    <div class="wall-card">
+      <div class="tag">不具合事例</div>
+      <h4>温度が上がらない</h4>
+      <p>「温まりにくい」「65度までしか上がらない」といった性能低下が各拠点で蓄積。</p>
+    </div>
+    <div class="wall-card">
+      <div class="tag">不具合事例</div>
+      <h4>安全装置の誤作動</h4>
+      <p>安全装置のリセットが頻発、電源が入らないなどの突発停止が発生。</p>
+    </div>
+    <div class="wall-card">
+      <div class="tag">不具合事例</div>
+      <h4>ハードウェア劣化</h4>
+      <p>ヒーター線の焦げ付きなど、物理的な損耗による品質低下。</p>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">課題② 機器構成の多様化に伴う点検・復旧手順の複雑化</h3>
+  <table>
+    <thead>
+      <tr><th>導入メーカー</th><th>確認ポイント</th><th>影響</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>ONE SAUNA</td><td>操作盤・リセット手順が独自仕様</td><td rowspan="3">機種ごとに一次対応が異なり、マニュアル化・標準化が困難。トラブル時に現地パートナーが対応できない</td></tr>
+      <tr><td>Harvia</td><td>安全装置の位置・復旧手順が異なる</td></tr>
+      <tr><td>TYLO</td><td>電源系統の確認方法が独自</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">課題③ インフラ（電源・ガス）起因の停止と現地復旧のハードル</h3>
+  <div class="wall-grid">
+    <div class="wall-card">
+      <div class="tag">インフラ停止</div>
+      <h4>電源系トラブル</h4>
+      <p>ブレーカーの遮断・電気回路の不具合による停止。現地での物理的リセットが必要。</p>
+    </div>
+    <div class="wall-card">
+      <div class="tag">インフラ停止</div>
+      <h4>ガス系トラブル</h4>
+      <p>ガスメーターの安全装置作動。元栓確認など、現地作業が不可欠な対応が発生。</p>
+    </div>
+  </div>
+  <div class="warn-box">
+    復旧にあたり、ゲストや現地パートナーに物理作業を依頼せざるを得ない運用となっており、ゲスト体験の毀損と運営負荷の増大を同時に招いています。
+  </div>
+
+  <h3 class="subsection-title">課題④ 安全設備（非常停止・異常通知）の実装基準のばらつき</h3>
+  <table>
+    <thead>
+      <tr><th>安全要件</th><th>新設施設</th><th>既存施設</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>室内からのヒーター緊急停止機能</td><td><span class="badge badge-done">必須要件として定義済</span></td><td><span class="badge badge-warn">実装途上</span></td></tr>
+      <tr><td>運営への異常通知（遠隔検知）機能</td><td><span class="badge badge-done">必須要件として定義済</span></td><td><span class="badge badge-warn">実装途上</span></td></tr>
+      <tr><td>全拠点での安全基準統一</td><td><span class="badge badge-ok">対応済</span></td><td><span class="badge badge-ng">未統一</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============================================== -->
+  <h2 id="solutions" class="section-title"><span class="section-num">3</span>JapanSaunaのご提案</h2>
+
+  <p>4つのソリューションを組み合わせることで、SANUが抱える設備課題を設計から保守まで一気通貫で解決します。</p>
+
+  <h3 class="subsection-title">提案① SANU専用カスタムサウナヒーターシステムの共同開発</h3>
+  <p><strong>解決する課題：</strong>①体験品質のブレ ／ ④安全設備のばらつき</p>
+
+  <div class="feat-grid">
+    <div class="feat">
+      <div class="ico">🌡️</div>
+      <h4>高精度温度制御</h4>
+      <p>目標温度への到達精度を向上。「65度までしか上がらない」問題を根本解消します。</p>
+    </div>
+    <div class="feat">
+      <div class="ico">🛡️</div>
+      <h4>安全装置の最適化</h4>
+      <p>誤作動リセットが頻発する閾値設計を見直し、安定稼働を実現します。</p>
+    </div>
+    <div class="feat">
+      <div class="ico">🔴</div>
+      <h4>室内緊急停止ボタン（標準装備）</h4>
+      <p>SANUの必須要件を全機種に標準実装。既存施設の後付けにも対応します。</p>
+    </div>
+    <div class="feat">
+      <div class="ico">📡</div>
+      <h4>遠隔異常通知（IoT搭載）</h4>
+      <p>異常を検知次第、運営側へリアルタイム通知。現地駆けつけ前に状況を把握できます。</p>
+    </div>
+    <div class="feat">
+      <div class="ico">🏠</div>
+      <h4>SANU全拠点統一仕様</h4>
+      <p>全拠点で同一機種・同一操作感を実現。機種混在による混乱を解消します。</p>
+    </div>
+    <div class="feat">
+      <div class="ico">🤝</div>
+      <h4>共同開発スキーム</h4>
+      <p>SANUの現場知見 × JapanSaunaの製品開発力で、現場に最適化した仕様を策定します。</p>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">提案② 全拠点統一 運用マニュアルの作成</h3>
+  <p><strong>解決する課題：</strong>②機器多様化による対応複雑化 ／ ③インフラ停止時の復旧難</p>
+
+  <div class="highlight-box">
+    <strong>マニュアル構成（案）</strong><br>
+    <div class="flow" style="margin-top:10px;">
+      <span class="step accent">日常操作</span><span class="arrow">→</span>
+      <span class="step">トラブル切り分け</span><span class="arrow">→</span>
+      <span class="step">インフラ対応</span><span class="arrow">→</span>
+      <span class="step">緊急停止</span><span class="arrow">→</span>
+      <span class="step accent">JS連絡フロー</span>
+    </div>
+    起動〜終了の日常操作 / 症状別トラブルシューティング / ブレーカー・ガスメーター対応 / 緊急時停止手順 / 週次・月次チェックリスト
+  </div>
+
+  <p>ゲスト・現地パートナーが迷わず対応できる体制を構築し、<strong>運営への問い合わせ工数を大幅に削減</strong>します。</p>
+
+  <h3 class="subsection-title">提案③ 年間メンテナンスパッケージ</h3>
+  <p><strong>解決する課題：</strong>①ヒーター性能低下の蓄積 ／ ③インフラ起因の突発停止</p>
+
+  <table>
+    <thead>
+      <tr><th>項目</th><th>内容</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>年1回 定期点検</strong></td><td>ヒーター・電気系統・安全装置・IoTモジュールの総点検</td></tr>
+      <tr><td><strong>消耗品の予防交換</strong></td><td>ヒーター線・センサー類の劣化前交換で突発停止を防止</td></tr>
+      <tr><td><strong>トラブル出張対応</strong></td><td>年間◯回まで優先出張修理対応（SLA設定可）</td></tr>
+      <tr><td><strong>リモート診断</strong></td><td>IoT連携による遠隔状態モニタリングと異常アラート</td></tr>
+      <tr><td><strong>設備状態レポート</strong></td><td>拠点ごとの定期レポート提出。経年劣化の傾向把握に活用</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">提案④ 導入済みストーブの買取 × 新型へのリプレイス</h3>
+  <p><strong>解決する課題：</strong>②機器多様化 ／ ④安全設備のばらつき（既存施設）</p>
+
+  <p>現在導入済みのサウナストーブ（Harvia / ONE SAUNA / TYLO等）を<strong>無償または下取り</strong>で買い取り、カスタム新型ストーブへのリプレイスを実行します。</p>
+
+  <div class="flow">
+    <span class="step">① 現地調査</span><span class="arrow">→</span>
+    <span class="step">② 買取査定</span><span class="arrow">→</span>
+    <span class="step accent">③ 新型納入・設置</span><span class="arrow">→</span>
+    <span class="step">④ 動作確認</span><span class="arrow">→</span>
+    <span class="step">⑤ 操作レクチャー</span><span class="arrow">→</span>
+    <span class="step accent">⑥ マニュアル納品</span>
+  </div>
+
+  <div class="info-box">
+    買取スキームにより移行コストを最小化しながら、全拠点の機種一本化と安全要件の統一を<strong>一気に実現</strong>できます。
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="roadmap" class="section-title"><span class="section-num">4</span>導入ロードマップ（案）</h2>
+
+  <div class="phase-block">
+    <div class="phase-header">
+      <span class="phase-num">Phase 1</span>
+      <span class="phase-title">要件定義 / 現地調査 / カスタム仕様策定</span>
+      <span class="phase-period">〜3ヶ月</span>
+    </div>
+    <div class="phase-body">
+      <ul>
+        <li>全拠点の既存設備ヒアリング・現地調査</li>
+        <li>SANUの安全要件・ブランド要件の確認と仕様合意</li>
+        <li>買取査定・リプレイス優先順位の決定</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-header">
+      <span class="phase-num">Phase 2</span>
+      <span class="phase-title">試作 / パイロット導入 / マニュアル初版作成</span>
+      <span class="phase-period">〜6ヶ月</span>
+    </div>
+    <div class="phase-body">
+      <ul>
+        <li>カスタムストーブの試作・テスト（温度精度・安全装置・IoT通知）</li>
+        <li>1〜2拠点でのパイロット導入・フィードバック収集</li>
+        <li>運用マニュアル初版の作成・現場検証</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-header">
+      <span class="phase-num">Phase 3</span>
+      <span class="phase-title">全拠点展開 / メンテナンスパッケージ開始</span>
+      <span class="phase-period">〜12ヶ月</span>
+    </div>
+    <div class="phase-body">
+      <ul>
+        <li>既存ストーブの順次買取・リプレイス（優先度の高い拠点から）</li>
+        <li>マニュアル配布・現地スタッフへの操作レクチャー</li>
+        <li>年間メンテナンスパッケージ開始・IoTモニタリング本稼働</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="effects" class="section-title"><span class="section-num">5</span>期待効果</h2>
+
+  <table>
+    <thead>
+      <tr><th>指標</th><th>現状の課題</th><th>期待効果</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>サウナ体験品質</strong></td>
+        <td>温度・稼働が拠点ごとに不安定</td>
+        <td><span class="badge badge-done">全拠点で均一な高品質体験を実現</span></td>
+      </tr>
+      <tr>
+        <td><strong>トラブル対応工数</strong></td>
+        <td>機種ごとに対応が異なり複雑</td>
+        <td><span class="badge badge-done">マニュアル化で一次対応を標準化</span></td>
+      </tr>
+      <tr>
+        <td><strong>突発停止リスク</strong></td>
+        <td>インフラ起因の停止が各拠点で頻発</td>
+        <td><span class="badge badge-done">予防保全＋遠隔監視で最小化</span></td>
+      </tr>
+      <tr>
+        <td><strong>安全基準の統一</strong></td>
+        <td>既存施設の安全実装が途上段階</td>
+        <td><span class="badge badge-done">全拠点で緊急停止・異常通知を統一実装</span></td>
+      </tr>
+      <tr>
+        <td><strong>移行コスト</strong></td>
+        <td>複数メーカーからの入替に初期負担</td>
+        <td><span class="badge badge-done">買取スキームで実質コストを抑制</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ============================================== -->
+  <h2 id="nextsteps" class="section-title"><span class="section-num">6</span>Next Steps</h2>
+
+  <p>本提案にご関心をお持ちいただけましたら、まずは<strong>現地調査と詳細ヒアリング</strong>（30〜60分）からスタートしたいと考えております。</p>
+
+  <div class="flow">
+    <span class="step accent">① ヒアリングMTG</span><span class="arrow">→</span>
+    <span class="step">② 代表拠点 現地調査</span><span class="arrow">→</span>
+    <span class="step">③ 詳細仕様・価格提示</span><span class="arrow">→</span>
+    <span class="step accent">④ 契約・Phase1開始</span>
+  </div>
+
+  <div class="closing">
+    <div class="big">JapanSaunaは、設計・製造・設置・保守まで一気通貫で対応できる数少ないパートナーです。<br>SANUの「自然との暮らし」をサウナ品質の面から支えさせてください。</div>
+    <div class="small">
+      ご不明点・ご要望はお気軽にご連絡ください。<br>
+      <strong>JapanSauna</strong> ｜ <a href="mailto:ryuya.harukawa@sevenrich.jp">ryuya.harukawa@sevenrich.jp</a>
+    </div>
+  </div>
+
+  <div class="report-footer">
+    <strong>JapanSauna</strong> — 作成日：2026年6月10日 ｜ 本資料の内容は提案時点のものです。詳細は別途ご協議のうえ確定します。
+  </div>
+
+</div>
+</body>
+</html>
