@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSSA キックオフMTG アジェンダ｜2026-06-11</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      color: #1a1a1a; background: #f4f5f7; line-height: 1.7; font-size: 15px;
+    }
+
+    /* ── NAV ── */
+    #nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.97); border-bottom: 1px solid #ddd;
+      padding: 10px 24px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      backdrop-filter: blur(6px);
+    }
+    .nav-label { font-size: 0.7rem; font-weight: 700; color: #aaa; letter-spacing: 0.08em; margin-right: 4px; }
+    .pill {
+      padding: 4px 14px; font-size: 0.75rem; font-weight: 600; color: #555;
+      text-decoration: none; border: 1px solid #ccc; border-radius: 999px;
+      transition: all 0.18s; white-space: nowrap;
+    }
+    .pill:hover { background: #1a5c3a; color: #fff; border-color: #1a5c3a; }
+
+    /* ── LAYOUT ── */
+    .page { max-width: 860px; margin: 0 auto; padding: 44px 40px 80px; }
+
+    /* ── COVER ── */
+    .cover {
+      background: linear-gradient(135deg, #0d3b26 0%, #1a5c3a 55%, #2d7a50 100%);
+      color: #fff; padding: 48px 44px; border-radius: 12px; margin-bottom: 36px;
+    }
+    .cover .eyebrow {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em;
+      background: rgba(255,255,255,0.15); display: inline-block;
+      padding: 4px 12px; border-radius: 4px; margin-bottom: 18px;
+    }
+    .cover h1 { font-size: 1.75rem; font-weight: 900; line-height: 1.3; margin-bottom: 10px; }
+    .cover .sub { font-size: 0.95rem; color: rgba(255,255,255,0.78); margin-bottom: 26px; }
+    .cover .meta-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .cover .meta-chip {
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 6px; padding: 6px 14px; font-size: 0.8rem; color: rgba(255,255,255,0.9);
+    }
+    .cover .meta-chip strong { display: block; font-size: 0.67rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.6); margin-bottom: 2px; }
+
+    /* ── SECTION ── */
+    .sec-head {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #1a5c3a;
+    }
+    .sec-badge {
+      background: #1a5c3a; color: #fff; font-size: 0.67rem; font-weight: 700;
+      letter-spacing: 0.1em; padding: 3px 10px; border-radius: 4px;
+    }
+    .sec-head h2 { font-size: 1.1rem; font-weight: 800; color: #0d3b26; }
+    .section-block { margin-bottom: 48px; }
+
+    /* ── PURPOSE BOX ── */
+    .purpose-box {
+      background: #fff; border: 1px solid #e0e3ea; border-radius: 10px; padding: 24px 26px; margin-bottom: 24px;
+    }
+    .purpose-box p { font-size: 0.88rem; color: #333; margin-bottom: 10px; }
+    .purpose-box p:last-child { margin-bottom: 0; }
+    .purpose-box strong { color: #0d3b26; }
+
+    /* ── AGENDA ITEMS ── */
+    .agenda-item {
+      background: #fff; border: 1px solid #e0e3ea; border-radius: 10px;
+      margin-bottom: 14px; overflow: hidden; display: flex;
+    }
+    .agenda-time {
+      background: #f0f7f3; border-right: 1px solid #e0e3ea;
+      padding: 20px 16px; min-width: 90px; text-align: center;
+      display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px;
+      flex-shrink: 0;
+    }
+    .agenda-time .t-num { font-size: 1.2rem; font-weight: 900; color: #1a5c3a; line-height: 1; }
+    .agenda-time .t-unit { font-size: 0.68rem; color: #888; font-weight: 600; }
+    .agenda-time .t-label { font-size: 0.65rem; color: #aaa; margin-top: 2px; }
+    .agenda-body { padding: 16px 20px; flex: 1; }
+    .agenda-body .a-tag { font-size: 0.67rem; font-weight: 700; color: #1a5c3a; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .agenda-body h3 { font-size: 0.98rem; font-weight: 800; color: #0d3b26; margin-bottom: 8px; }
+    .agenda-body ul { padding-left: 18px; font-size: 0.82rem; color: #444; }
+    .agenda-body li { margin-bottom: 4px; line-height: 1.6; }
+    .agenda-body .speaker {
+      margin-top: 10px; font-size: 0.75rem; color: #888;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .speaker-badge {
+      display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 0.68rem; font-weight: 700;
+    }
+    .sp-hal { background: #dbeafe; color: #1e40af; }
+    .sp-both { background: #fef3c7; color: #92400e; }
+    .sp-shioya { background: #ede9fe; color: #5b21b6; }
+
+    /* ── TOTAL TIME ── */
+    .total-bar {
+      background: #1a5c3a; color: #fff; border-radius: 8px;
+      padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px; font-size: 0.88rem; font-weight: 700;
+    }
+
+    /* ── BACKGROUND CARD ── */
+    .bg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .bg-card {
+      background: #fff; border: 1px solid #e0e3ea; border-radius: 10px; padding: 16px 18px;
+    }
+    .bg-card .bc-label { font-size: 0.68rem; font-weight: 700; color: #1a5c3a; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .bg-card h4 { font-size: 0.9rem; font-weight: 800; color: #0d3b26; margin-bottom: 6px; }
+    .bg-card p, .bg-card ul { font-size: 0.8rem; color: #444; }
+    .bg-card ul { padding-left: 16px; }
+    .bg-card li { margin-bottom: 3px; }
+
+    /* ── REQUEST TABLE ── */
+    .req-card {
+      background: #fff; border: 1px solid #e0e3ea; border-radius: 10px;
+      overflow: hidden; margin-bottom: 14px;
+    }
+    .req-head {
+      background: #0d3b26; color: #fff; padding: 10px 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .req-head .rn { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; border: 1px solid rgba(255,255,255,0.4); padding: 2px 8px; border-radius: 4px; }
+    .req-head h4 { font-size: 0.95rem; font-weight: 800; }
+    .req-body { padding: 16px 18px; font-size: 0.83rem; color: #333; }
+    .req-body p { margin-bottom: 8px; }
+    .req-body ul { padding-left: 18px; }
+    .req-body li { margin-bottom: 4px; line-height: 1.6; }
+
+    /* ── MILESTONE ── */
+    .milestone-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .ms-item {
+      background: #fff; border: 1px solid #e0e3ea; border-radius: 8px;
+      padding: 10px 16px; display: flex; align-items: center; gap: 14px; font-size: 0.82rem;
+    }
+    .ms-item .ms-date { font-weight: 700; color: #1a5c3a; white-space: nowrap; min-width: 80px; }
+    .ms-item .ms-text { color: #333; flex: 1; }
+    .ms-item.today { border-color: #1a5c3a; background: #f0f7f3; }
+    .ms-item.today .ms-date { color: #0d3b26; }
+    .ms-badge { font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+    .ms-today { background: #1a5c3a; color: #fff; }
+    .ms-open { background: #e5e7eb; color: #666; }
+
+    /* ── INFO / NOTE BOX ── */
+    .info-box { background: #f0f7f3; border-left: 4px solid #1a5c3a; padding: 10px 16px; border-radius: 0 6px 6px 0; font-size: 0.82rem; color: #0d3b26; margin: 14px 0; }
+    .note-box { background: #fffbeb; border-left: 4px solid #f6ad55; padding: 10px 16px; border-radius: 0 6px 6px 0; font-size: 0.8rem; color: #7b4700; margin: 14px 0; }
+
+    /* ── NEXT ACTIONS ── */
+    .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .action-card { background: #fff; border: 1px solid #e0e3ea; border-radius: 10px; padding: 16px 18px; }
+    .action-card .who { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .action-card.hal .who { color: #1e40af; }
+    .action-card.shioya .who { color: #5b21b6; }
+    .action-card ul { padding-left: 18px; font-size: 0.82rem; color: #333; }
+    .action-card li { margin-bottom: 5px; line-height: 1.6; }
+
+    footer { border-top: 1px solid #dde; padding: 16px 0; font-size: 0.75rem; color: #aaa; text-align: center; margin-top: 48px; }
+
+    @media (max-width: 640px) {
+      .page { padding: 20px 16px 60px; }
+      .cover { padding: 28px 20px; } .cover h1 { font-size: 1.35rem; }
+      .bg-grid, .action-grid { grid-template-columns: 1fr; }
+      .agenda-item { flex-direction: column; }
+      .agenda-time { flex-direction: row; justify-content: flex-start; padding: 10px 16px; border-right: none; border-bottom: 1px solid #e0e3ea; gap: 8px; }
+    }
+    @media print {
+      #nav { display: none; }
+      body { background: #fff; }
+      .cover, .req-head, .total-bar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <span class="nav-label">JUMP TO</span>
+  <a class="pill" href="#agenda">アジェンダ</a>
+  <a class="pill" href="#background">背景資料</a>
+  <a class="pill" href="#request">依頼事項</a>
+  <a class="pill" href="#schedule">スケジュール</a>
+  <a class="pill" href="#next">次のアクション</a>
+</nav>
+
+<div class="page">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="eyebrow">JSSA ／ KICKOFF MTG</div>
+    <h1>一般社団法人<br>日本サウナ安全協会（JSSA）<br>キックオフミーティング</h1>
+    <p class="sub">塩谷隆太先生 × JapanSauna 春川 ／ 理事就任打診 ＆ プロジェクト共有</p>
+    <div class="meta-row">
+      <div class="meta-chip"><strong>日時</strong>2026年6月11日（木）</div>
+      <div class="meta-chip"><strong>形式</strong>オンライン</div>
+      <div class="meta-chip"><strong>参加者</strong>塩谷隆太先生・春川龍也</div>
+      <div class="meta-chip"><strong>所要時間</strong>約50分</div>
+    </div>
+  </div>
+
+  <!-- AGENDA -->
+  <div class="section-block" id="agenda">
+    <div class="sec-head">
+      <span class="sec-badge">AGENDA</span>
+      <h2>本日のアジェンダ</h2>
+    </div>
+
+    <div class="purpose-box">
+      <p><strong>このMTGの目的：</strong>JSSAの設立構想を塩谷先生にご共有し、<strong>医療・健康分野の理事</strong>としてプロジェクトにジョインいただくことへの合意形成を行います。</p>
+      <p>また、協会の中立性を担保するために必要な<strong>代表理事候補のご紹介</strong>もお願いしたいと考えています。</p>
+    </div>
+
+    <div class="total-bar">
+      <span>総所要時間：約50分</span>
+      <span>担当凡例：<span class="speaker-badge sp-hal">Hal</span>　<span class="speaker-badge sp-shioya">塩谷先生</span>　<span class="speaker-badge sp-both">両者</span></span>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-time">
+        <div class="t-num">5</div>
+        <div class="t-unit">分</div>
+        <div class="t-label">0:00〜</div>
+      </div>
+      <div class="agenda-body">
+        <div class="a-tag">OPENING</div>
+        <h3>① オープニング・ご挨拶</h3>
+        <ul>
+          <li>接続確認・本日の流れを確認</li>
+          <li>JapanSaunaの近況（一言）</li>
+        </ul>
+        <div class="speaker"><span class="speaker-badge sp-hal">Hal</span></div>
+      </div>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-time">
+        <div class="t-num">10</div>
+        <div class="t-unit">分</div>
+        <div class="t-label">0:05〜</div>
+      </div>
+      <div class="agenda-body">
+        <div class="a-tag">BACKGROUND</div>
+        <h3>② JSSA設立の背景・課題意識</h3>
+        <ul>
+          <li>サウナタイガー事案以降の消防・保健所の動向</li>
+          <li>業界に安全基準が存在しないという構造的問題</li>
+          <li>個人宅・商業施設向けサウナキャビンという「規制の空白」</li>
+          <li>既存協会（日本サウナ・スパ協会 / 日本サウナ学会）との補完関係</li>
+        </ul>
+        <div class="speaker"><span class="speaker-badge sp-hal">Hal</span></div>
+      </div>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-time">
+        <div class="t-num">10</div>
+        <div class="t-unit">分</div>
+        <div class="t-label">0:15〜</div>
+      </div>
+      <div class="agenda-body">
+        <div class="a-tag">VISION</div>
+        <h3>③ JSSAのビジョン・活動内容</h3>
+        <ul>
+          <li><strong>ミッション</strong>：日本のサウナ利用者が安心して使える環境をつくる</li>
+          <li><strong>3本柱</strong>：基準の制定 ／ ライセンス発行 ／ 行政連携・情報発信</li>
+          <li><strong>設立スペック</strong>：7月設立目標・費用17〜22万円・最低2名</li>
+          <li><strong>JapanSaunaの立ち位置</strong>：理事＋事務局として実務を担う（商業色を排除するため代表理事は第三者）</li>
+        </ul>
+        <div class="speaker"><span class="speaker-badge sp-hal">Hal</span></div>
+      </div>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-time">
+        <div class="t-num">10</div>
+        <div class="t-unit">分</div>
+        <div class="t-label">0:25〜</div>
+      </div>
+      <div class="agenda-body">
+        <div class="a-tag">REQUEST</div>
+        <h3>④ 塩谷先生へのご依頼（本題）</h3>
+        <ul>
+          <li><strong>依頼①</strong>：医療・健康分野の理事としての参加<br>
+            <span style="font-size:0.78rem; color:#666;">→ サウナと健康の専門家としての見地で基準策定・信頼性向上に貢献いただきたい</span></li>
+          <li style="margin-top:6px;"><strong>依頼②</strong>：代表理事候補のご紹介<br>
+            <span style="font-size:0.78rem; color:#666;">→ 消防庁OB・建築安全の大学教授・製品安全の専門家など、お心当たりがあればご紹介いただきたい</span></li>
+        </ul>
+        <div class="speaker"><span class="speaker-badge sp-both">両者</span></div>
+      </div>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-time">
+        <div class="t-num">5</div>
+        <div class="t-unit">分</div>
+        <div class="t-label">0:35〜</div>
+      </div>
+      <div class="agenda-body">
+        <div class="a-tag">SCHEDULE</div>
+        <h3>⑤ 設立スケジュールの共有</h3>
+        <ul>
+          <li>マイルストーン全体像の確認（7月設立ゴール）</li>
+          <li>先生にご参加いただく場合の関与イメージ（工数・頻度）</li>
+        </ul>
+        <div class="speaker"><span class="speaker-badge sp-hal">Hal</span></div>
+      </div>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-time">
+        <div class="t-num">10</div>
+        <div class="t-unit">分</div>
+        <div class="t-label">0:40〜</div>
+      </div>
+      <div class="agenda-body">
+        <div class="a-tag">Q&A / CLOSING</div>
+        <h3>⑥ 質疑応答・次のアクション確認</h3>
+        <ul>
+          <li>先生からのご質問・ご懸念の受け止め</li>
+          <li>理事参加の意向確認（今日でなくても可）</li>
+          <li>紹介いただける候補者がいれば共有いただく</li>
+          <li>次回連絡の方法・タイミング確認</li>
+        </ul>
+        <div class="speaker"><span class="speaker-badge sp-both">両者</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BACKGROUND -->
+  <div class="section-block" id="background">
+    <div class="sec-head">
+      <span class="sec-badge">BACKGROUND</span>
+      <h2>背景資料（参考）</h2>
+    </div>
+
+    <div class="bg-grid">
+      <div class="bg-card">
+        <div class="bc-label">CONTEXT 01</div>
+        <h4>業界の現状：安全基準が存在しない</h4>
+        <ul>
+          <li>サウナタイガー事案後、消防・保健所が全国で巡回強化</li>
+          <li>しかし、個人宅・商業施設キャビンへの統一安全基準が未整備</li>
+          <li>消防庁は2026年3月に省令改正（テント・バレル型対象）したが、キャビン型は空白</li>
+        </ul>
+      </div>
+      <div class="bg-card">
+        <div class="bc-label">CONTEXT 02</div>
+        <h4>既存協会との差別化ポジション</h4>
+        <ul>
+          <li>日本サウナ・スパ協会 → 公衆浴場・大型スパが主対象</li>
+          <li>日本サウナ学会 → 感染症対策・健康科学が軸</li>
+          <li><strong>JSSA：個人宅・ホテル・ヴィラのキャビン設置・運用基準に特化</strong></li>
+        </ul>
+      </div>
+      <div class="bg-card">
+        <div class="bc-label">CONTEXT 03</div>
+        <h4>JSSAがJapanSaunaにもたらす価値</h4>
+        <ul>
+          <li>「基準を作った会社」としてのブランド優位性</li>
+          <li>キャビン販売時に「認定準拠製品」として訴求可能</li>
+          <li>The・のサウナ = 第一号認定施設としてPR</li>
+        </ul>
+      </div>
+      <div class="bg-card">
+        <div class="bc-label">CONTEXT 04</div>
+        <h4>理事構成の考え方</h4>
+        <ul>
+          <li>代表理事：中立な第三者（消防庁OB・大学教授等）</li>
+          <li>理事枠：消防・防災 / 建築・設備 / <strong>医療・健康（塩谷先生）</strong> / 施設オーナー</li>
+          <li>JapanSaunaは理事＋事務局として実務を担う</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-box">
+      塩谷先生にご参加いただくことで、<strong>医療・健康の専門性</strong>と<strong>サウナ業界での信頼・認知</strong>を協会に持ち込むことができます。既存のサウナ学会活動とは領域（設備安全基準）が異なるため、利益相反も生じません。
+    </div>
+  </div>
+
+  <!-- REQUEST -->
+  <div class="section-block" id="request">
+    <div class="sec-head">
+      <span class="sec-badge">REQUEST</span>
+      <h2>塩谷先生へのご依頼</h2>
+    </div>
+
+    <div class="req-card">
+      <div class="req-head">
+        <span class="rn">依頼 01</span>
+        <h4>医療・健康分野の理事として参加いただきたい</h4>
+      </div>
+      <div class="req-body">
+        <p>JSSAの理事として、<strong>医療・健康の専門家の視点</strong>から安全基準策定にアドバイスをいただきたいと考えています。</p>
+        <ul>
+          <li>安全基準の骨子策定における医学的知見の提供</li>
+          <li>年2〜3回程度の理事会参加（オンライン可）</li>
+          <li>対外的な信頼担保のためのお名前・プロフィール掲載</li>
+          <li>（任意）プレスリリース・HP上でのコメント</li>
+        </ul>
+        <div class="note-box" style="margin-top:10px;">
+          日常業務への大きな工数は想定していません。まずは設立時の理事として名義参加いただく形でも構いません。
+        </div>
+      </div>
+    </div>
+
+    <div class="req-card">
+      <div class="req-head">
+        <span class="rn">依頼 02</span>
+        <h4>代表理事候補をご紹介いただきたい</h4>
+      </div>
+      <div class="req-body">
+        <p>協会の<strong>中立性・公益性を担保</strong>するため、JapanSaunaは代表理事に就かず、第三者の方にお願いしたいと考えています。</p>
+        <p>以下のプロファイルに近い方で、お心当たりがあればぜひご紹介ください。</p>
+        <ul>
+          <li><strong>消防庁・総務省OB</strong>（行政との信頼関係が即できる）</li>
+          <li><strong>建築・設備安全の大学教授</strong>（日本建築学会・防災工学系）</li>
+          <li><strong>製品安全・リスクマネジメントの専門家</strong>（製品安全協会・損保出身など）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <div class="section-block" id="schedule">
+    <div class="sec-head">
+      <span class="sec-badge">SCHEDULE</span>
+      <h2>設立スケジュール</h2>
+    </div>
+
+    <div class="milestone-row">
+      <div class="ms-item">
+        <span class="ms-date">〜6/25</span>
+        <span class="ms-text">理事候補2名以上から内諾獲得</span>
+        <span class="ms-badge ms-open">進行中</span>
+      </div>
+      <div class="ms-item today">
+        <span class="ms-date">6/11（本日）</span>
+        <span class="ms-text"><strong>塩谷先生キックオフMTG ← 今日</strong>　法人名・定款骨子・活動方針の確定</span>
+        <span class="ms-badge ms-today">TODAY</span>
+      </div>
+      <div class="ms-item">
+        <span class="ms-date">〜7/9</span>
+        <span class="ms-text">司法書士相談完了・設立登記申請</span>
+        <span class="ms-badge ms-open">予定</span>
+      </div>
+      <div class="ms-item">
+        <span class="ms-date">〜7/31</span>
+        <span class="ms-text">設立完了・第一号認定施設発表（The・のサウナ）</span>
+        <span class="ms-badge ms-open">予定</span>
+      </div>
+      <div class="ms-item">
+        <span class="ms-date">〜8/7</span>
+        <span class="ms-text">プレスリリース配信・HP公開</span>
+        <span class="ms-badge ms-open">予定</span>
+      </div>
+    </div>
+
+    <div class="info-box">
+      設立自体は司法書士に依頼すれば<strong>最短4週間・費用17〜22万円</strong>で完了します。7月設立ゴールには十分間に合うスケジュールです。
+    </div>
+  </div>
+
+  <!-- NEXT ACTIONS -->
+  <div class="section-block" id="next">
+    <div class="sec-head">
+      <span class="sec-badge">NEXT ACTIONS</span>
+      <h2>MTG後のアクション（想定）</h2>
+    </div>
+
+    <div class="action-grid">
+      <div class="action-card hal">
+        <div class="who">HAL（JapanSauna）</div>
+        <ul>
+          <li>司法書士への相談予約を入れる</li>
+          <li>定款骨子・活動方針をドキュメント化</li>
+          <li>塩谷先生への正式依頼状（メール）の送付</li>
+          <li>ご紹介いただいた代表理事候補へのアプローチ</li>
+        </ul>
+      </div>
+      <div class="action-card shioya">
+        <div class="who">塩谷先生（お願い）</div>
+        <ul>
+          <li>理事参加の意向確認（1〜2週間以内でOK）</li>
+          <li>代表理事候補として心当たりの方のご紹介</li>
+          <li>設立構想へのご意見・懸念点のフィードバック</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    一般社団法人 日本サウナ安全協会（JSSA） 設立準備 ／ JapanSauna 春川龍也 ／ 作成：2026年6月11日
+  </footer>
+
+</div>
+</body>
+</html>
