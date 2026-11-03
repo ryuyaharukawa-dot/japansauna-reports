@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM ショールーム予約管理（新機能）</title>
+  <style>
+    body { font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; color: #1a1a1a; background: #fff; line-height: 1.7; margin: 0; }
+    html { font-size: 15px; }
+    #sticky-nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.97); border-bottom: 1px solid #ccc; padding: 12px 20px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; backdrop-filter: blur(6px); }
+    #sticky-nav .nav-label { font-size: 0.72rem; font-weight: 700; color: #777; letter-spacing: 0.05em; margin-right: 4px; }
+    .pill { display: inline-block; padding: 5px 16px; font-size: 0.78rem; font-weight: 600; color: #555; text-decoration: none; border: 1px solid #ccc; border-radius: 999px; }
+    .pill:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    #main { max-width: 1080px; margin: 0 auto; padding: 40px 32px 80px; }
+    .report-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 20px; margin-bottom: 32px; }
+    .report-header h1 { font-size: 1.6rem; margin: 0 0 4px; }
+    .report-header .subtitle { font-size: 0.9rem; color: #555; margin: 0 0 12px; }
+    .meta-row { display: flex; gap: 24px; font-size: 0.8rem; color: #555; flex-wrap: wrap; }
+    h2.section-title { font-size: 1.2rem; border-bottom: 1px solid #999; padding-bottom: 6px; margin: 44px 0 20px; }
+    h3.subsection-title { font-size: 1rem; margin: 28px 0 12px; padding-left: 10px; border-left: 3px solid #555; }
+    p, li { font-size: 0.88rem; }
+    table.doc { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 0.82rem; }
+    table.doc th, table.doc td { border: 1px solid #bbb; padding: 8px 10px; text-align: left; vertical-align: top; }
+    table.doc th { background: #f0f0f0; white-space: nowrap; }
+    .note { background: #f7f7f7; border-left: 3px solid #999; padding: 10px 14px; font-size: 0.84rem; margin: 12px 0; }
+    .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 12px 0 20px; }
+    .flow .step { border: 1px solid #1a1a1a; border-radius: 8px; padding: 8px 14px; font-size: 0.82rem; font-weight: 600; background: #fff; }
+    .flow .arrow { color: #999; }
+    .table-scroll { overflow-x: auto; }
+
+    /* ── CRM画面の見本 ── */
+    .mock { border: 1px solid #d4d4d8; border-radius: 12px; background: #f8fafc; padding: 20px; margin: 16px 0; font-size: 0.85rem; }
+    .mock-bar { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .mock h4 { margin: 0; font-size: 1.1rem; }
+    .mock .sub { color: #64748b; font-size: 0.78rem; margin-top: 2px; }
+    .cal-on { color: #047857; font-size: 0.75rem; }
+    .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .tab { border: 1px solid #e2e8f0; background: #fff; color: #475569; border-radius: 999px; padding: 4px 12px; font-size: 0.8rem; cursor: pointer; }
+    .tab.on { background: #0f172a; color: #fff; border-color: #0f172a; }
+    .tab b.red { color: #e11d48; }
+    .grid { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+    .grid th { background: #f1f5f9; color: #64748b; font-weight: 500; font-size: 0.75rem; text-align: left; padding: 8px 10px; white-space: nowrap; }
+    .grid td { border-top: 1px solid #e2e8f0; padding: 9px 10px; vertical-align: top; white-space: nowrap; }
+    .grid tr.row { cursor: pointer; }
+    .grid tr.row:hover td { background: #f8fafc; }
+    .grid tr.alert td { background: #fff1f2; }
+    .chev { color: #94a3b8; width: 14px; }
+    .code { color: #94a3b8; font-size: 0.72rem; font-family: monospace; }
+    .warn { color: #e11d48; font-size: 0.72rem; font-weight: 600; margin-top: 2px; }
+    .badge { display: inline-block; font-size: 0.72rem; padding: 1px 8px; border-radius: 4px; }
+    .s-pending { background: #ffe4e6; color: #be123c; } .s-confirmed { background: #dbeafe; color: #1d4ed8; }
+    .s-visited { background: #d1fae5; color: #047857; } .s-cancelled { background: #f1f5f9; color: #475569; }
+    .s-no_show { background: #fef3c7; color: #b45309; }
+    .st-contacted { background: #dbeafe; color: #1d4ed8; } .st-quoted { background: #fef3c7; color: #b45309; }
+    .st-meeting { background: #e0e7ff; color: #4338ca; }
+    .detail td { background: #f8fafc; white-space: normal; }
+    .detail-grid { display: grid; grid-template-columns: 240px 1fr; gap: 18px; }
+    .lbl { font-size: 0.72rem; color: #64748b; font-weight: 600; margin-bottom: 4px; }
+    .fields { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+    .fields label { font-size: 0.72rem; color: #64748b; }
+    .fields select, .fields input { display: block; margin-top: 3px; height: 32px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 8px; font-size: 0.82rem; background: #fff; }
+    .btn { height: 32px; padding: 0 14px; border-radius: 6px; border: 1px solid #0f172a; background: #0f172a; color: #fff; font-size: 0.8rem; cursor: pointer; }
+    .btn.outline { background: #fff; color: #0f172a; border-color: #cbd5e1; }
+    .btn.ghost { background: transparent; color: #64748b; border-color: transparent; }
+    .ask { margin-top: 10px; border: 1px solid #bfdbfe; background: #eff6ff; border-radius: 6px; padding: 10px 12px; }
+    .ask p { margin: 0 0 6px; font-size: 0.8rem; color: #1e3a8a; }
+    .hint { font-size: 0.72rem; color: #94a3b8; margin-top: 6px; }
+    .hint.indigo { color: #4338ca; }
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #fff; padding: 10px 18px; border-radius: 8px; font-size: 0.82rem; opacity: 0; transition: opacity .2s; pointer-events: none; max-width: 90vw; }
+    .toast.show { opacity: 1; }
+    @media (max-width: 720px) { #main { padding: 24px 16px 60px; } .detail-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<nav id="sticky-nav">
+  <span class="nav-label">目次</span>
+  <a class="pill" href="#summary">概要</a>
+  <a class="pill" href="#demo">画面デモ</a>
+  <a class="pill" href="#flow">運用の流れ</a>
+  <a class="pill" href="#calendar">カレンダー連携</a>
+  <a class="pill" href="#questions">確認したいこと</a>
+</nav>
+
+<div id="main">
+  <div class="report-header">
+    <h1>CRM ショールーム予約管理（新機能）</h1>
+    <p class="subtitle">新LPのショールーム予約フォームから届いた予約を、取りこぼさずに来場まで管理する</p>
+    <div class="meta-row"><span>作成：2026-11-04</span><span>ステータス：社内確認中（本番未反映）</span><span>対象：経営陣・営業</span></div>
+  </div>
+
+  <h2 class="section-title" id="summary">概要</h2>
+  <table class="doc">
+    <tr><th>目的</th><td>ショールーム予約の対応漏れ（日程調整の放置・来場後の見積忘れ）をなくす</td></tr>
+    <tr><th>問い合わせの数え方</th><td>予約が届いたら通常どおり<b>案件1件</b>として登録（問い合わせ数・ファネルにも1件で計上）。同じ人が資料請求もしていたら案件は1件にまとめ、予約だけ追加で記録する</td></tr>
+    <tr><th>管理する場所</th><td>CRMの左メニューに新ページ「<b>ショールーム予約</b>」を追加。案件詳細ページとマイページにも表示</td></tr>
+    <tr><th>自動登録</th><td>新LPの予約メール（info@japansauna.jp 宛）から、氏名・連絡先・<b>第1／第2希望日・時間帯・ご要望</b>を自動で読み取って登録</td></tr>
+    <tr><th>ステータス</th><td>未対応 → 日程確定 → 来場済（ほかにキャンセル／不来場）。見積・成約は案件ステージで管理し、一覧に並べて表示する（二重管理しない）</td></tr>
+  </table>
+
+  <h2 class="section-title" id="demo">画面デモ（クリックで操作できます）</h2>
+  <p>CRMの画面をこのページ上で再現した見本です。<b>行をクリック（▶）すると詳細が開き</b>、ステータスの変更を試せます。データはすべて架空で、操作しても保存はされません（再読み込みで元に戻ります）。</p>
+
+  <div class="mock" id="mock">
+    <div class="mock-bar">
+      <div><h4>ショールーム予約</h4><div class="sub">新LPの予約フォームから自動登録。問い合わせとしては案件1件で数え、来場までの進捗をここで管理します。</div></div>
+      <div class="cal-on">📅 Googleカレンダー連携中</div>
+    </div>
+    <div class="tabs" id="tabs"></div>
+    <div class="table-scroll">
+      <table class="grid">
+        <thead><tr><th></th><th>受付</th><th>顧客（案件）</th><th>第1／第2希望</th><th>時間帯</th><th>ステータス</th><th>確定日時</th><th>担当</th><th>案件ステージ</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="note">赤く表示される行＝要対応。「<b>24時間以上未対応</b>」と「<b>来場済・見積未提出</b>」の2種類です。マイページの上部にも「未対応のショールーム予約が○件」と表示されます。</div>
+
+  <h2 class="section-title" id="flow">運用の流れ</h2>
+  <div class="flow">
+    <span class="step">予約メール受信</span><span class="arrow">→</span>
+    <span class="step">CRMに自動登録（未対応）</span><span class="arrow">→</span>
+    <span class="step">お客様と日程調整 → 日程確定</span><span class="arrow">→</span>
+    <span class="step">来場 → 来場済</span><span class="arrow">→</span>
+    <span class="step">見積提出（自動でタスク化）</span>
+  </div>
+  <table class="doc">
+    <tr><th>操作</th><th>CRMで自動的に起きること</th></tr>
+    <tr><td>予約メールが届く</td><td>案件を作成（既存顧客なら名寄せ）し、予約を「未対応」で登録。<b>24時間たっても未対応なら赤く表示</b></td></tr>
+    <tr><td>日程確定にして保存</td><td>「Googleカレンダーに追加しますか？」を確認 → 追加する場合はショールームカレンダーに予定を作成し、担当者を招待</td></tr>
+    <tr><td>来場済にして保存</td><td>案件ステージを「<b>商談（現地調査）</b>」に進め、商談日に来場日を記録。見積が未提出なら、ネクストアクション「<b>見積提出</b>」（期日：来場の2日後）を自動登録 → 期日を過ぎるとマイページ・要フォロー一覧に出る</td></tr>
+    <tr><td>キャンセル</td><td>カレンダーの予定を削除</td></tr>
+  </table>
+
+  <h2 class="section-title" id="calendar">Googleカレンダー連携</h2>
+  <table class="doc">
+    <tr><th>どこに入る</th><td>info@japansauna.jp の共有カレンダー「ショールーム」。全員がショールームの埋まり具合を見られる</td></tr>
+    <tr><th>いつ入る</th><td>「日程確定」で保存するときに<b>追加するかを選択</b>（日時変更時は「更新しますか？」）。キャンセル時は自動で削除、来場済・不来場は記録として残す</td></tr>
+    <tr><th>予定の内容</th><td>件名「【ショールーム】○○様（案件番号）」、1時間、場所：蒲田ショールーム、メモ欄に案件URL・電話・ご要望</td></tr>
+    <tr><th>招待</th><td>担当者のみ（お客様には送らない）</td></tr>
+  </table>
+
+  <h2 class="section-title" id="questions">朝会で確認したいこと</h2>
+  <ol>
+    <li>ステータス5つ（未対応／日程確定／来場済／キャンセル／不来場）で足りるか</li>
+    <li>来場後の「見積提出」の期限は<b>来場の2日後</b>でよいか</li>
+    <li>カレンダーの予定時間（<b>1時間</b>）と招待する人（<b>担当者のみ</b>）でよいか</li>
+    <li>「24時間以上未対応」で赤く表示する基準でよいか</li>
+  </ol>
+  <div class="note">補足：新LPの通知メールには広告の識別情報（utm）が入っていないため、今は流入元が「その他」になります。LP側の通知メールにutmを追加すると、Meta広告／Google広告を判別できます。</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STATUSES = [
+  { id: "pending", label: "未対応" }, { id: "confirmed", label: "日程確定" }, { id: "visited", label: "来場済" },
+  { id: "cancelled", label: "キャンセル" }, { id: "no_show", label: "不来場" },
+];
+const STAGE = { contacted: "通電済", quoted: "見積提出", meeting: "商談（現地調査）" };
+const OWNERS = ["岡村", "春川", "中兼"];
+const now = Date.now();
+const H = 3600e3;
+let filter = null;
+let openId = null;
+let asking = null;
+const data = [
+  { id: 1, created: now - 2 * H, name: "斎藤様邸", code: "JS-DEMO-020", d1: "2026-11-15", d2: "2026-11-16", slot: "午前", status: "pending", at: null, who: null, stage: "contacted", quoted: null, msg: "家族3人で伺います", cal: false, phone: "090-0000-0001" },
+  { id: 2, created: now - 30 * H, name: "清水様邸", code: "JS-DEMO-021", d1: "2026-11-28", d2: "2026-11-11", slot: "午後", status: "pending", at: null, who: null, stage: "quoted", quoted: "2026-07-21", msg: "BASIC Lの実物を見たい", cal: false, phone: "090-0000-0002" },
+  { id: 3, created: now - 72 * H, name: "サウナ付き別荘JKL（法人）", code: "JS-DEMO-019", d1: "2026-11-08", d2: "2026-11-09", slot: "午後", status: "confirmed", at: "2026-11-08T14:00", who: "岡村", stage: "meeting", quoted: null, msg: "BASIC Mを見たい", cal: true, phone: "03-0000-0003" },
+  { id: 4, created: now - 144 * H, name: "民泊オーナー長野（法人）", code: "JS-DEMO-016", d1: "2026-11-01", d2: null, slot: "午前", status: "visited", at: "2026-11-01T10:00", who: "中兼", stage: "meeting", quoted: null, msg: "屋外設置を検討中", cal: true, phone: "026-000-0004" },
+];
+
+const md = (d) => (d ? `${Number(d.slice(5, 7))}/${Number(d.slice(8, 10))}` : "—");
+const fmt = (ts) => { const d = new Date(ts); return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`; };
+const fmtAt = (v) => (v ? `${md(v.slice(0, 10))} ${v.slice(11, 16)}` : "—");
+const label = (id) => STATUSES.find((s) => s.id === id).label;
+const suggest = (r) => (r.d1 ? `${r.d1}T${r.slot.includes("午前") ? "10:00" : r.slot.includes("午後") ? "14:00" : "13:00"}` : "");
+function attention(r) {
+  if (r.status === "pending" && now - r.created > 24 * H) return "24時間以上未対応";
+  if (r.status === "visited" && !r.quoted) return "来場済・見積未提出";
+  return null;
+}
+function toast(t) { const el = document.getElementById("toast"); el.textContent = t; el.classList.add("show"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("show"), 3600); }
+
+function renderTabs() {
+  const counts = {}; data.forEach((r) => (counts[r.status] = (counts[r.status] || 0) + 1));
+  const tabs = STATUSES.map((s) => ({ id: s.id, label: s.label, n: counts[s.id] || 0 })).concat([{ id: null, label: "すべて", n: data.length }]);
+  document.getElementById("tabs").innerHTML = tabs.map((t) =>
+    `<span class="tab ${filter === t.id ? "on" : ""}" data-tab="${t.id ?? ""}">${t.label} <b class="${t.id === "pending" && t.n && filter !== t.id ? "red" : ""}">${t.n}</b></span>`).join("");
+  document.querySelectorAll("[data-tab]").forEach((el) => (el.onclick = () => { filter = el.dataset.tab || null; render(); }));
+}
+
+function detailHtml(r) {
+  const at = r.at || suggest(r);
+  return `<tr class="detail"><td></td><td colspan="8">
+    <div class="detail-grid">
+      <div>
+        <div class="lbl">予約内容</div>
+        <div>第1希望：${md(r.d1)}　第2希望：${md(r.d2)}</div>
+        <div>時間帯：${r.slot}</div><div>電話：${r.phone}</div>
+        <div style="color:#475569">💬 ${r.msg}</div>
+        <div style="font-size:.72rem;color:#2563eb;margin-top:4px">案件ページを開く →</div>
+      </div>
+      <div>
+        <div class="lbl">対応状況</div>
+        <div class="fields">
+          <label>ステータス<select id="f-status">${STATUSES.map((s) => `<option value="${s.id}" ${s.id === r.status ? "selected" : ""}>${s.label}</option>`).join("")}</select></label>
+          <label>来場日時<input id="f-at" type="datetime-local" value="${at}"></label>
+          <label>担当<select id="f-who"><option value="">未定</option>${OWNERS.map((o) => `<option ${o === r.who ? "selected" : ""}>${o}</option>`).join("")}</select></label>
+          <label style="flex:1;min-width:160px">メモ<input id="f-memo" placeholder="電話で調整済み など" style="width:100%"></label>
+          <button class="btn" id="f-save">保存</button>
+        </div>
+        ${!r.at && r.d1 ? `<div class="hint">来場日時は第1希望日・時間帯を仮に入れています。お客様と調整した日時に直してください。</div>` : ""}
+        <div class="hint indigo" id="f-visited-note" style="display:none">保存すると案件を「商談（現地調査）」に進め、ネクストアクション「${r.quoted ? "来場後フォロー" : "見積提出"}」（期日：来場の2日後）を自動登録します。</div>
+        ${asking === r.id ? `<div class="ask">
+          <p><b>📅 ${r.cal ? "Googleカレンダーの予定も更新しますか？" : "Googleカレンダーに追加しますか？"}</b></p>
+          <p>ショールームカレンダーに「${fmtAt(document.getElementById("f-at")?.value || at)}〜（1時間）」で登録し、${(document.getElementById("f-who")?.value || r.who) ? `担当の${document.getElementById("f-who")?.value || r.who}さんを招待します。` : "担当が未定のため招待は送りません。"}</p>
+          <button class="btn" id="cal-yes">${r.cal ? "更新して保存" : "追加して保存"}</button>
+          <button class="btn outline" id="cal-no">${r.cal ? "更新せずに保存" : "追加せずに保存"}</button>
+          <button class="btn ghost" id="cal-back">戻る</button></div>` : ""}
+      </div>
+    </div></td></tr>`;
+}
+
+function rowHtml(r) {
+  const a = attention(r);
+  return `<tr class="row ${a ? "alert" : ""}" data-id="${r.id}">
+    <td class="chev">${openId === r.id ? "▼" : "▶"}</td>
+    <td style="color:#64748b">${fmt(r.created)}</td>
+    <td><b>${r.name}</b><div class="code">${r.code}</div>${a ? `<div class="warn">⚠ ${a}</div>` : ""}</td>
+    <td>${md(r.d1)} <span style="color:#94a3b8">／</span> ${md(r.d2)}</td>
+    <td>${r.slot}</td>
+    <td><span class="badge s-${r.status}">${label(r.status)}</span></td>
+    <td>${fmtAt(r.at)}${r.cal ? " 📅" : ""}</td>
+    <td>${r.who ?? "—"}</td>
+    <td><span class="badge st-${r.stage}">${STAGE[r.stage]}</span>${r.quoted ? `<div class="code">見積 ${md(r.quoted)}</div>` : ""}</td>
+  </tr>`;
+}
+
+function commit(r, cal) {
+  const st = document.getElementById("f-status").value;
+  const at = document.getElementById("f-at").value;
+  const who = document.getElementById("f-who").value || null;
+  if ((st === "confirmed" || st === "visited") && !at) return toast("日程確定・来場済にするには来場日時を入力してください");
+  const msgs = [];
+  if (st === "visited" && r.status !== "visited") {
+    r.stage = "meeting";
+    msgs.push(`案件を「商談（現地調査）」に進め、「${r.quoted ? "来場後フォロー" : "見積提出"}」のタスクを登録しました`);
+  }
+  if (st === "cancelled" && r.cal) { r.cal = false; msgs.push("カレンダーの予定を削除しました"); }
+  if (cal) { msgs.push(r.cal ? "カレンダーの予定を更新しました" : "ショールームカレンダーに追加しました"); r.cal = true; }
+  Object.assign(r, { status: st, at: at || null, who });
+  asking = null; openId = null;
+  render();
+  toast(`保存しました${msgs.length ? "：" + msgs.join("／") : ""}（デモのため実際には保存されません）`);
+}
+
+function render() {
+  renderTabs();
+  const order = { pending: 0, confirmed: 1 };
+  const rows = data.filter((r) => !filter || r.status === filter)
+    .sort((a, b) => (order[a.status] ?? 2) - (order[b.status] ?? 2) || b.created - a.created);
+  document.getElementById("rows").innerHTML = rows.length
+    ? rows.map((r) => rowHtml(r) + (openId === r.id ? detailHtml(r) : "")).join("")
+    : `<tr><td colspan="9" style="text-align:center;color:#94a3b8;padding:30px">該当する予約はありません</td></tr>`;
+  document.querySelectorAll("tr.row").forEach((el) => (el.onclick = () => { const id = Number(el.dataset.id); openId = openId === id ? null : id; asking = null; render(); }));
+  const r = data.find((x) => x.id === openId);
+  if (!r) return;
+  const stSel = document.getElementById("f-status");
+  const note = document.getElementById("f-visited-note");
+  const syncNote = () => (note.style.display = stSel.value === "visited" && r.status !== "visited" ? "block" : "none");
+  stSel.onchange = syncNote; syncNote();
+  document.getElementById("f-save").onclick = () => {
+    if (stSel.value === "confirmed" && document.getElementById("f-at").value) {
+      const keep = { st: stSel.value, at: document.getElementById("f-at").value, who: document.getElementById("f-who").value };
+      asking = r.id; render();
+      document.getElementById("f-status").value = keep.st; document.getElementById("f-at").value = keep.at; document.getElementById("f-who").value = keep.who;
+      return;
+    }
+    commit(r, false);
+  };
+  if (asking === r.id) {
+    document.getElementById("cal-yes").onclick = () => commit(r, true);
+    document.getElementById("cal-no").onclick = () => commit(r, false);
+    document.getElementById("cal-back").onclick = () => { asking = null; render(); };
+  }
+}
+render();
+</script>
+</body>
+</html>
